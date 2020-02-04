@@ -1,0 +1,76 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$regionbla: (
+  50 : #e0edf6,
+  100 : #b3d1e8,
+  200 : #80b3d9,
+  300 : #4d94ca,
+  400 : #267dbe,
+  500 : #0066b3,
+  600 : #005eac,
+  700 : #0053a3,
+  800 : #00499a,
+  900 : #00388b,
+  A100 : #b7ceff,
+  A200 : #84abff,
+  A400 : #5188ff,
+  A700 : #3777ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #ffffff,
+  )
+);
+
+$farg1: (
+  50 : #fffaed,
+  100 : #fff3d1,
+  200 : #ffebb2,
+  300 : #fee393,
+  400 : #fedd7c,
+  500 : #fed765,
+  600 : #fed35d,
+  700 : #fecd53,
+  800 : #fec749,
+  900 : #fdbe37,
+  A100 : #ffffff,
+  A200 : #ffffff,
+  A400 : #fff4df,
+  A700 : #ffecc6,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+
+
+$my-app-primary: mat-palette($regionbla);
+$my-app-accent:  mat-palette($regionbla);
+$my-app-warn:    mat-palette($mat-deep-orange);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+@include angular-material-theme($my-app-theme);

@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+
+$light-black: #3a3b3d;
+
+html, body { 
+  height: 100vh; 
+  width: 100vw;
+}
+
+body, .mat-body1 {
+  margin: 0;
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+  color: $light-black;
+  font-weight: normal;
+}
+
+h1, .mat-h1, .mat-headline {
+  font-family: Georgia, Times, "Times New Roman", sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  color: $light-black;
+  font-weight: normal;
+}
+
+h2, .mat-h2, .mat-title, .mat-card-title {
+  font-family: Georgia, Times, "Times New Roman", sans-serif;
+  font-style: light;
+  font-variant: normal;
+  color: $light-black;
+  font-weight: normal;
+}
+
+h3, .mat-h3, .mat-subheading-2 {
+  font-family: Georgia, Times, "Times New Roman", sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  color: $light-black;
+  font-weight: normal;
+}
+
+p, .mat-body2, .mat-button {
+  font-family: Tahoma, Verdana, Segoe, sans-serif !important;
+}
+
+blockquote {
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+}
+
+pre {
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+}

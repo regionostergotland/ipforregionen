@@ -1,0 +1,19 @@
+button {
+  margin: 10px;
+  padding: 0px;
+  min-width: 0px;
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.small {
+  background-color: green;
+}
+
+.small  .mat-paginator-range-label {
+  margin: 0 6px 0 24px !important;
+  background-color: green;
+}
