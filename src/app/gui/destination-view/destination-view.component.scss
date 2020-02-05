@@ -1,0 +1,29 @@
+table {
+    width: 100%;
+}
+
+button {
+  margin: 20px 20px;
+}
+
+.center {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.panel-container {
+    max-width: 1050px;
+    width: 100%;
+}
+
+.panel {
+    margin: 20px 20px;
+    text-align: start;
+}
+
+.mat-snack-bar-container {
+    background-color: '#B00' !important;
+}

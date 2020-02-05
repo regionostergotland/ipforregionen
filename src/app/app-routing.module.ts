@@ -20,6 +20,9 @@ import {
 import {
   InspectionViewComponent
 } from './gui/inspection-view/inspection-view.component';
+import {
+  DestinationViewComponent
+} from './gui/destination-view/destination-view.component';
 
 import { DataViewerModule } from './gui/data-viewer/data-viewer.module';
 
@@ -54,6 +57,7 @@ const routes: Routes = [
     { path: 'category-selection/:platform',
       component: CategorySelectionComponent },
     { path: 'inspection', component: InspectionViewComponent },
+    { path: 'destination', component: DestinationViewComponent},
     { path: 'edit', component: EditorViewComponent },
   ]},
 ];

@@ -17,20 +17,17 @@
 </div>
 
 <div *ngIf="!dataSent">
-<div *ngIf="!hasData()">
-  <h1 style="text-align: center">
-    Hoppsan!
-  </h1>
-  <p>Du har inte hämtat eller matat in någon data!</p>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="router.navigateByUrl('/home')"
-  >
-    Tillbaka hem
-  </button>
+  <div *ngIf="!hasData()">
+    <h1 style="text-align: center">
+      Hoppsan!
+    </h1>
+    <p>Du har inte hämtat eller matat in någon data!</p>
+    <button mat-raised-button color="primary"
+      (click)="router.navigateByUrl('/home')">
+        Tillbaka hem
+    </button>
+  </div>
 </div>
-
 <div *ngIf="hasData()">
   <div *ngIf="!dataSent" class="center">
     <p>Kontrollera dina värden innan du skickar in till RÖD</p>
@@ -56,15 +53,13 @@
       <button
         mat-raised-button
         color="primary"
-        (click)="router.navigateByUrl('edit')"
-      >
+        (click)="router.navigateByUrl('edit')">
         Tillbaka
       </button>
       <button
         mat-raised-button
         color="primary"
-        (click)="sendData()"
-      >
+        (click)="sendData()">
         Godkänn och skicka
       </button>
     </div>

@@ -1,0 +1,28 @@
+<div class="center">
+  <div class="panel-container">
+    <mat-expansion-panel class="panel">
+      <mat-expansion-panel-header >
+        <mat-panel-title>
+          {{selection}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list role="list">
+      	<mat-list-item role="listitem" *ngFor="let destination of Destinations; let i = index">
+      		<mat-radio-button color="primary" [checked]="i == defaultSelected" [value]="destination" (change)="selection = $event.value">
+      			{{destination}}
+      		</mat-radio-button>
+      	</mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </div>
+  <div style="display: flex; flex-direction: row">
+    <button mat-raised-button color="primary"
+      (click)="router.navigateByUrl('edit')">
+        Tillbaka
+    </button>
+    <button mat-raised-button color="primary"
+      (click)="sendData()">
+        Välj destination och gå vidare
+    </button>
+  </div>
+</div>

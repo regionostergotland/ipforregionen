@@ -81,6 +81,11 @@ import {
   InspectionViewComponent
 } from './gui/inspection-view/inspection-view.component';
 
+/* Destination */
+import {
+  DestinationViewComponent
+} from './gui/destination-view/destination-view.component';
+
 /* Common components */
 import { DataViewerModule } from './gui/data-viewer/data-viewer.module';
 
@@ -93,6 +98,7 @@ import { ToolbarComponent } from './gui/toolbar/toolbar.component';
 
 /* Google Fit configuration */
 import { CustomGoogleApiModule } from './google-fit-config';
+
 
 @NgModule({
   declarations: [
@@ -114,6 +120,7 @@ import { CustomGoogleApiModule } from './google-fit-config';
     /* editor view components */
     BottomSheetCategoriesComponent,
     AddNewDataModalComponent,
+    DestinationViewComponent,
   ],
   imports: [
     DataViewerModule,
