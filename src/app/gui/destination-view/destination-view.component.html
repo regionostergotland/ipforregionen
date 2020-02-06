@@ -1,4 +1,5 @@
 <div class="center">
+  <h3>Här kan du bestämma vart din data skickas!</h3>
   <div class="panel-container">
     <mat-expansion-panel class="panel">
       <mat-expansion-panel-header >
@@ -7,9 +8,10 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-list role="list">
-      	<mat-list-item role="listitem" *ngFor="let destination of Destinations; let i = index">
-      		<mat-radio-button color="primary" [checked]="i == defaultSelected" [value]="destination" (change)="selection = $event.value">
+      	<mat-list-item role="listitem" *ngFor="let destination of Destinations; let i = index; let lastitem = last">
+      		<mat-radio-button color="primary" [value]="destination" (change)="selection = $event.value">
       			{{destination}}
+            <mat-divider *ngIf="!lastitem"></mat-divider>
       		</mat-radio-button>
       	</mat-list-item>
       </mat-list>
@@ -17,12 +19,16 @@
   </div>
   <div style="display: flex; flex-direction: row">
     <button mat-raised-button color="primary"
-      (click)="router.navigateByUrl('edit')">
+      class="next-button-container"
+      (click)="router.navigateByUrl('/edit')">
         Tillbaka
     </button>
-    <button mat-raised-button color="primary"
-      (click)="sendData()">
-        Välj destination och gå vidare
-    </button>
+    <div class="next-button-container">
+      <button mat-raised-button color="primary"
+        (click)="yeet(selection)"
+        ng-disabled="false">
+          Välj destination och gå vidare
+      </button>
+    </div>
   </div>
 </div>

@@ -19,8 +19,7 @@
             class="arrow"
             stroke="gray"
             fill="gray"
-            src="{{assetUrl}}/arrow5.svg"
-          />
+            src="{{assetUrl}}/arrow5.svg"/>
           <div class="arrow-text">Börja här!</div>
         </div>
       </div>
@@ -30,18 +29,14 @@
         *ngIf="selectedCategory"
         [selectCategory]="selectedCategory"
         [editable]="true"
-        style="text-align: left"
-      >
+        style="text-align: left">
       </app-data-container>
 
       <div class="next-button-container">
-        <button
-          class="margin"
-          mat-raised-button
+        <button class="margin" mat-raised-button
           color="primary"
-          (click)="router.navigateByUrl('/inspection')"
-        >
-          Nästa steg
+          (click)="router.navigateByUrl('/destination')">
+            Nästa steg
         </button>
       </div>
     </div>
@@ -50,8 +45,7 @@
       <mat-nav-list style="margin-right: 5%; padding-top: 0">
         <mat-list-item
           (click)="selectCategory(null)"
-          [style.background-color]="getTitleSelected()"
-        >
+          [style.background-color]="getTitleSelected()">
           <h2>{{ title }}</h2>
         </mat-list-item>
 
@@ -60,8 +54,7 @@
         <div *ngFor="let category of getUserCategories()">
           <mat-list-item
             (click)="selectCategory(category)"
-            [style.background-color]="getBackgroundColor(category)"
-          >
+            [style.background-color]="getBackgroundColor(category)">
             <img class="sidebar-icon" [src]="getCategoryIcon(category)" />
             {{ getCategoryLabel(category) }}
           </mat-list-item>

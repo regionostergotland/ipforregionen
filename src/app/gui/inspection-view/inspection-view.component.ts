@@ -19,13 +19,16 @@ export class InspectionViewComponent implements OnInit {
 
   dataSent = false;
   receipt: CompositionReceipt;
+  destination: string;
 
   constructor(
     public router: Router,
     private cfg: ConfigService,
     private snackBar: MatSnackBar,
     private conveyor: Conveyor,
-  ) {}
+  ) {
+    this.destination = this.conveyor.getDestination();
+  }
 
   ngOnInit() {
     this.dataSent = false;

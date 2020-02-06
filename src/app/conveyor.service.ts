@@ -16,6 +16,7 @@ import { DummyPlatformService } from './platform/dummy.service';
 export class Conveyor {
   private readonly platforms: Map<string, Platform>;
   private categories: Map<string, DataList>;
+  private destination: string;
 
   constructor(
     private ehrService: EhrService,
@@ -116,5 +117,13 @@ export class Conveyor {
       Array.from(this.categories.values())
     );
     return this.ehrService.sendComposition(composition);
+  }
+
+  public getDestination(): string {
+    return this.destination;
+  }
+
+  public setDestination(destination: string) {
+    this.destination = destination;
   }
 }
