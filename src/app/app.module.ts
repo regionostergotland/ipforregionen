@@ -83,7 +83,9 @@ import {
 
 /* Destination */
 import {
-  DestinationViewComponent
+  DestinationViewComponent,
+  NewDestinationDialog,
+  NewAlertDialog
 } from './gui/destination-view/destination-view.component';
 
 /* Common components */
@@ -121,6 +123,8 @@ import { CustomGoogleApiModule } from './google-fit-config';
     BottomSheetCategoriesComponent,
     AddNewDataModalComponent,
     DestinationViewComponent,
+    NewDestinationDialog,
+    NewAlertDialog
   ],
   imports: [
     DataViewerModule,
@@ -181,11 +185,13 @@ import { CustomGoogleApiModule } from './google-fit-config';
     AppRoutingModule,
     HttpClientModule,
     CustomGoogleApiModule,
-    DataViewerModule,
+    DataViewerModule
   ],
   entryComponents: [
     BottomSheetCategoriesComponent,
-    AddNewDataModalComponent
+    AddNewDataModalComponent,
+    NewDestinationDialog,
+    NewAlertDialog
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' },

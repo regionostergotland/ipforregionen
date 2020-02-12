@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Lagg till ny destination</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Namn</mat-label>
+    <input matInput [(ngModel)]="data.dest_name">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>URL</mat-label>
+    <input matInput [(ngModel)]="data.dest_url">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="data">
+    Ok
+  </button>
+</div>

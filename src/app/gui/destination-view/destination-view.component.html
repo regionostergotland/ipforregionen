@@ -8,12 +8,22 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-list role="list">
-      	<mat-list-item role="listitem" *ngFor="let destination of Destinations; let i = index; let lastitem = last">
+      	<mat-list-item role="listitem" *ngFor="let destination of destination_names; let i = index; let lastitem = last">
       		<mat-radio-button color="primary" [value]="destination" (change)="selection = $event.value">
       			{{destination}}
-            <mat-divider *ngIf="!lastitem"></mat-divider>
       		</mat-radio-button>
+          <button mat-icon-button class="trash" (click)="openAlert(i)">
+            <img src="{{assetUrl}}/flaticon/trashcan.svg" style="max-height: 100%; width: auto;" stroke="red" fill="red"/>
+          </button>
+          <mat-divider *ngIf="!lastitem"></mat-divider>
       	</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem">
+          <button mat-stroked-button color="secondary"
+            class="add-button" (click)="openModal()">
+            + Lagg till destination
+          </button>
+        </mat-list-item>
       </mat-list>
     </mat-expansion-panel>
   </div>

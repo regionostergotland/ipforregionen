@@ -3,7 +3,7 @@ table {
 }
 
 button {
-  margin: 20px 20px;
+    margin: 20px 20px;
 }
 
 .center {
@@ -26,4 +26,15 @@ button {
 
 .mat-snack-bar-container {
     background-color: '#B00' !important;
+}
+
+.add-button {
+    margin-left: 0px;
+}
+
+.trash {
+  max-height: 50%;
+  width: auto;
+  position: absolute;
+  right: 0;
 }

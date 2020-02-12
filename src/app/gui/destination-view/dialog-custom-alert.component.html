@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>Är du säker?</h1>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="yeet">
+    Ok
+  </button>
+</div>
