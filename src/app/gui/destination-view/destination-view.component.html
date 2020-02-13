@@ -12,7 +12,10 @@
       		<mat-radio-button color="primary" [value]="destination" (change)="selection = $event.value">
       			{{destination}}
       		</mat-radio-button>
-          <button mat-icon-button class="trash" (click)="openAlert(i)">
+          <button mat-icon-button
+            class="trash"
+            (click)="openAlert(i)"
+            *ngIf="i !== 0">
             <img src="{{assetUrl}}/flaticon/trashcan.svg" style="max-height: 100%; width: auto;" stroke="red" fill="red"/>
           </button>
           <mat-divider *ngIf="!lastitem"></mat-divider>
@@ -35,8 +38,8 @@
     </button>
     <div class="next-button-container">
       <button mat-raised-button color="primary"
-        (click)="yeet(selection)"
-        ng-disabled="false">
+        (click)="continue(selection)"
+        [disabled]="selection === 'Välj destination...'">
           Välj destination och gå vidare
       </button>
     </div>

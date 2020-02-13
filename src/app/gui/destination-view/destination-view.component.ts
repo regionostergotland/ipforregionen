@@ -1,18 +1,39 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/config.service';
 import { Conveyor } from 'src/app/conveyor.service';
+
 import {
-  MatDialog, MatDialogRef, MAT_DIALOG_DATA
-} from '@angular/material/dialog';
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  ErrorStateMatcher
+} from '@angular/material';
+
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators
+} from '@angular/forms';
 
 export interface DialogData {
   dest_name: string;
   dest_url: string;
 }
 
-export interface YesNo {
-  yes: boolean;
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    return !!(control && control.invalid);
+  }
 }
 
 @Component({
@@ -40,17 +61,60 @@ export class DestinationViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!!localStorage.getItem('destination_names')) {
+      let names = localStorage.getItem('destination_names');
+      this.destination_names = this.destination_names.concat(JSON.parse(names));
+    }
+
+    if (!!localStorage.getItem('destination_urls')) {
+      let urls = localStorage.getItem('destination_urls');
+      this.destination_urls = this.destination_urls.concat(JSON.parse(urls));
+    }
   }
 
-  yeet(destination: string) {
+  continue(destination: string) {
     this.conveyor.setDestination(destination);
     this.router.navigateByUrl('/inspection');
   }
-/*
-  deleteDest(i: num) {
-    this.destination_names.splice(i,1);
-    this.destination_urls.splice(i,1);
-  }*/
+
+  addToLocalStorage(name: string, url: string) {
+    let names;
+    let urls;
+    if (!!localStorage.getItem('destination_names')) {
+      names = JSON.parse(localStorage.getItem('destination_names'));
+    } else {
+      names = new Array();
+    }
+
+    if (!!localStorage.getItem('destination_urls')) {
+      urls = JSON.parse(localStorage.getItem('destination_urls'));
+    } else {
+      urls = new Array();
+    }
+    names.push(name);
+    urls.push(url);
+
+    localStorage.setItem('destination_names', JSON.stringify(names));
+    localStorage.setItem('destination_urls', JSON.stringify(urls));
+  }
+
+  deleteFromLocalstorage(index: number) {
+    let names;
+    let urls;
+    if (!!localStorage.getItem('destination_names')) {
+      names = JSON.parse(localStorage.getItem('destination_names'));
+    }
+
+    if (!!localStorage.getItem('destination_urls')) {
+      urls = JSON.parse(localStorage.getItem('destination_urls'));
+    }
+
+    names.splice((index-1), 1);
+    urls.splice((index-1), 1);
+
+    localStorage.setItem('destination_names', JSON.stringify(names));
+    localStorage.setItem('destination_urls', JSON.stringify(urls));
+  }
 
   openModal(): void {
     const dialogRef = this.dialog.open(NewDestinationDialog, {
@@ -60,6 +124,7 @@ export class DestinationViewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.addToLocalStorage(result.dest_name,result.dest_url);
         this.destination_names.push(result.dest_name);
         this.destination_urls.push(result.dest_url);
       }
@@ -72,8 +137,8 @@ export class DestinationViewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if (result) {
+      if (result.delete) {
+        this.deleteFromLocalstorage(i);
         this.destination_names.splice(i,1);
         this.destination_urls.splice(i,1);
       }
@@ -88,10 +153,13 @@ export class DestinationViewComponent implements OnInit {
 })
 
 export class NewDestinationDialog {
+  destinationFormControl: Map<string, FormControl>;
 
   constructor(
     public dialogRef: MatDialogRef<NewDestinationDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.destinationFormControl = new Map<string, FormControl>();
+    }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -99,6 +167,17 @@ export class NewDestinationDialog {
 
   addNewDest(): void {
     this.dialogRef.close();
+  }
+
+  getFormControl(key: string): FormControl {
+    if (!this.destinationFormControl.has(key)) {
+      this.destinationFormControl.set(
+        key,
+        new FormControl('',
+        [Validators.required])
+      );
+    }
+    return this.destinationFormControl.get(key)
   }
 }
 

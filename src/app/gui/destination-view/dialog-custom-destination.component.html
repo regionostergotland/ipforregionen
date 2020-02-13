@@ -2,16 +2,27 @@
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Namn</mat-label>
-    <input matInput [(ngModel)]="data.dest_name">
+    <input matInput #name
+      [(ngModel)]="data.dest_name"
+      [formControl]="getFormControl(name)"
+      [errorStateMatcher]="matcher">
+    <mat-error>Värde saknas</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>URL</mat-label>
-    <input matInput [(ngModel)]="data.dest_url">
+    <input matInput #url
+      [(ngModel)]="data.dest_url"
+      [formControl]="getFormControl(url)"
+      [errorStateMatcher]="matcher">
+    <mat-error>Värde saknas</mat-error>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button cdkFocusInitial [mat-dialog-close]="data">
+  <button mat-button
+    cdkFocusInitial
+    [mat-dialog-close]="data"
+    [disabled]="url.value === '' || name.value === ''">
     Ok
   </button>
 </div>
