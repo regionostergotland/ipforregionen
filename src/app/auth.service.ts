@@ -281,6 +281,7 @@ export class AuthService {
         params,
         headers: hs
       };
+      console.log(options);
       return this.http.post<T>(url, body, options);
     }));
   }
@@ -289,8 +290,8 @@ export class AuthService {
    * User has authenticated and pnr, ehrId, subjectId are valid.
    */
   public isAuthenticated(): boolean {
-    return true;
-    // return this.authorized;
+    // return true;
+    return this.authorized;
   }
 
   /**

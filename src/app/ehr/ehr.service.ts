@@ -120,7 +120,7 @@ export class EhrService {
         }
       }
     }
-
+    console.log(composition);
     return composition;
   }
 
