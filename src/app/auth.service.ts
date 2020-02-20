@@ -95,15 +95,17 @@ export class AuthService {
       authObs = this.at.getToken();
       break;
     }
-
-    return authObs.pipe(map((authValue: string) =>
-      new HttpHeaders({
-        Authorization: authValue,
-        /* disable cache to prevent unauthorized calls from succeeding */
-        'Cache-Control': 'no-cache',
-        Pragma: 'no-cache',
-      })
-    ));
+    return new HttpHeaders({
+      'Cache-Control': 'no-cache'
+    });
+    // return authObs.pipe(map((authValue: string) =>
+    //   new HttpHeaders({
+    //     Authorization: authValue,
+    //     /* disable cache to prevent unauthorized calls from succeeding */
+    //     'Cache-Control': 'no-cache',
+    //     Pragma: 'no-cache',
+    //   })
+    // ));
   }
 
   /**
@@ -276,7 +278,9 @@ export class AuthService {
   public postAuthenticated<T>(call: string, body = {},
                               params: HttpParams = null): Observable<T> {
     return this.headers().pipe(concatMap(hs => {
-      const url = this.cfg.getEhrBaseUrl() + call;
+      const url = this.cfg.getEhrBaseUrl();
+      console.log(url);
+      // const url = this.cfg.getEhrBaseUrl() + call;
       const options = {
         params,
         headers: hs
@@ -290,8 +294,8 @@ export class AuthService {
    * User has authenticated and pnr, ehrId, subjectId are valid.
    */
   public isAuthenticated(): boolean {
-    // return true;
-    return this.authorized;
+    return true;
+    // return this.authorized;
   }
 
   /**

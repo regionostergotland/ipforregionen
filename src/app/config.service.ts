@@ -63,7 +63,7 @@ export class ConfigService {
   private assetUrl = 'assets/';
   private authMethod: AuthenticationMethod = AuthenticationMethod.BASIC;
 
-  private ehrBaseUrl = 'https://rest.ehrscape.com/rest/v1/';
+  private ehrBaseUrl = 'https://firebasestorage.googleapis.com/v0/b/personal-health-record-c7ebb.appspot.com/o/';
   private ehrTemplateId = 'self-reporting';
   private ehrNamespace = 'default';
 
