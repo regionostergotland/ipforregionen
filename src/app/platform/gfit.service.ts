@@ -35,7 +35,7 @@ export class GfitService extends Platform {
       [CommonFields.TIME,
       src => new Date(src.startTimeNanos * Math.pow(10, -6))],
       // split(':')[4] will yield the device uid from google's data
-      // [0] is device name, [1] is device type, [2] is device manufacturer
+      // [0] is device name, [1] is device type, [2] is device manufacturer 
       [MedicalDevice.NAME, src =>
         this.getDeviceInfo(src.originDataSourceId.split(':')[4])[0]],
       [MedicalDevice.TYPE, src =>
@@ -174,10 +174,11 @@ export class GfitService extends Platform {
       return this.http.get(
         this.baseUrl + '?access_token=' + this.getToken()).pipe(map(res => {
           const activities: any = res;
-          activities.dataSource.forEach(source => {
+            activities.dataSource.forEach(source => {
+                console.log(source.dataType.name);
             // Might want to check if last index contains the string 'merge'
             // instead?
-            if (source.dataStreamId.split(':')[0] === 'derived') {
+           // if (source.dataStreamId.split(':')[0] === 'derived') {
               const categoryId: string = this.categoryDataTypeNames
                 .get(source.dataType.name);
               if (source.device) {
@@ -186,7 +187,7 @@ export class GfitService extends Platform {
               if (this.isImplemented(categoryId) &&
                   !this.available.includes(categoryId)) {
                 this.available.push(categoryId);
-              }
+              //}
             }
           });
           return this.available;
