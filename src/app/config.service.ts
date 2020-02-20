@@ -63,7 +63,8 @@ export class ConfigService {
   private assetUrl = 'assets/';
   private authMethod: AuthenticationMethod = AuthenticationMethod.BASIC;
 
-  private ehrBaseUrl = 'https://firebasestorage.googleapis.com/v0/b/personal-health-record-c7ebb.appspot.com/o/';
+  private ehrBaseUrl = 'https://rest.ehrscape.com/rest/v1/';
+  private firebaseUrl = 'https://personal-health-record-c7ebb.firebaseio.com/'
   private ehrTemplateId = 'self-reporting';
   private ehrNamespace = 'default';
 
@@ -92,6 +93,7 @@ export class ConfigService {
   public getAuthMethod(): AuthenticationMethod { return this.authMethod; }
 
   public getEhrBaseUrl(): string { return this.ehrBaseUrl; }
+  public getFirebaseUrl(): string { return this.firebaseUrl ;}
   public getEhrTemplateId(): string { return this.ehrTemplateId; }
   public getEhrNamespace(): string { return this.ehrNamespace; }
 

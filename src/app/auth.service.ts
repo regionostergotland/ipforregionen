@@ -95,17 +95,15 @@ export class AuthService {
       authObs = this.at.getToken();
       break;
     }
-    return new HttpHeaders({
-      'Cache-Control': 'no-cache'
-    });
-    // return authObs.pipe(map((authValue: string) =>
-    //   new HttpHeaders({
-    //     Authorization: authValue,
-    //     /* disable cache to prevent unauthorized calls from succeeding */
-    //     'Cache-Control': 'no-cache',
-    //     Pragma: 'no-cache',
-    //   })
-    // ));
+
+    return authObs.pipe(map((authValue: string) =>
+      new HttpHeaders({
+        Authorization: authValue,
+        /* disable cache to prevent unauthorized calls from succeeding */
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+      })
+    ));
   }
 
   /**
@@ -278,14 +276,14 @@ export class AuthService {
   public postAuthenticated<T>(call: string, body = {},
                               params: HttpParams = null): Observable<T> {
     return this.headers().pipe(concatMap(hs => {
-      const url = this.cfg.getEhrBaseUrl();
+      const url = this.cfg.getFirebaseUrl() + 'PHR/test.json';
       console.log(url);
       // const url = this.cfg.getEhrBaseUrl() + call;
       const options = {
         params,
         headers: hs
       };
-      console.log(options);
+      console.log(typeof(body));
       return this.http.post<T>(url, body, options);
     }));
   }
