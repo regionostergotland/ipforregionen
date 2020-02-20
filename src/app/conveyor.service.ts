@@ -17,6 +17,7 @@ export class Conveyor {
   private readonly platforms: Map<string, Platform>;
   private categories: Map<string, DataList>;
   private destination: string;
+  private destinationUrl: string;
 
   constructor(
     private ehrService: EhrService,
@@ -116,7 +117,7 @@ export class Conveyor {
     const composition = this.ehrService.createComposition(
       Array.from(this.categories.values())
     );
-    return this.ehrService.sendComposition(composition);
+    return this.ehrService.sendComposition(composition, this.destinationUrl);
   }
 
   public getDestination(): string {
@@ -125,5 +126,13 @@ export class Conveyor {
 
   public setDestination(destination: string) {
     this.destination = destination;
+  }
+
+  public getDestinationUrl(): string {
+    return this.destinationUrl;
+  }
+
+  public setDestinationUrl(destination: string) {
+    this.destinationUrl = destination;
   }
 }

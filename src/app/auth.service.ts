@@ -273,17 +273,14 @@ export class AuthService {
    * @param params HttpParams object
    * @param body JSON object to send as body
    */
-  public postAuthenticated<T>(call: string, body = {},
+  public postAuthenticated<T>(call: string, body = {}, baseUrl: string,
                               params: HttpParams = null): Observable<T> {
     return this.headers().pipe(concatMap(hs => {
-      const url = this.cfg.getFirebaseUrl() + 'PHR/test.json';
-      console.log(url);
-      // const url = this.cfg.getEhrBaseUrl() + call;
+      const url = baseUrl + call;
       const options = {
         params,
         headers: hs
       };
-      console.log(typeof(body));
       return this.http.post<T>(url, body, options);
     }));
   }

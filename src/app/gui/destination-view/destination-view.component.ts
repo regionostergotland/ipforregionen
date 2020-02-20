@@ -44,7 +44,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class DestinationViewComponent implements OnInit {
 
   destination_names: string[] = ['Region Ostergotland'];
-  destination_urls: string[] = ['http://regionen.se'];
+  destination_urls: string[] = ['https://rest.ehrscape.com/rest/v1/'];
   assetUrl: string;
   defaultText: string = "Välj destination...";
   selection: string = this.defaultText;
@@ -73,7 +73,10 @@ export class DestinationViewComponent implements OnInit {
   }
 
   continue(destination: string) {
+    let index = this.destination_names.indexOf(destination);
+    let url = this.destination_urls[index];
     this.conveyor.setDestination(destination);
+    this.conveyor.setDestinationUrl(url);
     this.router.navigateByUrl('/inspection');
   }
 

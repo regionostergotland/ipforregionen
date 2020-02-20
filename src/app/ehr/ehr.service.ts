@@ -57,14 +57,23 @@ export class EhrService {
    * ehrID.
    * @returns composition UID of the created composition
    */
-  private postComposition(ehrId: any, composition: {}):
+  private postComposition(ehrId: any, composition: {}, baseUrl: string):
       Observable<CompositionResponse> {
     const params = new HttpParams()
       .set('ehrId', ehrId)
       .set('templateId', this.cfg.getEhrTemplateId())
       .set('format', 'STRUCTURED');
+    let call = 'composition';
+    /*
+     * Firebase url needs to end with .json
+     * Other databases might not need it
+     * Check if universal fix is possible
+     */
+    if (baseUrl.includes('firebase')) {
+      call += '.json';
+    }
     return this.auth.postAuthenticated<CompositionResponse>(
-      'composition', composition, params
+      call, composition, baseUrl, params
     );
   }
 
@@ -128,7 +137,8 @@ export class EhrService {
    * Send a composition to the EHR of individual with given configured pnr.
    * @param composition Composition created using createComposition method
    */
-  public sendComposition(composition: {}): Observable<CompositionReceipt> {
+  public sendComposition(composition: {},
+                baseUrl: string): Observable<CompositionReceipt> {
     const pnr = this.auth.getUser().pnr;
     const receipt: CompositionReceipt = {
       pnr,
@@ -137,7 +147,7 @@ export class EhrService {
       ehrId: '',
       compUid: '',
     };
-    return this.postComposition(this.auth.getUser().ehrId, composition)
+    return this.postComposition(this.auth.getUser().ehrId, composition, baseUrl)
       .pipe(map((res: CompositionResponse) => {
           receipt.compUid = res.compositionUid;
           return receipt;
