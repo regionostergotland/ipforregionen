@@ -34,6 +34,24 @@
             "es5BrowserSupport": true
           },
           "configurations": {
+            "sv" : {
+              "aot" : true,
+              "i18nFile" : "src/translate/messages.sv.xlf",
+              "i18nFormat" : "xlf",
+              "i18nLocale" : "sv",
+              "i18nMissingTranslation" : "missing translation" },
+            "es" : {
+              "aot" : true,
+              "i18nFile" : "src/translate/messages.es.xlf",
+              "i18nFormat" : "xlf",
+              "i18nLocale" : "es",
+              "i18nMissingTranslation" : "missing translation" },
+            "en" : {
+                "aot" : true,
+                "i18nFile" : "src/translate/messages.en.xlf",
+                "i18nFormat" : "xlf",
+                "i18nLocale" : "en",
+                "i18nMissingTranslation" : "missing translation" },
             "production": {
               "fileReplacements": [
                 {
@@ -58,6 +76,7 @@
                 }
               ]
             }
+
           }
         },
         "serve": {
@@ -66,6 +85,9 @@
             "browserTarget": "wwv:build"
           },
           "configurations": {
+            "sv" : { "browserTarget" : "wwv:build:sv"},
+            "es" : { "browserTarget" : "wwv:build:es"},
+            "en" : { "browserTarget" : "wwv:build:en"},
             "production": {
               "browserTarget": "wwv:build:production"
             }
