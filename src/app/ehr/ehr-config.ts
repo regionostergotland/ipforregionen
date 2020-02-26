@@ -11,7 +11,11 @@ export enum Categories {
   BODY_WEIGHT = 'body_weight',
   HEIGHT = 'height_length',
   HEART_RATE = 'pulse_heart_beat',
-  STEPS = 'steps'
+  STEPS = 'steps',
+  CYCLING = 'cycling',
+  WORKOUT = 'workout',
+  OXYGEN_SATURATION = 'pulse_oximetry',
+  MEAL = 'meal'
 }
 
 export enum SubTrees {
@@ -52,6 +56,26 @@ export enum HeartRate {
 
 export enum Steps {
   STEPS = 'steps'
+}
+
+export enum Cycling {
+  DISTANCE = 'distance',
+  DURATION = 'duration'
+}
+
+export enum Workout {
+  DURATION = 'duration',
+  TYPE = 'type',
+  INTENSITY = 'intensity'
+}
+
+export enum OxygenSaturation {
+  SATURATION = 'saturation',
+  EXERTION = 'exertion'
+}
+
+export enum Meal {
+  CALORIES = 'calories'
 }
 
 const TimeField: [string, DataType] = [
@@ -314,8 +338,6 @@ export const ehrConfig: EhrConfig = {
         ],
       )
     },
-
-
     {
       id : Categories.HEART_RATE,
       label : 'Puls/Hjärtfrekvens',
@@ -372,6 +394,191 @@ export const ehrConfig: EhrConfig = {
         DeviceNameField,
         DeviceTypeField,
         DeviceManufacturerField,
+      ])
+    },
+    {
+      id : Categories.CYCLING,
+      label : 'Cykling',
+      description : `Loggar cykling.`,
+      dataTypes : new Map<string, DataType>([
+        TimeField,
+        [
+          Cycling.DISTANCE,
+          new DataTypeQuantity(
+            {
+              path: [SubTrees.EVENT],
+              label: 'Avstånd (km)',
+              description: 'Avstånd cyklat i Km.',
+              required: true,
+              single: false,
+              visible: true,
+              visibleOnMobile: true,
+            }, 'km', 0, -1
+          )
+        ],
+        [
+          Cycling.DURATION,
+          new DataTypeQuantity(
+            {
+              path: [SubTrees.EVENT],
+              label: 'Tidsåtgång (min)',
+              description: 'Hur lång tid tog turen.',
+              required: true,
+              single: false,
+              visible: true,
+              visibleOnMobile: true,
+            }, 'min', 0, -1
+          )
+        ],
+        CommentField,
+      ])
+    },
+    {
+      id : Categories.WORKOUT,
+      label : 'Träning',
+      description : `Loggar träningstillfälle.`,
+      dataTypes : new Map<string, DataType>([
+        TimeField,
+        [
+          Workout.DURATION,
+          new DataTypeQuantity(
+            {
+              path: [SubTrees.EVENT],
+              label: 'Tidsåtgång (min)',
+              description: 'Hur lång tid tog turen.',
+              required: true,
+              single: false,
+              visible: true,
+              visibleOnMobile: true,
+            }, 'min', 0, -1
+          )
+        ],
+        [
+          Workout.TYPE,
+          new DataTypeText(
+            {
+              path: [SubTrees.EVENT],
+              label: 'Träningstyp',
+              description: `Vilken sorts träning?`,
+              required: true,
+              single: false,
+              visible: true,
+              visibleOnMobile: true,
+            }
+          )
+        ],
+        [
+          Workout.INTENSITY,
+          new DataTypeCodedText(
+            {
+              path: [SubTrees.EVENT],
+              label: 'Intensitet',
+              description: 'Upplevd intensitet under träning.',
+              required: false,
+              single: false,
+              visible: true,
+              visibleOnMobile: true,
+            },
+            [
+              {
+                code: 'at0012',
+                label: 'Lätt',
+                description: 'Lättare fysisk aktivitet.',
+              },
+              {
+                code: 'at0013',
+                label: 'Medeltung',
+                description: 'Medeltung fysisk aktivitet.',
+              },
+              {
+                code: 'at0014',
+                label: 'Tung',
+                description: 'Utmanande fysisk aktivitet.',
+              },
+              {
+                code: 'at0015',
+                label: 'Extremt tung',
+                description: 'Extremt utmanande fysisk aktivitet.',
+              }
+            ]
+          )
+        ],
+        CommentField,
+      ])
+    },
+    {
+      id : Categories.OXYGEN_SATURATION,
+      label : 'Syresättning',
+      description : 'Mäter syresättning i blodet.',
+      dataTypes : new Map<string, DataType>([
+        TimeField,
+        [
+          OxygenSaturation.SATURATION,
+          new DataTypeQuantity(
+            {
+              path: [SubTrees.EVENT],
+              label: 'Syresättning',
+              description: 'Blodets syresättning mätt i SpO2.',
+              required: true,
+              single: false,
+              visible: true,
+              visibleOnMobile: true,
+            }, 'SpO2', 0, 100
+          )
+        ],
+        [
+          OxygenSaturation.EXERTION,
+          new DataTypeCodedText(
+            {
+              path: [SubTrees.EVENT],
+              label: 'Anstrangningsniva',
+              description: 'Vilken fysisk anstrangningsniva?',
+              required: true,
+              single: true,
+              visible: true,
+              visibleOnMobile: true,
+            },
+            [
+              {
+                code: 'at0006',
+                label: 'Vila',
+                description: 'Mat syresättning under vila.',
+              },
+              {
+                code: 'at0008',
+                label: 'Efter fysisk aktivitet',
+                description: 'Mat syresättning efter fysisk aktivitet.',
+              }
+            ]
+          )
+        ],
+        CommentField,
+        DeviceNameField,
+        DeviceTypeField,
+        DeviceManufacturerField
+      ])
+    },
+    {
+      id : Categories.MEAL,
+      label : 'Maltid',
+      description : 'Antal kallorier i en maltid.',
+      dataTypes : new Map<string, DataType>([
+        TimeField,
+        [
+          Meal.CALORIES,
+          new DataTypeQuantity(
+            {
+              path: [SubTrees.EVENT],
+              label: 'Maltid',
+              description: 'Antal kallorier i en maltid.',
+              required: true,
+              single: false,
+              visible: true,
+              visibleOnMobile: true,
+            }, 'kcal', 0, 10000
+          )
+        ],
+        CommentField,
       ])
     }
   ]

@@ -84,6 +84,7 @@ export class InspectionViewComponent implements OnInit {
           this.conveyor.clearData();
         },
         e => {
+          console.log(e);
           if (this.cfg.getIsDebug()) { console.log(e); }
           this.snackBar.open(
             'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', 'OK',

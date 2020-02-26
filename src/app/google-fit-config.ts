@@ -19,10 +19,8 @@ const gapiClientConfig: NgGapiClientConfig = {
     ],
     scope: [
       'https://www.googleapis.com/auth/fitness.blood_pressure.read',
-        'https://www.googleapis.com/auth/fitness.body.read',
-        'https://www.googleapis.com/auth/fitness.activity.read'
-
-
+      'https://www.googleapis.com/auth/fitness.body.read',
+      'https://www.googleapis.com/auth/fitness.activity.read'
     ].join(' ')
 };
 
@@ -33,4 +31,3 @@ const CustomGoogleApiModule = GoogleApiModule.forRoot({
 });
 
 export { CustomGoogleApiModule, GoogleApiService, GoogleAuthService };
-
