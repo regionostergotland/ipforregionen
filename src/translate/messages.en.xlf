@@ -18,6 +18,58 @@
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="logInTitle" datatype="html">
+        <source>Logga in</source>
+        <target>Log in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/gui/login/login.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pnrLabel" datatype="html">
+        <source>Personnummer:</source>
+        <target>SS Number:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/gui/login/login.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="userLabel" datatype="html">
+        <source>Användare:</source>
+        <target>Username:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/gui/login/login.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordLabel" datatype="html">
+        <source>Lösenord:</source>
+          <target>Password:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/gui/login/login.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="logInButton" datatype="html">
+        <source>
+    Logga in
+  </source>
+  <target>Log in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/gui/login/login.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="logInButtonBankId" datatype="html">
+        <source>
+    Logga in med BankId
+  </source>
+  <target>Log in with BankId</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/gui/login/login.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,13 +1,13 @@
-<h1>Logga in</h1>
+<h1 i18n="@@logInTitle">Logga in</h1>
 
 <div *ngIf="method===AuthenticationMethod.BASIC">
   <div class="auth-form">
-    <label>Personnummer:</label> <input #pnr />
-    <label>Användare:</label> <input #username />
-    <label>Lösenord:</label> <input type="password" #password />
+    <label i18n="@@pnrLabel">Personnummer:</label> <input #pnr />
+    <label i18n="@@userLabel">Användare:</label> <input #username />
+    <label i18n="@@passwordLabel">Lösenord:</label> <input type="password" #password />
   </div>
 
-  <button
+  <button i18n="@@logInButton"
     mat-raised-button
     color="primary"
     (click)="basic(username.value, password.value, pnr.value)">
@@ -16,7 +16,7 @@
 </div>
 
 <div *ngIf="method===AuthenticationMethod.ASSISTED_TOKEN">
-  <button
+  <button i18n="@@logInButtonBankId"
       mat-raised-button
       color="primary"
       (click)="assistedToken()"
