@@ -101,6 +101,12 @@ import { ToolbarComponent } from './gui/toolbar/toolbar.component';
 /* Google Fit configuration */
 import { CustomGoogleApiModule } from './google-fit-config';
 
+/* Localization settings */
+import { LanguageSelectComponent } from './gui/language-select/language-select.component';
+import { registerLocaleData } from '@angular/common';
+import localeSv from '@angular/common/locales/sv';
+
+registerLocaleData(localeSv, 'sv');
 
 @NgModule({
   declarations: [
@@ -124,7 +130,8 @@ import { CustomGoogleApiModule } from './google-fit-config';
     AddNewDataModalComponent,
     DestinationViewComponent,
     NewDestinationDialog,
-    NewAlertDialog
+    NewAlertDialog,
+    LanguageSelectComponent,
   ],
   imports: [
     DataViewerModule,

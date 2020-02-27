@@ -15,4 +15,15 @@ html, body {
     width: 100%;
     height: 20px;
     background-color: #efefef;
+  }
+
+.button {
+  background-color: darkslateblue;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  width: 10%;
+  margin: 5px;
+  text-decoration: none;
+  cursor: pointer;
 }
