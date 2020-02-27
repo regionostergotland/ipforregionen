@@ -157,6 +157,7 @@ export class DestinationViewComponent implements OnInit {
 
 export class NewDestinationDialog {
   destinationFormControl: Map<string, FormControl>;
+  matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     public dialogRef: MatDialogRef<NewDestinationDialog>,
