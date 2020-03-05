@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { registerLocaleData } from '@angular/common';
 import localeSv from '@angular/common/locales/sv';
+import { i18n } from '@angular/core/src/render3';
 registerLocaleData(localeSv, 'sv');
 
 @Component({
@@ -18,21 +19,33 @@ export class LanguageSelectComponent implements OnInit {
     { code: 'es', label: 'ES'}
   ];
   constructor(@Inject(LOCALE_ID)
-  protected localeId: string,
+  public localeId: string,
   private route: ActivatedRoute,
   public router: Router)
   {
-    console.log('locale', localeId);
+    this.getLocale();
+    console.log('language-select router locale', localeId);
   }
 
   setLocale(languageCode: string) {
     this.localeId = languageCode;
     console.log('language', languageCode);
+    localStorage.setItem('language', JSON.stringify(languageCode));
     window.location.reload(true);
   }
 
+  // TODO: Få denna att fungera. Just nu kan man hämta sparat språk från local storage men inte
+  // 'tvinga' appen att använde den som locale. Pipelines?
+
+  //TODO: Ta reda på var en-US kommer ifrån och få appen att sluta med det.
   getLocale() {
-    return this.localeId;
+    if(JSON.parse(localStorage.getItem('language')) === null){
+      this.localeId = 'sv';
+    }
+    else{
+      this.localeId = JSON.parse(localStorage.getItem('language'));
+    }
+    console.log('language-select getLocale() language', this.localeId);
   }
 
   ngOnInit() {}

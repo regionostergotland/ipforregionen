@@ -13,6 +13,6 @@ export class AppComponent {
     { code: 'es', label: 'ES'}
   ];
   constructor(@Inject(LOCALE_ID) protected localeId: string) {
-    console.log('locale', localeId);
+    console.log('app.component locale', localeId);
   }
 }
