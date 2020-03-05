@@ -107,6 +107,9 @@ import { CustomGoogleApiModule } from './google-fit-config';
 /* Localization settings */
 import { LanguageSelectComponent } from './gui/language-select/language-select.component';
 
+/* Bluetooth Configuration */
+import { BluetoothSourceComponent } from './gui/bluetooth-source/bluetooth-source.component';
+
 
 @NgModule({
   declarations: [
@@ -132,6 +135,7 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     NewDestinationDialog,
     NewAlertDialog,
     LanguageSelectComponent,
+    BluetoothSourceComponent,
   ],
   imports: [
     DataViewerModule,
@@ -199,7 +203,8 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     AddNewDataModalComponent,
     NewDestinationDialog,
     NewAlertDialog,
-    LanguageSelectComponent
+    LanguageSelectComponent,
+    BluetoothSourceComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' }
