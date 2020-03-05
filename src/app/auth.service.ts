@@ -161,7 +161,7 @@ export class AuthService {
   }
 
   /*
-   * Get party / patient by personal identity number (personnummer).
+   * Get party / patient by personal identity numberestination, (personnummer).
    */
   private fetchParty(pnr: string): Observable<Party> {
     const params: HttpParams = new HttpParams().set('Personnummer', pnr);
@@ -289,8 +289,8 @@ export class AuthService {
    * User has authenticated and pnr, ehrId, subjectId are valid.
    */
   public isAuthenticated(): boolean {
-    // return true;
-    return this.authorized;
+    return true;
+    //return this.authorized;
   }
 
   /**

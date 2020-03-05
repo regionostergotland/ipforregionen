@@ -43,7 +43,10 @@ import {
   MatFormFieldModule,
   MatTableModule,
 } from '@angular/material';
+
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { LOCALE_ID } from '@angular/core';
+
 import { AmazingTimePickerModule } from 'amazing-time-picker';
 
 /* Main component */
@@ -103,10 +106,7 @@ import { CustomGoogleApiModule } from './google-fit-config';
 
 /* Localization settings */
 import { LanguageSelectComponent } from './gui/language-select/language-select.component';
-import { registerLocaleData } from '@angular/common';
-import localeSv from '@angular/common/locales/sv';
 
-registerLocaleData(localeSv, 'sv');
 
 @NgModule({
   declarations: [
@@ -198,10 +198,11 @@ registerLocaleData(localeSv, 'sv');
     BottomSheetCategoriesComponent,
     AddNewDataModalComponent,
     NewDestinationDialog,
-    NewAlertDialog
+    NewAlertDialog,
+    LanguageSelectComponent
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' },
+    { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' }
   ],
   bootstrap: [AppComponent],
 })

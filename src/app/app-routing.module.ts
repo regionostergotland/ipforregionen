@@ -1,4 +1,4 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, LOCALE_ID } from '@angular/core';
 import {
   Router, RouterModule, Routes,
   CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot

@@ -1,4 +1,8 @@
 <ng-container *ngFor="let language of languageList">
   <! --languageList defined in app.component.ts -->
-  <a href="/{{language.code}}/"><button class="button">{{language.label}}</button></a>
+    <button
+      class="button"
+      (click)="setLocale(language.code)">
+      {{language.label}}
+    </button>
 </ng-container>
