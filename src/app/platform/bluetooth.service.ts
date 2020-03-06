@@ -34,32 +34,47 @@ export class BluetoothService extends Platform {
   * Attempts to pair with a Bluetooth device
   */
   public async signIn() {
-    console.log('Requesting Bluetooth Device ...');
-    (window.navigator as any).bluetooth.requestDevice({
-      // a filter can be applied here instead
-      acceptAllDevices: true,
-      optionalServices: ['generic_access']
-    })
-    .then(device => {
-      console.log('> Name:             ' + device.name);
-      console.log('> Id:               ' + device.id);
-      console.log('Connecting to GATT Server ...');
-      return device.gatt.connect();
-    })
-    .then(service => {
-      console.log('Getting Characteristics ...');
-      return service.getCharacteristics();
-    })
-    .then(characteristics => {
-      console.log('> Characteristics: ' +
-        characteristics.map(c => c.uuid).join('\n' + ''.repeat(19)));
-    })
-    .catch(error => {
-      console.log('That did not work! ' + error);
-    });
+    this.pair();
   }
 
-  private pairSuccessHandler(){}
+  public async pair() {
+    // this can be made into a selector later for different devices
+    let serviceUuid = ["pulse_oximeter"];
+    try {
+      console.log('Requesting Bluetooth Device ...')
+      const device = await (window.navigator as any).bluetooth.requestDevice({
+        // Filters to limit the pairing options showed
+        filters: [{services: serviceUuid }],
+        optionalServices: ['generic_access']
+      });
+      console.log('> Name:             ' + device.name);
+      console.log('> Id:               ' + device.id);
+
+      console.log('Connecting to GATT Server ...');
+      const server = await device.gatt.connect();
+      console.log('> Connected:        ' + device.gatt.connected);
+
+      console.log('Getting Service...');
+      const service = await server.getPrimaryService(serviceUuid);
+
+      console.log('Getting Characteristics...');
+      const characteristics = await service.getCharacteristics();
+
+      console.log('> Characteristics: ' +
+            characteristics.map(c => c.uuid).join('\n' + ' '.repeat(19)));
+
+      for (const characteristic of characteristics) {
+        const descriptor = await characteristic.getDescriptors();
+        console.log('> Descriptors: ' +
+      descriptor.map(c => c.uuid).join('\n' + ' '.repeat(19)));
+      }
+
+
+    } catch(error) {
+      console.log('That did not work! ' + error);
+    }
+  }
+
 
   public signOut(): void {}
 
