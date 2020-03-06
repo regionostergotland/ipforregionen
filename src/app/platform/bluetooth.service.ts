@@ -12,12 +12,12 @@ import { Categories,
 @Injectable({
   providedIn: 'root'
 })
-export class BluetoothService {
+export class BluetoothService extends Platform {
 
   constructor(
     private blt: BluetoothService
   ) {
-    //super();
+    super();
     this.implementedCategories = new Map([
       [Categories.HEART_RATE, {
         url: '',
@@ -38,7 +38,10 @@ export class BluetoothService {
   }
 
   public getData(categoryId: string,
-                 start: Date, end: Date){
+                 start: Date, end: Date): Observable<DataPoint[]> {
 
-                 }
+    const dataPoints: DataPoint[] = [];
+    return of(dataPoints);
+
+  }
 }
