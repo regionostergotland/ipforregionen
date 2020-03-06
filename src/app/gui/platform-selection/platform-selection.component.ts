@@ -12,6 +12,7 @@ interface Source {
 
 const googleFit = 'google-fit';
 const dummy = 'dummy';
+const bluetooth = 'bluetooth';
 
 @Component({
   selector: 'app-platform-selection',
@@ -38,6 +39,11 @@ export class PlatformSelectionComponent implements OnInit {
         id: dummy,
         name: 'Dummy service',
         imageUrl: this.cfg.getAssetUrl() + 'wwv.png',
+      }],
+      [bluetooth, {
+        id: bluetooth,
+        name: 'Bluetooth',
+        imageUrl: this.cfg.getAssetUrl() + 'btl.png',
       }],
     ]);
 

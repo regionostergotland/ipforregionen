@@ -9,6 +9,7 @@ import { CompositionReceipt } from './ehr/ehr.service';
 import { Platform } from './platform/platform.service';
 import { GfitService } from './platform/gfit.service';
 import { DummyPlatformService } from './platform/dummy.service';
+import { BluetoothService } from './platform/bluetooth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,13 @@ export class Conveyor {
   constructor(
     private ehrService: EhrService,
     private gfitService: GfitService,
-    private dummyPlatformService: DummyPlatformService) {
+    private dummyPlatformService: DummyPlatformService,
+    private bluetoothService: BluetoothService) {
     this.categories = new Map<string, DataList>();
     this.platforms = new Map<string, Platform>([
       [ 'google-fit', this.gfitService ],
-      [ 'dummy', this.dummyPlatformService ]
+      [ 'dummy', this.dummyPlatformService ],
+      [ 'bluetooth', this.bluetoothService ]
     ]);
   }
 
