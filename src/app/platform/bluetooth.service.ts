@@ -30,7 +30,26 @@ export class BluetoothService extends Platform {
 
   }
 
-  public async signIn() {}
+  /**
+  * Attempts to pair with a Bluetooth device
+  */
+  public async signIn() {
+    console.log('Requesting Bluetooth Device ...');
+    (window.navigator as any).bluetooth.requestDevice({
+      // a filter can be applied here instead
+      acceptAllDevices: true,
+      optionalServices: ['generic_access']
+    })
+    .then(device => {
+      console.log('> Name:             ' + device.name);
+      console.log('> Id:               ' + device.id);
+      console.log('> Connected:        ' + device.gatt.connected);
+    })
+    .catch(error => {
+      console.log('That did not work! ' + error);
+    })
+  }
+
   public signOut(): void {}
 
   public getAvailable(): Observable<string[]>{
@@ -44,4 +63,5 @@ export class BluetoothService extends Platform {
     return of(dataPoints);
 
   }
+
 }
