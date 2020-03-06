@@ -50,6 +50,8 @@ export class BluetoothService extends Platform {
     })
   }
 
+  private pairSuccessHandler(){}
+
   public signOut(): void {}
 
   public getAvailable(): Observable<string[]>{
