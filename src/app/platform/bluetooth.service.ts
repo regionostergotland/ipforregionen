@@ -43,11 +43,20 @@ export class BluetoothService extends Platform {
     .then(device => {
       console.log('> Name:             ' + device.name);
       console.log('> Id:               ' + device.id);
-      console.log('> Connected:        ' + device.gatt.connected);
+      console.log('Connecting to GATT Server ...');
+      return device.gatt.connect();
+    })
+    .then(service => {
+      console.log('Getting Characteristics ...');
+      return service.getCharacteristics();
+    })
+    .then(characteristics => {
+      console.log('> Characteristics: ' +
+        characteristics.map(c => c.uuid).join('\n' + ''.repeat(19)));
     })
     .catch(error => {
       console.log('That did not work! ' + error);
-    })
+    });
   }
 
   private pairSuccessHandler(){}
