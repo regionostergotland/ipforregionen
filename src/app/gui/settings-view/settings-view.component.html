@@ -7,10 +7,14 @@
   	  (click)="saveToFile()">
   		Data-backup
 	</button>
+
+	<input type="file" style="display: none" #file (change)="uploadToApp($event)"/>
 	<button 
-  	  mat-raised-button 
-  	  color="primary">
-		Ladda upp backup-fil
-	</button>
+		type="button" 
+		class="btn" 
+		mat-raised-button
+		color="primary" 
+		(click)="file.click()"> Browse </button>
+
 </div>
 
