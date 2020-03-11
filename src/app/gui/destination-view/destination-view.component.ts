@@ -60,6 +60,10 @@ export class DestinationViewComponent implements OnInit {
       this.assetUrl = cfg.getAssetUrl();
   }
 
+
+    /**
+   * Checks local storage for previously saved destinations
+   */
   ngOnInit() {
     if (!!localStorage.getItem('destination_names')) {
       let names = localStorage.getItem('destination_names');
@@ -72,7 +76,11 @@ export class DestinationViewComponent implements OnInit {
     }
   }
 
-  continue(destination: string) {
+    /**
+   * Moves us on to the next step when user deems itself done
+   * @param destination Destination chosen by user
+   */
+  continue(destination: string): void {
     let index = this.destination_names.indexOf(destination);
     let url = this.destination_urls[index];
     this.conveyor.setDestination(destination);
@@ -80,7 +88,13 @@ export class DestinationViewComponent implements OnInit {
     this.router.navigateByUrl('/inspection');
   }
 
-  addToLocalStorage(name: string, url: string) {
+
+    /**
+   * Adds user destinations to personal local storage
+   * @param name Name of the destination, provided by user
+   * @param url Destination URL, provided by user
+   */
+  addToLocalStorage(name: string, url: string): void {
     let names;
     let urls;
     if (!!localStorage.getItem('destination_names')) {
@@ -101,7 +115,12 @@ export class DestinationViewComponent implements OnInit {
     localStorage.setItem('destination_urls', JSON.stringify(urls));
   }
 
-  deleteFromLocalstorage(index: number) {
+
+    /**
+   * Removes a user added destination from local storage
+   * @param index index in destination_names and destination_urls 
+   */
+  deleteFromLocalstorage(index: number): void {
     let names;
     let urls;
     if (!!localStorage.getItem('destination_names')) {
@@ -119,6 +138,12 @@ export class DestinationViewComponent implements OnInit {
     localStorage.setItem('destination_urls', JSON.stringify(urls));
   }
 
+
+    /**
+   * Opens modal to add new destinations
+   * Adds user input to destination_names and destination_urls
+   * Saves destination to local storage
+   */
   openModal(): void {
     const dialogRef = this.dialog.open(NewDestinationDialog, {
       width: '250px',
@@ -134,6 +159,12 @@ export class DestinationViewComponent implements OnInit {
     });
   }
 
+    /**
+   * Opens alert to delete destinations
+   * Removes destination from local storage
+   * Removes destination from destination_names and destination_urls
+   * @param i index of destination to handle in destination_names and destination_urls
+   */
   openAlert(i: number): void {
     const dialogRef = this.dialog.open(NewAlertDialog, {
       width: '250px',
@@ -166,14 +197,19 @@ export class NewDestinationDialog {
       this.destinationFormControl = new Map<string, FormControl>();
     }
 
-  onNoClick(): void {
+  /**
+   * Closes dialog when user presses no
+   */
+  closeDialog(): void {
     this.dialogRef.close();
   }
 
-  addNewDest(): void {
-    this.dialogRef.close();
-  }
-
+  /**
+   * Checks if paramter exists as a key in destinationFormControl
+   * Adds to destinationFormControl if false
+   * @param key 'name' or 'url'
+   * @returns the value behind 'key' in the map
+   */
   getFormControl(key: string): FormControl {
     if (!this.destinationFormControl.has(key)) {
       this.destinationFormControl.set(
@@ -196,7 +232,10 @@ export class NewAlertDialog {
   constructor(
     public dialogRef: MatDialogRef<NewAlertDialog>) {}
 
-  onNoClick(): void {
+  /**
+   * Closes dialog when user presses no
+   */
+  closeDialog(): void {
     this.dialogRef.close();
   }
 }
