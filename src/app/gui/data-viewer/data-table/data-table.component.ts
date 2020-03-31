@@ -6,7 +6,9 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import * as dayjs from 'dayjs';
 
@@ -63,7 +65,7 @@ export class DataTableComponent implements OnInit {
     ['period_MONTH', 'Månad för mätning'],
     ['date', 'Datum för mätning']]);
 
-  @ViewChild(MatPaginator, {static: false}) paginator !: MatPaginator;
+  @ViewChild(MatPaginator) paginator !: MatPaginator;
   data: MatTableDataSource<DataPoint>;
 
   // The selected datapoints

@@ -7,12 +7,8 @@ import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/config.service';
 import { Conveyor } from 'src/app/conveyor.service';
 
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  ErrorStateMatcher
-} from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {
   FormControl,
