@@ -63,7 +63,7 @@ export class DataTableComponent implements OnInit {
     ['period_MONTH', 'Månad för mätning'],
     ['date', 'Datum för mätning']]);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator !: MatPaginator;
   data: MatTableDataSource<DataPoint>;
 
   // The selected datapoints
