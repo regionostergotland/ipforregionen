@@ -23,7 +23,9 @@ import {
 import {
   DestinationViewComponent
 } from './gui/destination-view/destination-view.component';
-
+import {
+  SettingsViewComponent
+} from './gui/settings-view/settings-view.component';
 import { DataViewerModule } from './gui/data-viewer/data-viewer.module';
 
 import { AuthService } from 'src/app/auth.service';
@@ -62,6 +64,7 @@ const routes: Routes = [
     { path: 'inspection', component: InspectionViewComponent },
     { path: 'destination', component: DestinationViewComponent},
     { path: 'edit', component: EditorViewComponent },
+    { path: 'settings', component: SettingsViewComponent },
   ]},
 ];
 
