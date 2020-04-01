@@ -33,14 +33,15 @@ export class SelectionViewComponent implements OnInit {
       result = reader.result;
       result = JSON.parse(result);
       console.log(typeof result);
-      console.log(result);
+      console.log("1 " + result["selections"]);
 
       if (!!result["selections"]) {
-        let selections = result["selections"];
+        let selections = result["selections"][0];
+        console.log("2 " + selections);
         localStorage.setItem('selections_names', JSON.stringify(selections["name"]));
         localStorage.setItem('selections_ids', JSON.stringify(selections["id"]));
         localStorage.setItem('selections_destinations', JSON.stringify(selections["destinations"]));
-        localStorage.setItem('destination_categories', JSON.stringify(selections["categories"]));
+        localStorage.setItem('selection_categories', JSON.stringify(selections["categories"]));
       }
     }    
   }
