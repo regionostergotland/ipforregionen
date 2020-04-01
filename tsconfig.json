@@ -21,6 +21,9 @@
       "dom"
     ]
   },
+  "angularCompilerOptions": {
+    "enableIvy": false,
+  },
   "typedocOptions": {
     "mode": "modules",
     "out": "docs"
