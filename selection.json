@@ -1,0 +1,11 @@
+{
+	"selections": [{
+		"id": 1,
+		"name": "demo",
+		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/"],
+		"categories": {
+			"steps": ["mean", "max"],
+			"blood_pressure": ["max"]
+		}
+	}]
+}
