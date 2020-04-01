@@ -60,6 +60,7 @@ import { InfoPageComponent } from './gui/info-page/info-page.component';
 import { HomePageComponent } from './gui/home-page/home-page.component';
 import { HelpPageComponent } from './gui/help-page/help-page.component';
 import { SettingsViewComponent } from './gui/settings-view/settings-view.component';
+import { SelectionViewComponent } from './gui/selection-view/selection-view.component'; //?
 /* Fetching */
 import {
   PlatformSelectionComponent
@@ -108,6 +109,7 @@ import { CustomGoogleApiModule } from './google-fit-config';
 import { LanguageSelectComponent } from './gui/language-select/language-select.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,7 +134,8 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     NewDestinationDialog,
     NewAlertDialog,
     LanguageSelectComponent,
-    SettingsViewComponent
+    SettingsViewComponent,
+    SelectionViewComponent
   ],
   imports: [
     DataViewerModule,
