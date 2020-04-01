@@ -101,12 +101,12 @@ export class DataTableComponent implements OnInit {
    */
   addPaginator() {
     // Translations for the table paginator
-    this.paginator._intl.itemsPerPageLabel = 'Antal per sida';
-    this.paginator._intl.firstPageLabel = 'Första sida';
-    this.paginator._intl.previousPageLabel = 'Föregående sida';
-    this.paginator._intl.nextPageLabel = 'Nästa sida';
-    this.paginator._intl.lastPageLabel = 'Sista sida';
-    this.paginator._intl.getRangeLabel = this.customRangeLabel;
+    // this.paginator.itemsPerPageLabel = 'Antal per sida';
+    // this.paginator.firstPageLabel = 'Första sida';
+    // this.paginator.previousPageLabel = 'Föregående sida';
+    // this.paginator.nextPageLabel = 'Nästa sida';
+    // this.paginator.lastPageLabel = 'Sista sida';
+    // this.paginator.getRangeLabel = this.customRangeLabel;
     this.data.paginator = this.paginator;
   }
 
