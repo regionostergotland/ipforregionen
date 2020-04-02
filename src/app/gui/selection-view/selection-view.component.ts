@@ -15,16 +15,18 @@ interface Selection {
 export class SelectionViewComponent implements OnInit {
   selections: Selection[] = [];
 
-  constructor() { }
+  constructor() {
+    console.log("Loaded selection view...");
+   }
 
   file: File;
 
   ngOnInit() {
   }
 
-  uploadToApp(file) : void{
+  importSelection(file) : void{
     this.file = file.target.files[0];
-    console.log(this.file.name);
+    console.log("File uploaded is: " + this.file.name);
     let result;
 
     let reader = new FileReader();
@@ -36,14 +38,18 @@ export class SelectionViewComponent implements OnInit {
       console.log("1 " + result["selections"]);
 
       if (!!result["selections"]) {
-        let selections = result["selections"][0];
-        console.log("2 " + selections);
-        localStorage.setItem('selections_names', JSON.stringify(selections["name"]));
-        localStorage.setItem('selections_ids', JSON.stringify(selections["id"]));
-        localStorage.setItem('selections_destinations', JSON.stringify(selections["destinations"]));
-        localStorage.setItem('selection_categories', JSON.stringify(selections["categories"]));
+        let selection = result["selections"][0];
+        console.log("2 " + selection);
+        localStorage.setItem('selections_names', JSON.stringify(selection["name"]));
+        localStorage.setItem('selections_ids', JSON.stringify(selection["id"]));
+        localStorage.setItem('selections_destinations', JSON.stringify(selection["destinations"]));
+        localStorage.setItem('selection_categories', JSON.stringify(selection["categories"]));
       }
-    }    
+
+      else {
+        console.log("This file is not a valid selection.");
+      }
+    }
   }
 
 }

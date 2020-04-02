@@ -1,9 +1,7 @@
-<input type="file" style="display:none" #file (change)="uploadToApp($event)"/>
-<button 
+<input type="file" style="display:none" #file (change)="importSelection($event)"/>
+<button
   name="fileSelector"
-  type="button" 
+  type="button"
   class="btn" 
-  color="primary" 
+  color="primary"
   (click) = "file.click()"> Select file </button>
-
-
