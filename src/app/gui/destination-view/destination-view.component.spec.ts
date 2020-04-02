@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { MatExpansionModule } from '@angular/material/expansion';
 import { DestinationViewComponent } from './destination-view.component';
 
 describe('DestinationViewComponent', () => {
@@ -8,6 +9,7 @@ describe('DestinationViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MatExpansionModule],
       declarations: [ DestinationViewComponent ]
     })
     .compileComponents();

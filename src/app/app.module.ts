@@ -44,8 +44,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { LOCALE_ID } from '@angular/core';
 
-import { AmazingTimePickerModule } from 'amazing-time-picker';
-
+import { HammerModule } from '@angular/platform-browser';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 /* Main component */
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -135,12 +135,10 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     DataViewerModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    AmazingTimePickerModule,
     FormsModule,
     BrowserAnimationsModule,
     FormsModule,
     BrowserAnimationsModule,
-    AmazingTimePickerModule,
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -180,7 +178,6 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     MatTreeModule,
     MatFormFieldModule,
     MatTableModule,
-    AmazingTimePickerModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatProgressBarModule,
@@ -190,7 +187,9 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     AppRoutingModule,
     HttpClientModule,
     CustomGoogleApiModule,
-    DataViewerModule
+    DataViewerModule,
+    HammerModule,
+    NgxMaterialTimepickerModule,
   ],
   entryComponents: [
     BottomSheetCategoriesComponent,

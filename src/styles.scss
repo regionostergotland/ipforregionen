@@ -49,3 +49,11 @@ blockquote {
 pre {
   font-family: Tahoma, Verdana, Segoe, sans-serif;
 }
+
+.timepicker-overlay {
+  z-index: 1000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 1000000 !important;
+}

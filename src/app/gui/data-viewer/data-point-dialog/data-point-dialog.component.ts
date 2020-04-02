@@ -10,7 +10,7 @@ import {
   DataTypeQuantity,
 } from 'src/app/ehr/datatype';
 import { DataPoint } from 'src/app/ehr/datalist';
-import { AmazingTimePickerService } from 'amazing-time-picker';
+
 import {
   FormControl,
   FormGroupDirective,
@@ -56,7 +56,6 @@ export class DataPointDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DataPointDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogInput,
     private conveyor: Conveyor,
-    private atp: AmazingTimePickerService
   ) {
     this.dataPoint = data.point;
     this.isEditable = data.isEditable;
@@ -337,14 +336,14 @@ export class DataPointDialogComponent implements OnInit {
 
   /**
    * Open the time picker to choose a time.
-   */
-  openTimePicker() {
-    const amazingTimePicker = this.atp.open();
-    amazingTimePicker.afterClose().subscribe(time => {
-      this.setTime(time);
-    });
-  }
-
+   openTimePicker() {
+     const amazingTimePicker = this.atp.open();
+     amazingTimePicker.afterClose().subscribe(time => {
+       this.setTime(time);
+      });
+    }
+    */
+    
   /**
    * Gets the label of the category.
    * @returns A human readable string of the label of the category.

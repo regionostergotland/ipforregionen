@@ -52,12 +52,13 @@
       <mat-form-field>
         <input
           #time
+          [ngxTimepicker]="picker"
+          [format]="24"
           [formControl]="getFormControl(key)"
-          (click)="openTimePicker()"
-          matInput
-          [(ngModel)]="clockTime"/>
+          matInput/>
         <mat-error>Värde saknas</mat-error>
       </mat-form-field>
+      <ngx-material-timepicker #picker></ngx-material-timepicker>
     </div>
     <div *ngIf="getVisualType(key) === dataTypeEnum.DATE_TIME &&
                 key != 'time' && key != 'date'">
@@ -68,8 +69,7 @@
           (dateChange)="pointData.set(key, $event.value)"
           matInput
           [matDatepicker]="start"
-          placeholder={{getLabel(key)}}
-        >
+          placeholder={{getLabel(key)}}>
         <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
         <mat-datepicker #start></mat-datepicker>
         <mat-error>Värde saknas</mat-error>
