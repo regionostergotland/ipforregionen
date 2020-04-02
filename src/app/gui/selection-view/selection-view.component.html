@@ -1,7 +1,18 @@
+<h2>Ladda upp ett urval</h2>
+<p>
+  Välj en giltig json fil.
+</p>
+
 <input type="file" style="display:none" #file (change)="importSelection($event)"/>
 <button
   name="fileSelector"
   type="button"
-  class="btn" 
+  class="btn"
   color="primary"
   (click) = "file.click()"> Select file </button>
+
+<div *ngFor="let selection of selections">
+  <p>{{selection.name}}</p>
+  <p>{{selection.id}}</p>
+  <p>{{selection.dest}}</p>
+  <p>{{selection.cat}}</p>

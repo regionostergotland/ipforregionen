@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 interface Selection {
-  id: number;
+  id: string;
   name: string;
-  destinations: string[];
-  categories: Map<string, string[]>;
+  dest: string;
+  cat: string;
+  // destinations: string[];
+  // categories: Map<string, string[]>;
 }
 
 @Component({
@@ -34,16 +36,24 @@ export class SelectionViewComponent implements OnInit {
     reader.onload = (evt: Event) => {
       result = reader.result;
       result = JSON.parse(result);
-      console.log(typeof result);
-      console.log("1 " + result["selections"]);
 
       if (!!result["selections"]) {
+
+        // For now loading one selection. Can easily be made into loop for more.
         let selection = result["selections"][0];
         console.log("2 " + selection);
-        localStorage.setItem('selections_names', JSON.stringify(selection["name"]));
-        localStorage.setItem('selections_ids', JSON.stringify(selection["id"]));
-        localStorage.setItem('selections_destinations', JSON.stringify(selection["destinations"]));
-        localStorage.setItem('selection_categories', JSON.stringify(selection["categories"]));
+
+        // Making instance of interface Selection
+        const currentSelection: Selection = {
+          id: JSON.stringify(selection["id"]),
+          name: JSON.stringify(selection["name"]),
+          dest: JSON.stringify(selection["destinations"]),
+          cat: JSON.stringify(selection["categories"])
+        };
+
+        // Adding currentSelection to member variable selections
+        this.selections.push(currentSelection);
+
       }
 
       else {

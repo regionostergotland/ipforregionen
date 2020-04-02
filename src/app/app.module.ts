@@ -203,8 +203,10 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     AddNewDataModalComponent,
     NewDestinationDialog,
     NewAlertDialog,
-    LanguageSelectComponent
+    LanguageSelectComponent,
+    SelectionViewComponent
   ],
+
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' }
   ],
