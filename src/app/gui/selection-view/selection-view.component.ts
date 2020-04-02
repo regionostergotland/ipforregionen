@@ -3,10 +3,8 @@ import { Component, OnInit } from '@angular/core';
 interface Selection {
   id: string;
   name: string;
-  dest: string;
-  cat: string;
-  // destinations: string[];
-  // categories: Map<string, string[]>;
+  destinations: string[];
+  categories: Map<string, string[]>;
 }
 
 @Component({
@@ -43,12 +41,20 @@ export class SelectionViewComponent implements OnInit {
         let selection = result["selections"][0];
         console.log("2 " + selection);
 
+        // Preparing categories in a map
+        let selectionCategories = selection["categories"];
+        let categoryMap: Map<string, string[]> = new Map<string, string[]>();
+        for (var key in selectionCategories) {
+          categoryMap[key] = selectionCategories[key];
+          console.log(key, categoryMap[key]);
+        }
+
         // Making instance of interface Selection
         const currentSelection: Selection = {
           id: JSON.stringify(selection["id"]),
           name: JSON.stringify(selection["name"]),
-          dest: JSON.stringify(selection["destinations"]),
-          cat: JSON.stringify(selection["categories"])
+          destinations: selection["destinations"],
+          categories: categoryMap
         };
 
         // Adding currentSelection to member variable selections
