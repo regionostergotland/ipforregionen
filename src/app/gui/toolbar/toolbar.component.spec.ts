@@ -13,8 +13,8 @@ describe('ToolbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [AppModule, MatTooltipModule, BrowserAnimationsModule],
-      declarations: [ToolbarComponent],
+      imports: [/*AppModule,*/ MatTooltipModule, BrowserAnimationsModule],
+      //declarations: [ToolbarComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
     }).compileComponents();

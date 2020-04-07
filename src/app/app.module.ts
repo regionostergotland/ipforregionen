@@ -104,7 +104,6 @@ import { CustomGoogleApiModule } from './google-fit-config';
 /* Localization settings */
 import { LanguageSelectComponent } from './gui/language-select/language-select.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
