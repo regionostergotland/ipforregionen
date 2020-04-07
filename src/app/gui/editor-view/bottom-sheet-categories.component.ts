@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { DataList } from '../../ehr/datalist';
 import { Conveyor } from '../../conveyor.service';
 import { ConfigService } from 'src/app/config.service';

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatBottomSheet, MatDialog } from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 import { Conveyor } from 'src/app/conveyor.service';
 import { AddNewDataModalComponent } from './add-new-data-modal.component';
 import { ConfigService } from 'src/app/config.service';

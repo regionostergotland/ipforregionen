@@ -1,11 +1,11 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatToolbarModule,
-         MatGridListModule,
-         MatMenuModule,
-         MatIconModule,
-         MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { FooterComponent } from './gui/footer/footer.component';
 import { ToolbarComponent } from './gui/toolbar/toolbar.component';

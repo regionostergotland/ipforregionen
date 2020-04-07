@@ -59,7 +59,7 @@ export class ConfigService {
     'idpScope',
   ];
 
-  private isDebug = true;
+  private isDebug = false;
   private assetUrl = 'assets/';
   private authMethod: AuthenticationMethod = AuthenticationMethod.BASIC;
 

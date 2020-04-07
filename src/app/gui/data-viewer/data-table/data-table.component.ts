@@ -6,7 +6,9 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import * as dayjs from 'dayjs';
 
@@ -63,7 +65,7 @@ export class DataTableComponent implements OnInit {
     ['period_MONTH', 'Månad för mätning'],
     ['date', 'Datum för mätning']]);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator !: MatPaginator;
   data: MatTableDataSource<DataPoint>;
 
   // The selected datapoints
@@ -99,12 +101,12 @@ export class DataTableComponent implements OnInit {
    */
   addPaginator() {
     // Translations for the table paginator
-    this.paginator._intl.itemsPerPageLabel = 'Antal per sida';
-    this.paginator._intl.firstPageLabel = 'Första sida';
-    this.paginator._intl.previousPageLabel = 'Föregående sida';
-    this.paginator._intl.nextPageLabel = 'Nästa sida';
-    this.paginator._intl.lastPageLabel = 'Sista sida';
-    this.paginator._intl.getRangeLabel = this.customRangeLabel;
+    // this.paginator.itemsPerPageLabel = 'Antal per sida';
+    // this.paginator.firstPageLabel = 'Första sida';
+    // this.paginator.previousPageLabel = 'Föregående sida';
+    // this.paginator.nextPageLabel = 'Nästa sida';
+    // this.paginator.lastPageLabel = 'Sista sida';
+    // this.paginator.getRangeLabel = this.customRangeLabel;
     this.data.paginator = this.paginator;
   }
 

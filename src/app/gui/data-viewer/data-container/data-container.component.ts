@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatTableDataSource,
-         MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { Conveyor } from 'src/app/conveyor.service';
 import {
