@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CustomGoogleApiModule } from './google-fit-config';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -40,99 +41,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { LOCALE_ID } from '@angular/core';
-
 import { HammerModule } from '@angular/platform-browser';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
-/* Main component */
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
-import { LoginComponent } from './gui/login/login.component';
-
-/* Page / view components */
-import { InfoPageComponent } from './gui/info-page/info-page.component';
-import { HomePageComponent } from './gui/home-page/home-page.component';
-import { HelpPageComponent } from './gui/help-page/help-page.component';
-import { SettingsViewComponent } from './gui/settings-view/settings-view.component';
-/* Fetching */
-import {
-  PlatformSelectionComponent
-} from './gui/platform-selection/platform-selection.component';
-import {
-  CategorySelectionComponent
-} from './gui/category-selection/category-selection.component';
-
-/* Editing */
-import {
-  EditorViewComponent,
-} from './gui/editor-view/editor-view.component';
-import {
-  AddNewDataModalComponent
-} from './gui/editor-view/add-new-data-modal.component';
-import {
-  BottomSheetCategoriesComponent
-} from './gui/editor-view/bottom-sheet-categories.component';
-
-/* Inspection */
-import {
-  InspectionViewComponent
-} from './gui/inspection-view/inspection-view.component';
-
-/* Destination */
-import {
-  DestinationViewComponent,
-  NewDestinationDialog,
-  NewAlertDialog
-} from './gui/destination-view/destination-view.component';
-
-/* Common components */
-import { DataViewerModule } from './gui/data-viewer/data-viewer.module';
-
-/* Static components */
-import {
-  ProgressBarComponent
-} from './gui/progress-bar/progress-bar.component';
-import { FooterComponent } from './gui/footer/footer.component';
-import { ToolbarComponent } from './gui/toolbar/toolbar.component';
-
-/* Google Fit configuration */
-import { CustomGoogleApiModule } from './google-fit-config';
-
-/* Localization settings */
-import { LanguageSelectComponent } from './gui/language-select/language-select.component';
-
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    /* pages */
-    HomePageComponent,
-    InfoPageComponent,
-    HelpPageComponent,
-    /* static components */
-    ProgressBarComponent,
-    FooterComponent,
-    //ToolbarComponent,
-    /* views */
-    PlatformSelectionComponent,
-    CategorySelectionComponent,
-    EditorViewComponent,
-    InspectionViewComponent,
-    /* editor view components */
-    BottomSheetCategoriesComponent,
-    AddNewDataModalComponent,
-    DestinationViewComponent,
-    NewDestinationDialog,
-    NewAlertDialog,
-    LanguageSelectComponent,
-    SettingsViewComponent
-  ],
-  imports: [
-    DataViewerModule,
+export const imports= [
+    NgxChartsModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
@@ -178,29 +91,8 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     MatTreeModule,
     MatFormFieldModule,
     MatTableModule,
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatProgressBarModule,
-    MatButtonModule,
-    MatGridListModule,
-    BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     CustomGoogleApiModule,
-    DataViewerModule,
     HammerModule,
-    NgxMaterialTimepickerModule,
-  ],
-  entryComponents: [
-    BottomSheetCategoriesComponent,
-    AddNewDataModalComponent,
-    NewDestinationDialog,
-    NewAlertDialog,
-    LanguageSelectComponent
-  ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' }
-  ],
-  bootstrap: [AppComponent],
-})
-export class AppModule { }
+    NgxMaterialTimepickerModule
+]
