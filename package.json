@@ -32,7 +32,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.2",
     "@swimlane/ngx-charts": "^13.0.2",
     "@types/web-bluetooth": "0.0.5",
-    "core-js": "^2.6.11",
+    "core-js": "^3.6.4",
     "dayjs": "^1.8.23",
     "file-saver": "^2.0.2",
     "fine-uploader": "^5.16.2",

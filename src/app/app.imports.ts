@@ -43,6 +43,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { HammerModule } from '@angular/platform-browser';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { RouterTestingModule } from '@angular/router/testing';
 
 export const imports= [
     NgxChartsModule,
@@ -94,5 +95,6 @@ export const imports= [
     HttpClientModule,
     CustomGoogleApiModule,
     HammerModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    RouterTestingModule
 ]
