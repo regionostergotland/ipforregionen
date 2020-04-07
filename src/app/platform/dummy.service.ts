@@ -86,9 +86,9 @@ export class DummyPlatformService extends Platform {
   public getData(categoryId: string,
                  start: Date, end: Date): Observable<DataPoint[]> {
     const generators: Map<DataTypeEnum, (date: Date) => any> = new Map([
-      [DataTypeEnum.TEXT, date => date.toString()],
-      [DataTypeEnum.DATE_TIME, date => date],
-      [DataTypeEnum.QUANTITY, date => date.getDate()],
+      //[DataTypeEnum.TEXT, date => date.toString()],
+      //[DataTypeEnum.DATE_TIME, date => date],
+      //[DataTypeEnum.QUANTITY, date => date.getDate()],
     ]);
     const lengthOfDay = 1000 * 3600 * 24;
     let current: Date = new
