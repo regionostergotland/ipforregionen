@@ -116,7 +116,7 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     /* static components */
     ProgressBarComponent,
     FooterComponent,
-    //ToolbarComponent,
+    ToolbarComponent,
     /* views */
     PlatformSelectionComponent,
     CategorySelectionComponent,
