@@ -128,7 +128,7 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     NewDestinationDialog,
     NewAlertDialog,
     LanguageSelectComponent,
-    SettingsViewComponent
+    SettingsViewComponent,
   ],
   imports: [
     DataViewerModule,
