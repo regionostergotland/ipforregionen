@@ -1,0 +1,27 @@
+Installationsmanual för att starta en ehrbase-server på ubuntu
+----------------Innan installation----------------
+1(docker): Öppna terminalen och skriv "sudo apt install docker.io"
+2(docker): Konfirmera installation genom att skriva "docker --version",
+borde skriva ut "Docker version 19.03.6, build 369ce". Er version kan vara annorlunda! 
+3(docker): för att lägga till sig själv i gruppen docker, så du kan använda kommandot utan sudo: "sudo usermod -a -G docker $USER", starta om datorn. 
+
+1(jdk): Kontrollera om Java JDK 11 är installerat: "java --version".
+2(jdk): "sudo apt-get install default-jdk", ska installera senaste version 
+3(jdk): om "echo $JAVA_HOME" inte skriver ut nått lägg till "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/" 
+i ~/.bashrc med till exempel Nano eller Vim och starta om datorn 
+
+1(mvn): Kontrollera att maven finns installerat med "mvn --version", om du får ett felmeddelande se 2(mvn)
+2(mvn): "sudo apt install maven", kontrollera installation med 1(mvn)
+----------------Installing----------------
+Steg 1: Skapa ett nätverk med "docker network create ehrbase-net"
+Steg 2: Starta en docker för ehrbase med: 
+"docker run --name ehrdb --network ehrbase-net -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 ehrbaseorg/ehrbase-postgres:latest"
+Steg 3: Ladda ner ehrbase som en zip-fil från "github.com/ehrbase/ehrbase"
+Steg 4: Zippa upp filen.
+Steg 6: Gå in i den upzippade mappen och skriv "mvn package" och vänta på att den byggt färdigt 
+Steg 7: Kör "java -jar application/target/application-0.11.0.jar", dockern från steg 4 måste vara igång: kontrollera med sudo lsof -i :5432, om inte tomt OK!
+Steg 8: Navigera till http://localhost:8080/ehrbase/swagger-ui.html 
+----------------Köra igen----------------
+Steg 9: "docker run --network ehrbase-net -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 ehrbaseorg/ehrbase-postgres:latest"
+Steg 10: Kör java -jar application/target/application-0.11.0.jar
+

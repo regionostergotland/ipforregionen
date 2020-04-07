@@ -159,7 +159,6 @@ export class NewDestinationDialog {
   destinationFormControl: Map<string, FormControl>;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
-
   constructor(
     public dialogRef: MatDialogRef<NewDestinationDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {

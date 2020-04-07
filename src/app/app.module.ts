@@ -59,7 +59,7 @@ import { LoginComponent } from './gui/login/login.component';
 import { InfoPageComponent } from './gui/info-page/info-page.component';
 import { HomePageComponent } from './gui/home-page/home-page.component';
 import { HelpPageComponent } from './gui/help-page/help-page.component';
-
+import { SettingsViewComponent } from './gui/settings-view/settings-view.component';
 /* Fetching */
 import {
   PlatformSelectionComponent
@@ -132,6 +132,7 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     NewDestinationDialog,
     NewAlertDialog,
     LanguageSelectComponent,
+    SettingsViewComponent
   ],
   imports: [
     DataViewerModule,
