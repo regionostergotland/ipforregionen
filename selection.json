@@ -4,7 +4,7 @@
 		"name": "demo",
 		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/"],
 		"categories": {
-			"steps": ["mean", "max"],
+			"body_weight": ["mean", "max"],
 			"blood_pressure": ["max"]
 		}
 	}]

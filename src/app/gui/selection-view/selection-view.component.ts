@@ -1,10 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { Conveyor } from '../../conveyor.service';
+import { CategorySpec } from 'src/app/ehr/datatype';
+import { DataList } from '../../ehr/datalist';
+import {
+  Categories,
+  CommonFields,
+  MedicalDevice,
+  BloodPressure,
+  BodyWeight,
+  Height,
+  HeartRate
+} from '../../ehr/ehr-config';
 
 interface Selection {
   id: string;
   name: string;
   destinations: string[];
-  categories: Map<string, string[]>;
+  categories: Category[];
+}
+
+interface Category {
+  dataType: string;
+  filter: string[];
 }
 
 @Component({
@@ -14,8 +31,12 @@ interface Selection {
 })
 export class SelectionViewComponent implements OnInit {
   selections: Selection[] = [];
+  selectedSelection: Selection[] = []; //Add Selection to this list when it is clicked on
+  categorySpec: CategorySpec;
+  implementedCategory: Category;
+  implementedCategories: Category[];
 
-  constructor() {
+  constructor(private conveyor: Conveyor) {
     console.log("Loaded selection view...");
    }
 
@@ -41,12 +62,18 @@ export class SelectionViewComponent implements OnInit {
         let selection = result["selections"][0];
         console.log("2 " + selection);
 
-        // Preparing categories in a map
+        // Preparing categories in an array
         let selectionCategories = selection["categories"];
-        let categoryMap: Map<string, string[]> = new Map<string, string[]>();
+        let tmpCategories : Category[] = [];
+
         for (var key in selectionCategories) {
-          categoryMap[key] = selectionCategories[key];
-          console.log(key, categoryMap[key]);
+          const category: Category = {
+            dataType: key,
+            filter: selectionCategories[key]  
+          }
+          tmpCategories.push(category);
+          console.log(category.dataType);
+          console.log(category.filter);
         }
 
         // Making instance of interface Selection
@@ -54,7 +81,7 @@ export class SelectionViewComponent implements OnInit {
           id: JSON.stringify(selection["id"]),
           name: JSON.stringify(selection["name"]),
           destinations: selection["destinations"],
-          categories: categoryMap
+          categories: tmpCategories
         };
 
         // Adding currentSelection to member variable selections
@@ -66,6 +93,23 @@ export class SelectionViewComponent implements OnInit {
         console.log("This file is not a valid selection.");
       }
     }
+  }
+
+  // [sel, sel, sel]
+  
+  executeSelections() {
+    let tmp : DataList;
+
+    for (let sel of this.selections){      
+      for (let cat of sel.categories){
+           tmp =this.conveyor.getDataList(cat.dataType);
+           console.log(tmp[0]);
+      }
+    }
+  }
+
+  selectSelection(){
+    
   }
 
 }
