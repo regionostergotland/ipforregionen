@@ -1,14 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from 'src/app/app.module';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { imports } from '../../app.imports';
 import { EditorViewComponent } from './editor-view.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EditorViewComponent', () => {
   let component: EditorViewComponent;
   let fixture: ComponentFixture<EditorViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      imports: [AppModule],
+      imports: imports,
+      declarations: [ EditorViewComponent ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     }).compileComponents();
   }));
 

@@ -1,14 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SettingsViewComponent } from './settings-view.component';
+import { imports } from '../../app.imports';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('SettingsViewComponent', () => {
   let component: SettingsViewComponent;
   let fixture: ComponentFixture<SettingsViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsViewComponent ]
+      imports: imports,
+      declarations: [ SettingsViewComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));

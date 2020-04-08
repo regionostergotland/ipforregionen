@@ -1,20 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { imports } from '../../app.imports';
 
 import { HelpPageComponent } from './help-page.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('HelpPageComponent', () => {
   let component: HelpPageComponent;
   let fixture: ComponentFixture<HelpPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
+      imports: imports,
       declarations: [ HelpPageComponent ],
-      imports: [
-        BrowserAnimationsModule,
-        MatCardModule
-      ]
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     })
     .compileComponents();
   }));

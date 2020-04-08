@@ -1,14 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataViewerModule } from '../data-viewer.module';
 import { DataChartComponent } from './data-chart.component';
+
 
 describe('DataChartComponent', () => {
   let component: DataChartComponent;
   let fixture: ComponentFixture<DataChartComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       imports: [ DataViewerModule ],
+      //declarations: [ DataChartComponent ],
     })
     .compileComponents();
   }));

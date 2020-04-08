@@ -1,14 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { imports } from '../../app.imports';
 
 import { LanguageSelectComponent } from './language-select.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('LanguageSelectComponent', () => {
   let component: LanguageSelectComponent;
   let fixture: ComponentFixture<LanguageSelectComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LanguageSelectComponent ]
+      imports: imports,
+      declarations: [ LanguageSelectComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));

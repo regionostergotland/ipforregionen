@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DestinationViewComponent } from './destination-view.component';
 import { imports } from '../../app.imports';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -7,11 +7,11 @@ describe('DestinationViewComponent', () => {
   let component: DestinationViewComponent;
   let fixture: ComponentFixture<DestinationViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       imports: imports,
       declarations: [ DestinationViewComponent ],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     })
     .compileComponents();
   }));

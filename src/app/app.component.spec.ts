@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, fakeAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ import { CustomGoogleApiModule,
 describe('AppComponent', () => {
   // The purpose of the async is to let all the possible asynchronous code to
   // finish before continuing.
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       imports: [ // add all modules used in this component
         RouterTestingModule,

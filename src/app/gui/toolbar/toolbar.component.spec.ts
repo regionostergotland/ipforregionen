@@ -1,8 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppModule } from 'src/app/app.module';
+import { imports } from '../../app.imports';
 
 import { ToolbarComponent } from './toolbar.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -11,12 +9,11 @@ describe('ToolbarComponent', () => {
   let component: ToolbarComponent;
   let fixture: ComponentFixture<ToolbarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      imports: [/*AppModule,*/ MatTooltipModule, BrowserAnimationsModule],
-      //declarations: [ToolbarComponent],
+      imports: imports,
+      declarations: [ ToolbarComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-
     }).compileComponents();
   }));
 

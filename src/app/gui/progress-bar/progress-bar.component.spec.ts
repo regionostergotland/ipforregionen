@@ -1,15 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from 'src/app/app.module';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { imports } from '../../app.imports';
 
 import { ProgressBarComponent } from './progress-bar.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ProgressBarComponent', () => {
   let component: ProgressBarComponent;
   let fixture: ComponentFixture<ProgressBarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      imports: [AppModule]
+      imports: imports,
+      declarations: [ ProgressBarComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));

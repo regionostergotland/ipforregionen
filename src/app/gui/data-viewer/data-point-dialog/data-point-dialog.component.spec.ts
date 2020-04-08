@@ -1,5 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataPointDialogComponent } from './data-point-dialog.component';
 import { DataViewerModule } from '../data-viewer.module';
 
@@ -8,9 +7,10 @@ describe('DataPointDialog', () => {
   let component: DataPointDialogComponent;
   let fixture: ComponentFixture<DataPointDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       imports: [ DataViewerModule ],
+      //declarations: [DataPointDialogComponent],
     })
     .compileComponents();
   }));
