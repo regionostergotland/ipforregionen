@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Conveyor } from '../../conveyor.service';
 import { CategorySpec } from 'src/app/ehr/datatype';
 import { DataList } from '../../ehr/datalist';
+import { Router } from '@angular/router';
 import {
   Categories,
   CommonFields,
@@ -48,11 +49,11 @@ export class SelectionViewComponent implements OnInit {
 
   AfterViewInit() : void {
     console.log("AfterViewInit");
-    let tmpCat : string[];
+    /*let tmpCat : string[];
     tmpCat = this.conveyor.getCategoryIds();
     for (let i=0; i < tmpCat.length; i++){
       console.log(tmpCat[i]);
-    }    
+    }    */
   }
 
   importSelection(file) : void{
@@ -108,6 +109,11 @@ export class SelectionViewComponent implements OnInit {
   // [sel, sel, sel]
   
   executeSelections() : void {
+    let tmpCat : string[];
+    tmpCat = this.conveyor.getCategoryIds();
+    //for (let i=0; i < tmpCat.length; i++){
+      console.log("Tmpcat: " + tmpCat);
+    //}  
     let tmp : DataList;
 
     for (let sel of this.selections){      
