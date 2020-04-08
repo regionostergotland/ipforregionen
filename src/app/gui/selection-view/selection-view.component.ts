@@ -43,6 +43,11 @@ export class SelectionViewComponent implements OnInit {
   file: File;
 
   ngOnInit() {
+    console.log("ngOnInit");
+  }
+
+  AfterViewInit() : void {
+    console.log("AfterViewInit");
     let tmpCat : string[];
     tmpCat = this.conveyor.getCategoryIds();
     for (let i=0; i < tmpCat.length; i++){
@@ -102,7 +107,7 @@ export class SelectionViewComponent implements OnInit {
 
   // [sel, sel, sel]
   
-  executeSelections() {
+  executeSelections() : void {
     let tmp : DataList;
 
     for (let sel of this.selections){      
