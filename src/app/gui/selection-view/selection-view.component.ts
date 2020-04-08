@@ -43,6 +43,11 @@ export class SelectionViewComponent implements OnInit {
   file: File;
 
   ngOnInit() {
+    let tmpCat : string[];
+    tmpCat = this.conveyor.getCategoryIds();
+    for (let i=0; i < tmpCat.length; i++){
+      console.log(tmpCat[i]);
+    }    
   }
 
   importSelection(file) : void{
