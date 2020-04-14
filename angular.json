@@ -4,22 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "wwv": {
-      "i18n": {
-        "locales": {
-          "sv": {
-            "translation": "src/translate/messages.sv.xlf",
-            "baseHref": ""
-          },
-          "es": {
-            "translation": "src/translate/messages.es.xlf",
-            "baseHref": ""
-          },
-          "en": {
-            "translation": "src/translate/messages.en.xlf",
-            "baseHref": ""
-          }
-        }
-      },
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -51,42 +35,6 @@
             "es5BrowserSupport": true
           },
           "configurations": {
-            "sv" : {
-              "aot" : true,
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "i18nMissingTranslation" : "missing translation" ,            "localize": [
-              "sv"
-            ]
-},
-            "es" : {
-              "aot" : true,
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "i18nMissingTranslation" : "missing translation" ,            "localize": [
-              "es"
-            ]
-},
-            "en" : {
-                "aot" : true,
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-                "i18nMissingTranslation" : "missing translation" ,            "localize": [
-              "en"
-            ]
-},
             "production": {
               "fileReplacements": [
                 {
@@ -124,9 +72,6 @@
             "browserTarget": "wwv:build"
           },
           "configurations": {
-            "sv" : { "browserTarget" : "wwv:build:sv"},
-            "es" : { "browserTarget" : "wwv:build:es"},
-            "en" : { "browserTarget" : "wwv:build:en"},
             "production": {
               "browserTarget": "wwv:build:production"
             }

@@ -17,15 +17,25 @@
     <div *ngIf="isAuthenticated()">
       <button style="margin: 10px"
         mat-raised-button
-        (click)="signOut()"
-      >
-        Logga ut
+        (click)="signOut()">
+      {{ 'Global.Login' | translate }}
       </button>
     </div>
 
-    <span class="fill-remaining-space"></span>
+    <span class="form-inline">
+      <select 
+          class="form-control" 
+          #selectedLang 
+          (change)="switchLang(selectedLang.value)">
+        <option *ngFor="let language of translate.getLangs()" 
+          [value]="language"
+          [selected]="language === translate.currentLang">
+          {{ language }}
+        </option>
+      </select>
+    </span>
 
-    <!--<app-language-select></app-language-select>-->
+    <span class="fill-remaining-space"></span>
 
     <div>
         <div

@@ -1,6 +1,6 @@
 <div></div>
 <h1 style="text-align: center">
-  Välkommen!
+  {{ 'Home-page.Welcome' | translate }}
 </h1>
 
 <div class="centering" class="container">
@@ -9,28 +9,23 @@
     fxLayout.xs="column"
     fxLayout.lt-sm="column"
     fxFlex
-    class="wrapper"
-  >
+    class="wrapper">
     <mat-card class="home-card source" routerLink="/platform-selection">
       <mat-card-title>
-        Skicka in data
+        {{ 'Home-page.Senddata' | translate }}
       </mat-card-title>
       <mat-card-content style="display:flex">
-        <p>
-          Skicka hälsodata till Region Östergötlands Digitaliseringsplattform.
-        </p>
+        <p>{{ 'Home-page.Sendflavor' | translate }}</p>
       </mat-card-content>
       <mat-card-actions>
         <div
           style="text-align:center;
-                 font-family: Tahoma, Verdana, Segoe, sans-serif;"
-        >
+                 font-family: Tahoma, Verdana, Segoe, sans-serif;">
           <button
             id="home-nav-src"
             mat-button
-            style="font-family: Tahoma, Verdana, Segoe, sans-serif;"
-          >
-            Välj källa
+            style="font-family: Tahoma, Verdana, Segoe, sans-serif;">
+            {{ 'Home-page.Choose' | translate }}
             <img src="{{assetUrl}}/flaticon/diagonal-arrow.png">
           </button>
         </div>
@@ -39,21 +34,18 @@
 
     <mat-card class="home-card help" routerLink="/help">
       <mat-card-title>
-        Hjälp
+        {{ 'Home-page.Help' | translate }}
       </mat-card-title>
       <mat-card-content>
-        <p>
-          Behöver du en hjälpande hand? Ta en titt på vår guide.
-        </p>
+        <p>{{ 'Home-page.Helpflavor' | translate }}</p>
       </mat-card-content>
       <mat-card-actions>
         <div style="text-align:center;">
           <button
             id="home-nav-help"
             mat-button
-            style="font-family: Tahoma, Verdana, Segoe, sans-serif;"
-          >
-            Hjälp
+            style="font-family: Tahoma, Verdana, Segoe, sans-serif;">
+            {{ 'Home-page.Help' | translate }}
             <img src="{{assetUrl}}/flaticon/question.png">
           </button>
         </div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -46,6 +46,11 @@ import { LOCALE_ID } from '@angular/core';
 
 import { HammerModule } from '@angular/platform-browser';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
+/* Translation components */
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 /* Main component */
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -189,6 +194,13 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     DataViewerModule,
     HammerModule,
     NgxMaterialTimepickerModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
+      }
+    })
   ],
   entryComponents: [
     BottomSheetCategoriesComponent,
@@ -203,3 +215,8 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
   bootstrap: [AppComponent],
 })
 export class AppModule { }
+
+// AOT compilation support
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/config.service';
 import { AuthService } from 'src/app/auth.service';
 
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -16,8 +18,11 @@ export class ToolbarComponent {
     private router: Router,
     private cfg: ConfigService,
     private auth: AuthService,
+    public translate: TranslateService
   ) {
     this.assetUrl = this.cfg.getAssetUrl();
+    translate.addLangs(['sv', 'en']);
+    translate.setDefaultLang('sv');
   }
 
   isAuthenticated() {
@@ -35,5 +40,9 @@ export class ToolbarComponent {
   signOut() {
     this.auth.deauthenticate();
     this.router.navigateByUrl('login');
+  }
+
+  switchLang(lang: string) {
+    this.translate.use(lang);
   }
 }

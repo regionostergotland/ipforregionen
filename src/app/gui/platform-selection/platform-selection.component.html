@@ -1,8 +1,5 @@
-<h2>Val av plattform</h2>
-<p>
-  Välj en plattform att hämta data ifrån eller självinmatning för att mata in
-  egna värden.
-</p>
+<h2>{{ 'Platform-sel.Choice' | translate }}</h2>
+<p>{{ 'Platform-sel.Choiceflavor' | translate }}</p>
 
 <div class="centering">
 <div
@@ -25,7 +22,7 @@
     </mat-card-content>
     <mat-card-actions>
       <div style="text-align:center;">
-        <button mat-button>Logga in</button>
+        <button mat-button>{{ 'Global.Login' | translate }}</button>
       </div>
     </mat-card-actions>
   </mat-card>
@@ -33,7 +30,7 @@
   <!-- INPUT DATA -->
   <mat-card class="home-card" (click)="router.navigateByUrl('/edit')">
     <mat-card-header>
-      <mat-card-title>Självinmatning</mat-card-title>
+      <mat-card-title>{{ 'Platform-sel.Customdata' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-card-content style="display:flex;">
       <mat-icon
@@ -46,7 +43,7 @@
     </mat-card-content>
     <mat-card-actions>
       <div style="text-align:center;">
-        <button mat-button>Mata in egen data</button>
+        <button mat-button>{{ 'Platform-sel.Customdataflavor' | translate }}</button>
       </div>
     </mat-card-actions>
   </mat-card>

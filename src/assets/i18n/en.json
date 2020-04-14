@@ -1,0 +1,25 @@
+{
+    "Global":{
+        "Login": "Log in"
+    },
+    "Platform-sel": {
+        "Choice": "Choose a platform",
+        "Choiceflavor": "Choose a platform to fetch data or to input your own values",
+        "Customdata": "Self input",
+        "Customdataflavor": "Enter custom data"
+    },
+    "Progress-bar": {
+        "Importdata": "Import",
+        "Edit": "Edit",
+        "Choosedest": "Choose destination",
+        "Inspect": "Inspect and send"
+    },
+    "Home-page":{
+        "Welcome": "Welcome!",
+        "Senddata": "Send data",
+        "Sendflavor": "Send health data to Region Östergötland's Digitalization Platform.",
+        "Choose": "Choose source",
+        "Help": "Help",
+        "Helpflavor": "Need a helping hand? Take a look at our guide!"
+    }
+}

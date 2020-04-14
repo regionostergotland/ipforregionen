@@ -1,0 +1,25 @@
+{
+    "Global": {
+        "Login": "Logga in"
+    },
+    "Platform-sel": {
+        "Choice": "Val av plattform",
+        "Choiceflavor": "Välj en plattform att hämta data ifrån eller självinmatning för att mata in egna värden.",
+        "Customdata": "Självinmatning",
+        "Customdataflavor": "Mata in egen data"
+    },
+    "Progress-bar": {
+        "Importdata": "Hämta",
+        "Edit": "Redigera",
+        "Choosedest": "Välj destination",
+        "Inspect": "Granska och skicka"
+    },
+    "Home-page":{
+        "Welcome": "Välkommen!",
+        "Senddata": "Skicka in data",
+        "Sendflavor": "Skicka hälsodata till Region Östergötlands Digitaliseringsplattform.",
+        "Choose": "Välj källa",
+        "Help": "Hjälp",
+        "Helpflavor": "Behöver du en hjälpande hand? Ta en titt på vår guide."
+    }
+}

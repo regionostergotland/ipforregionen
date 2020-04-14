@@ -6,7 +6,7 @@
         1
       </button>
       <div *ngIf="!onSmallScreen()">
-        <p style="margin-left: 4px;">Hämta</p>
+        <p style="margin-left: 4px;">{{ 'Progress-bar.Importdata' | translate }}</p>
       </div>
     </div>
 
@@ -15,7 +15,7 @@
       <button (click)="navigate('edit', 2)" [class]="getClass(2)">
         2
       </button>
-      <div *ngIf="!onSmallScreen()"><p>Redigera</p></div>
+      <div *ngIf="!onSmallScreen()"><p>{{ 'Progress-bar.Edit' | translate }}</p></div>
     </div>
 
     <!-- EDIT -->
@@ -23,7 +23,7 @@
       <button (click)="navigate('destination', 3)" [class]="getClass(3)">
         3
       </button>
-      <div *ngIf="!onSmallScreen()"><p>Välj destination</p></div>
+      <div *ngIf="!onSmallScreen()"><p>{{ 'Progress-bar.Choosedest' | translate }}</p></div>
     </div>
 
     <!-- REVIEW -->
@@ -31,7 +31,7 @@
       <button (click)="navigate('inspection', 4)" [class]="getClass(4)">
         4
       </button>
-      <div *ngIf="!onSmallScreen()"><p>Granska och skicka</p></div>
+      <div *ngIf="!onSmallScreen()"><p>{{ 'Progress-bar.Inspect' | translate }}</p></div>
     </div>
   </div>
 </div>
