@@ -28,50 +28,33 @@ interface Selection {
 export class SelectionViewComponent implements OnInit {
   selections: Selection[] = [];
   selectedSelection: Selection[] = []; //Add Selection to this list when it is clicked on
-  categorySpec: CategorySpec;
-  categories: [string, string][] = [];
-  categoryIds: string[] = [];
-  categoryMap: Map<string, boolean>;
 
-  private platformId = '';
+  categoryIds: string[] = [];
 
   file: File;
-
 
   constructor(private conveyor: Conveyor,
     public router: Router) {
     console.log("Loaded selection view...");
-
    }
-
 
   ngOnInit() {
     console.log("ngOnInit");
-    this.platformId = 'dummy';
-    this.categoryMap = new Map<string, boolean>();
-    this.conveyor.getAvailableCategories(this.platformId).subscribe(res => {
-    this.categoryIds = res;
     this.getCategories();
-    });
   }
 
   AfterViewInit() : void {
     console.log("AfterViewInit");
-    /*let tmpCat : string[];
-    tmpCat = this.conveyor.getCategoryIds();
-    for (let i=0; i < tmpCat.length; i++){
-      console.log(tmpCat[i]);
-
-    }*/
   }
+
+  /**
+  * Fetches categories available in conveyor after
+  * Data is imported by user in step 1
+  **/
   getCategories(): void {
-    console.log("Get Cats");
-    let cat: CategorySpec;
+    this.categoryIds = this.conveyor.getCategoryIds();
     for (const id of this.categoryIds) {
       console.log("cat: " + id);
-      cat = this.conveyor.getCategorySpec(id);
-      this.categories.push([id, cat.label]);
-      this.categoryMap.set(id, false);
     }
   }
 
@@ -91,7 +74,6 @@ export class SelectionViewComponent implements OnInit {
       result = JSON.parse(result);
 
       if (!!result["selection"]) {
-
         // For now loading only one selection.
         let selection = result["selection"];
         console.log("2 " + JSON.stringify(selection));
@@ -116,20 +98,23 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
-
+/*
+* Uses imported selections stored in this.selections
+* And retrieves the relevant values and filters
+*/
   executeSelections() : void {
-    let tmpCat : string[];
-    tmpCat = this.conveyor.getCategoryIds();
-    //for (let i=0; i < tmpCat.length; i++){
-      console.log("Tmpcat: " + tmpCat);
-    //}
-    let tmp : DataList;
+    let dataList : DataList;
+    const filter: Filter = {
+      width: 2,
+      fn: 1
+    };
 
     for (let sel of this.selections){
       for (let cat of sel.categories){
-        console.log("cat: "+ cat);
-           tmp =this.conveyor.getDataList(cat);
-           for (let entry of tmp.getPoints().entries())
+        console.log("For cat: "+ cat);
+        dataList = this.conveyor.getDataList(cat);
+        dataList.addFilter(filter);
+        for (let entry of dataList.getPoints().entries())
            {
              console.log(entry[1]);
            }
@@ -137,8 +122,13 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
+  getFilters(categoryKey: string) : {}
+
+  /*
+  * Allows selecting one or more selections
+  * that will then be handled with executeSelections()
+  */
   selectSelection(){
 
   }
-
 }
