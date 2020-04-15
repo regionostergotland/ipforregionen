@@ -83,7 +83,8 @@ export class SelectionViewComponent implements OnInit {
           id: JSON.stringify(selection["id"]),
           name: JSON.stringify(selection["name"]),
           destinations: selection["destinations"],
-          categories: selection["categories"]
+          categories: selection["categories"],
+          filters: selection["filters"]
         };
 
         console.log("Categories: "+ currentSelection.categories);
@@ -104,16 +105,16 @@ export class SelectionViewComponent implements OnInit {
 */
   executeSelections() : void {
     let dataList : DataList;
-    const filter: Filter = {
-      width: 2,
-      fn: 1
-    };
 
     for (let sel of this.selections){
       for (let cat of sel.categories){
         console.log("For cat: "+ cat);
         dataList = this.conveyor.getDataList(cat);
+        let filter: Filter = sel.filters[cat];
+        console.log("Filter:");
+        console.log(filter);
         dataList.addFilter(filter);
+
         for (let entry of dataList.getPoints().entries())
            {
              console.log(entry[1]);
@@ -121,8 +122,6 @@ export class SelectionViewComponent implements OnInit {
       }
     }
   }
-
-  getFilters(categoryKey: string) : {}
 
   /*
   * Allows selecting one or more selections

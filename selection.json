@@ -6,12 +6,12 @@
 		"categories": ["body_weight", "blood_pressure"],
 		"filters": {
 		"body_weight": {
-			"fn": "1",
-			"width": "1"
+			"width": 1,
+			"fn": 2
 			},
 		"blood_pressure": {
-			"fn": "2",
-			"width": "3"
+			"width": 3,
+			"fn": 2
 			}
 		}
 	}
