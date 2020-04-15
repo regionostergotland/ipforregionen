@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Filter } from 'src/app/ehr/datalist';
+import { Filter, filterString } from 'src/app/ehr/datalist';
 import { Conveyor } from 'src/app/conveyor.service';
 
 import { MathFunctionEnum, mathFunctionString } from 'src/app/ehr/datatype';
@@ -61,6 +61,8 @@ export class DataFilterDialogComponent {
         width: parseInt(intervalString, 10),
         fn: parseInt(funcString, 10),
       };
+      console.log("This is the filter used: " + funcString);
+      console.log("This is the interval: " + intervalString);
       this.conveyor.getDataList(this.selectedCategory).addFilter(filter);
       this.closeDialog();
     }

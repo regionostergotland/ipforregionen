@@ -143,8 +143,8 @@ export class SelectionViewComponent implements OnInit {
     let tmp : DataList;
 
     for (let sel of this.selections){
-      for (let cat of sel.categories){
-           tmp =this.conveyor.getDataList(cat.dataType);
+      for (let cat in sel.categories){
+           tmp =this.conveyor.getDataList(cat);
            for (let entry of tmp.getPoints().entries())
            {
              console.log(entry[1]);
