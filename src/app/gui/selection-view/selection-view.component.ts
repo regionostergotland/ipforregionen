@@ -3,6 +3,7 @@ import { Conveyor } from '../../conveyor.service';
 import { CategorySpec } from 'src/app/ehr/datatype';
 import { DataList } from '../../ehr/datalist';
 import { Router } from '@angular/router';
+import { Filter, filterString } from 'src/app/ehr/datalist';
 import {
   Categories,
   CommonFields,
@@ -18,6 +19,7 @@ interface Selection {
   name: string;
   destinations: string[];
   categories: string[];
+  filters: Map<string, Filter>;
 }
 
 @Component({
