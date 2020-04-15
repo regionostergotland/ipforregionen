@@ -36,15 +36,28 @@ export class SelectionViewComponent implements OnInit {
   categorySpec: CategorySpec;
   implementedCategory: Category;
   implementedCategories: Category[];
+  categories: [string, string][] = [];
+  categoryIds: string[] = [];
+  categoryMap: Map<string, boolean>;
+
+  private platformId = '';
+
+  file: File;
+
 
   constructor(private conveyor: Conveyor) {
     console.log("Loaded selection view...");
    }
 
-  file: File;
 
   ngOnInit() {
     console.log("ngOnInit");
+    this.platformId = 'dummy';
+    this.categoryMap = new Map<string, boolean>();
+    this.conveyor.getAvailableCategories(this.platformId).subscribe(res => {
+    this.categoryIds = res;
+    this.getCategories();
+    });
   }
 
   AfterViewInit() : void {
@@ -53,7 +66,17 @@ export class SelectionViewComponent implements OnInit {
     tmpCat = this.conveyor.getCategoryIds();
     for (let i=0; i < tmpCat.length; i++){
       console.log(tmpCat[i]);
-    }    */
+    }
+  }
+  getCategories(): void {
+    console.log("Get Cats");
+    let cat: CategorySpec;
+    for (const id of this.categoryIds) {
+      console.log("cat: " + id);
+      cat = this.conveyor.getCategorySpec(id);
+      this.categories.push([id, cat.label]);
+      this.categoryMap.set(id, false);
+    }
   }
 
   importSelection(file) : void{
@@ -80,7 +103,7 @@ export class SelectionViewComponent implements OnInit {
         for (var key in selectionCategories) {
           const category: Category = {
             dataType: key,
-            filter: selectionCategories[key]  
+            filter: selectionCategories[key]
           }
           tmpCategories.push(category);
           console.log(category.dataType);
@@ -107,16 +130,16 @@ export class SelectionViewComponent implements OnInit {
   }
 
   // [sel, sel, sel]
-  
+
   executeSelections() : void {
     let tmpCat : string[];
     tmpCat = this.conveyor.getCategoryIds();
     //for (let i=0; i < tmpCat.length; i++){
       console.log("Tmpcat: " + tmpCat);
-    //}  
+    //}
     let tmp : DataList;
 
-    for (let sel of this.selections){      
+    for (let sel of this.selections){
       for (let cat of sel.categories){
            tmp =this.conveyor.getDataList(cat.dataType);
            console.log(tmp[0]);
@@ -125,7 +148,7 @@ export class SelectionViewComponent implements OnInit {
   }
 
   selectSelection(){
-    
+
   }
 
 }
