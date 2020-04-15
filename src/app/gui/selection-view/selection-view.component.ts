@@ -62,7 +62,7 @@ export class SelectionViewComponent implements OnInit {
 
   AfterViewInit() : void {
     console.log("AfterViewInit");
-    /*let tmpCat : string[];
+    //let tmpCat : string[];
     tmpCat = this.conveyor.getCategoryIds();
     for (let i=0; i < tmpCat.length; i++){
       console.log(tmpCat[i]);
