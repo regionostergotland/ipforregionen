@@ -18,18 +18,26 @@
       <div *ngIf="!onSmallScreen()"><p>Redigera</p></div>
     </div>
 
-    <!-- EDIT -->
+    <!-- SELECTION -->
     <div class="item-container">
-      <button (click)="navigate('destination', 3)" [class]="getClass(3)">
+      <button (click)="navigate('selection', 3)" [class]="getClass(3)">
         3
+      </button>
+      <div *ngIf="!onSmallScreen()"><p>Urval</p></div>
+    </div>
+
+    <!-- DESTINATION -->
+    <div class="item-container">
+      <button (click)="navigate('destination', 4)" [class]="getClass(4)">
+        4
       </button>
       <div *ngIf="!onSmallScreen()"><p>Välj destination</p></div>
     </div>
 
     <!-- REVIEW -->
     <div class="item-container">
-      <button (click)="navigate('inspection', 4)" [class]="getClass(4)">
-        4
+      <button (click)="navigate('inspection', 5)" [class]="getClass(5)">
+        5
       </button>
       <div *ngIf="!onSmallScreen()"><p>Granska och skicka</p></div>
     </div>

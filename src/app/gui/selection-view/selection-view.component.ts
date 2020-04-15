@@ -45,8 +45,10 @@ export class SelectionViewComponent implements OnInit {
   file: File;
 
 
-  constructor(private conveyor: Conveyor) {
+  constructor(private conveyor: Conveyor,
+    public router: Router) {
     console.log("Loaded selection view...");
+    
    }
 
 
@@ -62,11 +64,12 @@ export class SelectionViewComponent implements OnInit {
 
   AfterViewInit() : void {
     console.log("AfterViewInit");
-    //let tmpCat : string[];
+    /*let tmpCat : string[];
     tmpCat = this.conveyor.getCategoryIds();
     for (let i=0; i < tmpCat.length; i++){
       console.log(tmpCat[i]);
-    }
+
+    }*/
   }
   getCategories(): void {
     console.log("Get Cats");
