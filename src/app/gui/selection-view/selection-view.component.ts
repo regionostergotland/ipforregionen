@@ -17,12 +17,7 @@ interface Selection {
   id: string;
   name: string;
   destinations: string[];
-  categories: Category[];
-}
-
-interface Category {
-  dataType: string;
-  filter: string[];
+  categories: string[];
 }
 
 @Component({
@@ -34,8 +29,6 @@ export class SelectionViewComponent implements OnInit {
   selections: Selection[] = [];
   selectedSelection: Selection[] = []; //Add Selection to this list when it is clicked on
   categorySpec: CategorySpec;
-  implementedCategory: Category;
-  implementedCategories: Category[];
   categories: [string, string][] = [];
   categoryIds: string[] = [];
   categoryMap: Map<string, boolean>;
@@ -48,7 +41,7 @@ export class SelectionViewComponent implements OnInit {
   constructor(private conveyor: Conveyor,
     public router: Router) {
     console.log("Loaded selection view...");
-    
+
    }
 
 
@@ -82,6 +75,10 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
+/*
+* Importing one selection at the time and saving it in
+* member variable selections
+*/
   importSelection(file) : void{
     this.file = file.target.files[0];
     console.log("File uploaded is: " + this.file.name);
@@ -93,37 +90,24 @@ export class SelectionViewComponent implements OnInit {
       result = reader.result;
       result = JSON.parse(result);
 
-      if (!!result["selections"]) {
+      if (!!result["selection"]) {
 
-        // For now loading one selection. Can easily be made into loop for more.
-        let selection = result["selections"][0];
-        console.log("2 " + selection);
-
-        // Preparing categories in an array
-        let selectionCategories = selection["categories"];
-        let tmpCategories : Category[] = [];
-
-        for (var key in selectionCategories) {
-          const category: Category = {
-            dataType: key,
-            filter: selectionCategories[key]
-          }
-          tmpCategories.push(category);
-          console.log(category.dataType);
-          console.log(category.filter);
-        }
+        // For now loading only one selection.
+        let selection = result["selection"];
+        console.log("2 " + JSON.stringify(selection));
 
         // Making instance of interface Selection
         const currentSelection: Selection = {
           id: JSON.stringify(selection["id"]),
           name: JSON.stringify(selection["name"]),
           destinations: selection["destinations"],
-          categories: tmpCategories
+          categories: selection["categories"]
         };
 
+        console.log("Categories: "+ currentSelection.categories);
         // Adding currentSelection to member variable selections
         this.selections.push(currentSelection);
-
+        console.log("Selection: "+ JSON.stringify(this.selections));
       }
 
       else {
@@ -132,7 +116,6 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
-  // [sel, sel, sel]
 
   executeSelections() : void {
     let tmpCat : string[];
@@ -143,7 +126,8 @@ export class SelectionViewComponent implements OnInit {
     let tmp : DataList;
 
     for (let sel of this.selections){
-      for (let cat in sel.categories){
+      for (let cat of sel.categories){
+        console.log("cat: "+ cat);
            tmp =this.conveyor.getDataList(cat);
            for (let entry of tmp.getPoints().entries())
            {
