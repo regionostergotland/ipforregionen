@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { registerLocaleData } from '@angular/common';
 import localeSv from '@angular/common/locales/sv';
-import { i18n } from '@angular/core/src/render3';
 registerLocaleData(localeSv, 'sv');
 
 @Component({

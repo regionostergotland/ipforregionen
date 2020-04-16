@@ -32,7 +32,6 @@ import {
 import { DataViewerModule } from './gui/data-viewer/data-viewer.module';
 
 import { AuthService } from 'src/app/auth.service';
-import { LocaleDataIndex } from '@angular/common/src/i18n/locale_data';
 
 @Injectable({
   providedIn: 'root',
