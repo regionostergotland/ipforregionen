@@ -62,6 +62,7 @@ import { InfoPageComponent } from './gui/info-page/info-page.component';
 import { HomePageComponent } from './gui/home-page/home-page.component';
 import { HelpPageComponent } from './gui/help-page/help-page.component';
 import { SettingsViewComponent } from './gui/settings-view/settings-view.component';
+import { SelectionViewComponent } from './gui/selection-view/selection-view.component';
 /* Fetching */
 import {
   PlatformSelectionComponent
@@ -134,6 +135,7 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     NewAlertDialog,
     LanguageSelectComponent,
     SettingsViewComponent,
+    SelectionViewComponent
   ],
   imports: [
     DataViewerModule,
@@ -207,8 +209,10 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     AddNewDataModalComponent,
     NewDestinationDialog,
     NewAlertDialog,
-    LanguageSelectComponent
+    LanguageSelectComponent,
+    SelectionViewComponent
   ],
+
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' }
   ],

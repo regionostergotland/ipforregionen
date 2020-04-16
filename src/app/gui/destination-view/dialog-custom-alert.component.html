@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Vill du verkligen ta bort den här destinationen?</h1>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="closeDialog()">No Thanks</button>
   <button mat-button cdkFocusInitial [mat-dialog-close]="{delete: true}">
     Ok
   </button>

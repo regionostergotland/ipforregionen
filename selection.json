@@ -1,0 +1,18 @@
+{
+	"selection": {
+		"id": 1,
+		"name": "demo",
+		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/"],
+		"categories": ["body_weight", "blood_pressure"],
+		"filters": {
+		"body_weight": {
+			"width": 1,
+			"fn": 2
+			},
+		"blood_pressure": {
+			"width": 3,
+			"fn": 2
+			}
+		}
+	}
+}

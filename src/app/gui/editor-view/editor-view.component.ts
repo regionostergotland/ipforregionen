@@ -64,6 +64,7 @@ export class EditorViewComponent implements OnInit {
   }
 
   selectCategory(category: string): void {
+    console.log(category);
       this.selectedCategory = category;
   }
 

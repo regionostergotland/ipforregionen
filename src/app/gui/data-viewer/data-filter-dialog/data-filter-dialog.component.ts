@@ -61,6 +61,8 @@ export class DataFilterDialogComponent {
         width: parseInt(intervalString, 10),
         fn: parseInt(funcString, 10),
       };
+      console.log("This is the filter used: " + funcString);
+      console.log("This is the interval: " + intervalString);
       this.conveyor.getDataList(this.selectedCategory).addFilter(filter);
       this.closeDialog();
     }
