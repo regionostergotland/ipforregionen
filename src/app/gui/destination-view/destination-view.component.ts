@@ -118,7 +118,7 @@ export class DestinationViewComponent implements OnInit {
 
     /**
    * Removes a user added destination from local storage
-   * @param index index in destination_names and destination_urls 
+   * @param index index in destination_names and destination_urls
    */
   deleteFromLocalstorage(index: number): void {
     let names;

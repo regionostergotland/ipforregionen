@@ -103,7 +103,8 @@ export class SelectionViewComponent implements OnInit {
 
 /*
 * Uses imported selections stored in this.selections
-* And retrieves the relevant values and filters
+* Retrieves the relevant values and filters
+* And applies the filters to the values
 */
   executeSelections() : void {
     let dataList : DataList;
@@ -116,6 +117,8 @@ export class SelectionViewComponent implements OnInit {
         console.log("Filter:");
         console.log(filter);
         dataList.addFilter(filter);
+        console.log(sel.destinations);
+        this.conveyor.setDestinationUrl(sel.destinations[0]);
 
         for (let entry of dataList.getPoints().entries())
            {
