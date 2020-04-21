@@ -6,12 +6,12 @@
 		"categories": ["body_weight", "blood_pressure"],
 		"filters": {
 		"body_weight": {
-			"width": 1,
+			"width": 4,
 			"fn": 2
 			},
 		"blood_pressure": {
 			"width": 3,
-			"fn": 2
+			"fn": 5
 			}
 		}
 	},
@@ -19,13 +19,16 @@
 			"id": 2,
 			"name": "demo1",
 			"destinations": ["https://rest.ehrscape.com/rest/v1/"],
-			"categories": ["steps", "body_length"],
+			"categories": ["steps", "height_length"],
 			"filters": {
 				"steps": {
-					"width": 2,
-					"fn": 5
+					"width": 4,
+					"fn": 3
 				},
-				"body_"
+				"height_length" : {
+					"width": 4,
+					"fn": 1
+				}
 			}
 		}
 	]
