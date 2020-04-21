@@ -97,7 +97,7 @@ export class Conveyor {
     }
 
   public getDataList(categoryId: string): DataList {
-    console.log("getDataList: " + categoryId);
+    //console.log("getDataList: " + categoryId);
     if (this.categories.has(categoryId)) {
       return this.categories.get(categoryId);
     } else {

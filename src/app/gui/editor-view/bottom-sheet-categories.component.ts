@@ -62,13 +62,37 @@ export class BottomSheetCategoriesComponent {
    * @param categoryId the string ID of the user-selected category.
    */
   addCategory(event: MouseEvent, categoryId: string): void {
+    console.log("Hej vi väljer kategori nu!");
+    let values;
+
     if (!this.conveyor.hasCategoryId(categoryId)) {
       this.conveyor.setDataList(
         categoryId,
         new DataList(this.conveyor.getCategorySpec(categoryId))
       );
     }
+    if (!!localStorage.getItem(JSON.stringify(categoryId)))
+    {
+      values = JSON.parse(localStorage.getItem(JSON.stringify(categoryId)));  
+    } else 
+    {
+      values = new Array
+    }
+    localStorage.setItem(JSON.stringify(categoryId), JSON.stringify(values));
     this.bottomSheetRef.dismiss();
     event.preventDefault();
   }
 }
+// if (!!localStorage.getItem('destination_names')) {
+
+/*
+  addToLocalStorage(category: string, values: array): void {
+    let values;
+    if (!!localStorage.getItem(category)) {
+      values = JSON.parse(localStorage.getItem(category));
+    } else {
+      values = new Array();
+    }
+
+    localStorage.setItem(category, JSON.stringify(values));
+  }*/
