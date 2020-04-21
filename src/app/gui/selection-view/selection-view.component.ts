@@ -78,7 +78,6 @@ export class SelectionViewComponent implements OnInit {
       if (!!result["selection"]) {
         // For now loading only one selection.
         let selection = result["selection"];
-        console.log("2 " + JSON.stringify(selection));
 
         // Making instance of interface Selection
         const currentSelection: Selection = {
@@ -89,10 +88,10 @@ export class SelectionViewComponent implements OnInit {
           filters: selection["filters"]
         };
 
-        console.log("Categories: "+ currentSelection.categories);
+        this.saveToLocal(currentSelection);
+
         // Adding currentSelection to member variable selections
         this.selections.push(currentSelection);
-        console.log("Selection: "+ JSON.stringify(this.selections));
       }
 
       else {
@@ -132,7 +131,30 @@ export class SelectionViewComponent implements OnInit {
   * Allows selecting one or more selections
   * that will then be handled with executeSelections()
   */
-  selectSelection(){
+  selectSelection() : void{
 
   }
+
+  /**
+   * Saves selection to localstorage under "selections" if not already
+   * present.
+   * @param object selection
+   */
+
+  saveToLocal(selection: Selection) : void {
+    let selections;
+    if (!!JSON.parse(localStorage.getItem("selections"))) {
+      selections = JSON.parse(localStorage.getItem("selections"));
+    } else {
+      selections = {};
+    }
+
+    if (!selections[selection.id]) {
+      selections[selection.id] = selection;
+      localStorage.setItem("selections", JSON.stringify(selections));
+    }
+  }
 }
+
+
+//    localStorage.setItem('destination_urls', JSON.stringify(urls));

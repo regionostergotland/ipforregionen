@@ -91,8 +91,8 @@ export class DestinationViewComponent implements OnInit {
    * @param url Destination URL, provided by user
    */
   addToLocalStorage(name: string, url: string): void {
-    let names;
-    let urls;
+    let names: any[];
+    let urls: any[];
     if (!!localStorage.getItem('destination_names')) {
       names = JSON.parse(localStorage.getItem('destination_names'));
     } else {
