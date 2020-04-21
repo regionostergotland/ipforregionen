@@ -77,8 +77,11 @@ export class SelectionViewComponent implements OnInit {
 
       if (!!result["selection"]) {
         // For now loading only one selection.
-        let selection = result["selection"];
-        console.log("2 " + JSON.stringify(selection));
+
+        for (let selection of result["selection"]){ 
+
+        //let selection = result["selection"];
+          console.log("2 " + JSON.stringify(selection));
 
         // Making instance of interface Selection
         const currentSelection: Selection = {
@@ -94,6 +97,7 @@ export class SelectionViewComponent implements OnInit {
         this.selections.push(currentSelection);
         console.log("Selection: "+ JSON.stringify(this.selections));
       }
+    }
 
       else {
         console.log("This file is not a valid selection.");

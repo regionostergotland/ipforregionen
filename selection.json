@@ -1,5 +1,5 @@
 {
-	"selection": {
+	"selection": [{
 		"id": 1,
 		"name": "demo",
 		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/"],
@@ -14,5 +14,19 @@
 			"fn": 2
 			}
 		}
-	}
+	},
+		{
+			"id": 2,
+			"name": "demo1",
+			"destinations": ["https://rest.ehrscape.com/rest/v1/"],
+			"categories": ["steps", "body_length"],
+			"filters": {
+				"steps": {
+					"width": 2,
+					"fn": 5
+				},
+				"body_"
+			}
+		}
+	]
 }
