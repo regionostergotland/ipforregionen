@@ -25,22 +25,22 @@ export class ToolbarComponent {
     translate.setDefaultLang('sv');
   }
 
-  isAuthenticated() {
-    return this.auth.isAuthenticated();
-  }
+  // isAuthenticated() {
+  //   return this.auth.isAuthenticated();
+  // }
 
-  pnr() {
-    return this.auth.getUser().pnr;
-  }
+  // pnr() {
+  //   return this.auth.getUser().pnr;
+  // }
 
-  fullName() {
-    return this.auth.getUser().fullName;
-  }
+  // fullName() {
+  //   return this.auth.getUser().fullName;
+  // }
 
-  signOut() {
-    this.auth.deauthenticate();
-    this.router.navigateByUrl('login');
-  }
+  // signOut() {
+  //   this.auth.deauthenticate();
+  //   this.router.navigateByUrl('login');
+  // }
 
   switchLang(lang: string) {
     this.translate.use(lang);

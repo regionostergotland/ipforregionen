@@ -31,34 +31,11 @@ import {
 } from './gui/selection-view/selection-view.component';  
 import { DataViewerModule } from './gui/data-viewer/data-viewer.module';
 
-import { AuthService } from 'src/app/auth.service';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard implements CanActivate {
-  constructor(
-    private auth: AuthService,
-    private router: Router
-  ) {}
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const can: boolean = this.auth.isAuthenticated();
-    if (!can) {
-      this.router.navigateByUrl('/login');
-    }
-    return can;
-  }
-}
-
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  //TODO: Ladda in language från local storage och redirecta till den istället för hårdkodad sv
-  { path: 'login', redirectTo: 'sv/login'},
-  { path: 'sv/login', component: LoginComponent },
   { path: 'help', component: HelpPageComponent },
   { path: 'info', component: InfoPageComponent },
-  { path: '', canActivate: [AuthGuard], children: [
+  { path: '', children: [
     { path: 'home', component: HomePageComponent },
     { path: 'platform-selection', component: PlatformSelectionComponent },
     { path: 'category-selection/:platform',
