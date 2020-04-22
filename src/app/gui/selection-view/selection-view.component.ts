@@ -4,6 +4,7 @@ import { CategorySpec } from 'src/app/ehr/datatype';
 import { DataList } from '../../ehr/datalist';
 import { Router } from '@angular/router';
 import { Filter, filterString } from 'src/app/ehr/datalist';
+import { Destination } from '../../destination.service';
 import {
   Categories,
   CommonFields,
@@ -32,6 +33,8 @@ export class SelectionViewComponent implements OnInit {
   selectedSelection: Selection[] = []; //Add Selection to this list when it is clicked on
 
   categoryIds: string[] = [];
+  
+  destination: Destination;
 
   file: File;
 
@@ -110,25 +113,41 @@ export class SelectionViewComponent implements OnInit {
 * Retrieves the relevant values and filters
 * And applies the filters to the values
 */
-  executeSelections() : void {
-    let dataList : DataList;
-
+  executeSelections() : void {   
     for (let sel of this.selections){
-      for (let cat of sel.categories){
-        console.log("For cat: "+ cat);
-        dataList = this.conveyor.getDataList(cat);
-        let filter: Filter = sel.filters[cat];
+      this.executeSelection(sel);
+    }
+  }
+
+  executeSelection(selection: Selection): void {
+    for (let cat of selection.categories){
+      console.log("For cat: "+ cat);
+      if(this.conveyor.hasCategoryId(cat)){
+        let dataList = this.conveyor.getDataList(cat);
+        let filter: Filter = selection.filters[cat];
         console.log("Filter:");
         console.log(filter);
         dataList.addFilter(filter);
-        console.log(sel.destinations);
-        this.conveyor.setDestinationUrl(sel.destinations[0]);
+        console.log(selection.destinations);
+        this.addDestinationData(cat, dataList, selection.destinations)
+        //this.conveyor.setDestinationUrl(sel.destinations[0]);
+        
 
-        for (let entry of dataList.getPoints().entries())
-           {
-             console.log(entry[1]);
-           }
+      } else {
+        console.log("Category has not been imported");
       }
+    }
+  }
+
+  addDestinationData(category : string, data : DataList, 
+    destinations: string[]): void {
+      let i : number; //tmp
+      i = 0; //tmp
+    for (let dest of destinations){
+      let tmp = new Destination("dest" + i.toString, dest);
+      tmp.setDataList(category, data);    
+      this.conveyor.setDestination(tmp);
+      i++; //tmp
     }
   }
 

@@ -8,6 +8,7 @@ import {
 import { Conveyor } from '../../conveyor.service';
 import { CompositionReceipt } from '../../ehr/ehr.service';
 import { ConfigService } from 'src/app/config.service';
+import { Destination } from '../../destination.service';
 
 @Component({
   selector: 'app-inspection-view',
@@ -19,7 +20,7 @@ export class InspectionViewComponent implements OnInit {
 
   dataSent = false;
   receipt: CompositionReceipt;
-  destination: string;
+  destinations: Destination[];
 
   constructor(
     public router: Router,
@@ -27,11 +28,12 @@ export class InspectionViewComponent implements OnInit {
     private snackBar: MatSnackBar,
     private conveyor: Conveyor,
   ) {
-    this.destination = this.conveyor.getDestination();
+    
   }
 
   ngOnInit() {
     this.dataSent = false;
+    this.destinations = this.conveyor.getDestinations();
   }
 
   hasData(): boolean {
@@ -76,7 +78,10 @@ export class InspectionViewComponent implements OnInit {
    * Send all the data stored in the conveyor.
    */
   sendData(pnr: string) {
-    this.conveyor.sendData().
+    //for (let dest of this.destinations){
+      let dest = new Destination("demo",
+       "https://personal-health-record-c7ebb.firebaseio.com/");
+    this.conveyor.sendData(dest).
       subscribe(
         receipt => {
           this.dataSent = true;
@@ -91,6 +96,7 @@ export class InspectionViewComponent implements OnInit {
             { duration: 100000000 }
           );
         }
-    );
+      );
+      //}
   }
 }

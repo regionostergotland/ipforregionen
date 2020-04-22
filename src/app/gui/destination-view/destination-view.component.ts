@@ -79,9 +79,9 @@ export class DestinationViewComponent implements OnInit {
   continue(destination: string): void {
     let index = this.destination_names.indexOf(destination);
     let url = this.destination_urls[index];
-    this.conveyor.setDestination(destination);
-    this.conveyor.setDestinationUrl(url);
-    this.router.navigateByUrl('/inspection');
+    //this.conveyor.setDestination(destination);
+    //this.conveyor.setDestinationUrl(url);
+    //this.router.navigateByUrl('/inspection');
   }
 
 
