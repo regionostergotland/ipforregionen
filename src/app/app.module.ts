@@ -116,6 +116,9 @@ import {
   FiveOhPageComponent 
 } from './error-pages/error-pages.component';
 
+/* LoginModal */
+import { LoginModal } from './gui/inspection-view/login-modal.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -139,6 +142,7 @@ import {
     DestinationViewComponent,
     NewDestinationDialog,
     NewAlertDialog,
+    LoginModal,
     LanguageSelectComponent,
     SettingsViewComponent,
     SelectionViewComponent,
@@ -218,7 +222,8 @@ import {
     NewDestinationDialog,
     NewAlertDialog,
     LanguageSelectComponent,
-    SelectionViewComponent
+    SelectionViewComponent,
+    LoginModal
   ],
 
   providers: [

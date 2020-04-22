@@ -43,7 +43,7 @@ export class DestinationViewComponent implements OnInit {
   destination_urls: string[] = ['https://rest.ehrscape.com/rest/v1/'];
   assetUrl: string;
   defaultText: string = "Välj destination...";
-  selection: string = this.defaultText;
+  selection: string = "Region Ostergotland"; // should be defaultText, only like this for testing
 
   name: string;
   dest_url: string;

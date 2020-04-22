@@ -3,11 +3,13 @@ import {Component,
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
-import {
-         DataTypeEnum} from '../../ehr/datatype';
+import { DataTypeEnum } from '../../ehr/datatype';
 import { Conveyor } from '../../conveyor.service';
 import { CompositionReceipt } from '../../ehr/ehr.service';
 import { ConfigService } from 'src/app/config.service';
+import { LoginModal } from './login-modal.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-inspection-view',
@@ -26,12 +28,17 @@ export class InspectionViewComponent implements OnInit {
     private cfg: ConfigService,
     private snackBar: MatSnackBar,
     private conveyor: Conveyor,
+    public dialog: MatDialog
   ) {
     this.destination = this.conveyor.getDestination();
   }
 
   ngOnInit() {
     this.dataSent = false;
+  }
+
+  hasDestination(): boolean {
+    return this.destination != null;
   }
 
   hasData(): boolean {
@@ -63,7 +70,7 @@ export class InspectionViewComponent implements OnInit {
    * @param category the category to get values from
    * @returns the number of values in the chosen category
    */
-  getNumberOfValues(category: string) {
+  getNumberOfValues(category: string): number {
     let values = 0;
     const pointMap = this.conveyor.getDataList(category).getPoints();
     for (const points of pointMap.values()) {
@@ -75,10 +82,16 @@ export class InspectionViewComponent implements OnInit {
   /**
    * Send all the data stored in the conveyor.
    */
-  sendData(pnr: string) {
-    this.conveyor.sendData().
+  sendData(): void {
+    const dialogRef = this.dialog.open(LoginModal, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.conveyor.sendData().
       subscribe(
         receipt => {
+          console.log(receipt);
           this.dataSent = true;
           this.receipt = receipt;
           this.conveyor.clearData();
@@ -87,10 +100,11 @@ export class InspectionViewComponent implements OnInit {
           console.log(e);
           if (this.cfg.getIsDebug()) { console.log(e); }
           this.snackBar.open(
-            'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', 'OK',
-            { duration: 100000000 }
+            'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', null,
+            { duration: 5000 }
           );
         }
     );
+    });
   }
 }

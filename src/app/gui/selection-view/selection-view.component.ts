@@ -120,9 +120,9 @@ export class SelectionViewComponent implements OnInit {
         this.conveyor.setDestinationUrl(sel.destinations[0]);
 
         for (let entry of dataList.getPoints().entries())
-           {
-             console.log(entry[1]);
-           }
+        {
+          console.log(entry[1]);
+        }
       }
     }
   }

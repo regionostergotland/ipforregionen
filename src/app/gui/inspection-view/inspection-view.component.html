@@ -13,32 +13,32 @@
   </button>
 </div>
 
-<div *ngIf="!dataSent">
-  <div *ngIf="!hasData()">
-    <h1 style="text-align: center">
-      Hoppsan!
-    </h1>
-    <p>Du har inte hämtat eller matat in någon data!</p>
-    <button mat-raised-button color="primary"
-      (click)="router.navigateByUrl('/destination')">
-        Backa
-    </button>
-  </div>
+<div *ngIf="!dataSent && (!hasDestination() || !hasData())">
+  <h1 style="text-align: center">
+    Hoppsan!
+  </h1>
+  <p *ngIf="!hasDestination() && !hasData()">Du har inte hämtat data eller valt destination!</p>
+  <p *ngIf="!hasDestination() && hasData()">Du har inte valt destination!</p>
+  <p *ngIf="hasDestination() && !hasData()">Du har inte hämtat någon data att skicka!</p>
+  <button mat-raised-button color="primary"
+    (click)="router.navigateByUrl('/destination')">
+      Backa
+  </button>
 </div>
-<div *ngIf="hasData()">
+<div *ngIf="hasData() && hasDestination()">
   <div *ngIf="!dataSent" class="center">
-    <p>Kontrollera dina värden innan du skickar in till {{destination}}</p>
+    <p>Kontrollera dina värden innan du skickar in till {{ destination }}</p>
     <div class="panel-container">
       <mat-expansion-panel *ngFor="let category of conveyor.getCategoryIds()"
                            class="panel">
         <mat-expansion-panel-header *ngIf="!isCategoryEmpty(category)">
-          <mat-panel-title
-            >{{ conveyor.getCategorySpec(category).label }}
+          <mat-panel-title>
+            {{ conveyor.getCategorySpec(category).label }}
           </mat-panel-title>
-          <mat-panel-description
-            >Antal mätvärden:
-            {{ getNumberOfValues(category) }}</mat-panel-description
-          >
+          <mat-panel-description>
+            Antal mätvärden:
+            {{ getNumberOfValues(category) }}
+          </mat-panel-description>
         </mat-expansion-panel-header>
 
         <app-data-container [editable]="false" [selectCategory]="category">

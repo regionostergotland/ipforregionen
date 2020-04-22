@@ -59,12 +59,12 @@ export class EhrService {
    */
   private postComposition(ehrId: any, composition: {}, baseUrl: string):
       Observable<CompositionResponse> {
-    const params = new HttpParams()
-      .set('ehrId', ehrId)
-      .set('templateId', this.cfg.getEhrTemplateId())
-      .set('format', 'STRUCTURED');
-    let call = 'composition';
-    /*
+        const params = new HttpParams()
+        .set('ehrId', ehrId)
+        .set('templateId', this.cfg.getEhrTemplateId())
+        .set('format', 'STRUCTURED');
+        let call = 'composition';
+        /*
      * Firebase url needs to end with .json
      * Other databases might not need it
      * Check if universal fix is possible
@@ -149,6 +149,7 @@ export class EhrService {
     };
     return this.postComposition(this.auth.getUser().ehrId, composition, baseUrl)
       .pipe(map((res: CompositionResponse) => {
+          receipt.ehrId = this.auth.getUser().ehrId;
           receipt.compUid = res.compositionUid;
           return receipt;
         }));
