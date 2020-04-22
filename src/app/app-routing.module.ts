@@ -1,10 +1,8 @@
-import { Injectable, NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
-  Router, RouterModule, Routes,
-  CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot
+  RouterModule, Routes,
 } from '@angular/router';
 
-import { LoginComponent } from './gui/login/login.component';
 import { HomePageComponent } from './gui/home-page/home-page.component';
 import { InfoPageComponent } from './gui/info-page/info-page.component';
 import { HelpPageComponent} from './gui/help-page/help-page.component';
@@ -30,6 +28,7 @@ import {
   SelectionViewComponent
 } from './gui/selection-view/selection-view.component';  
 import { DataViewerModule } from './gui/data-viewer/data-viewer.module';
+import { FourFourPageComponent, FiveOhPageComponent } from './error-pages/error-pages.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -39,13 +38,16 @@ const routes: Routes = [
     { path: 'home', component: HomePageComponent },
     { path: 'platform-selection', component: PlatformSelectionComponent },
     { path: 'category-selection/:platform',
-      component: CategorySelectionComponent },
+    component: CategorySelectionComponent },
     { path: 'inspection', component: InspectionViewComponent },
     { path: 'destination', component: DestinationViewComponent},
     { path: 'edit', component: EditorViewComponent },
     { path: 'settings', component: SettingsViewComponent },
     { path: 'selection', component: SelectionViewComponent },
   ]},
+  { path: '404', component: FourFourPageComponent},
+  { path: '500', component: FiveOhPageComponent},
+  { path: '**', redirectTo: '/404'},
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -110,6 +110,12 @@ import { CustomGoogleApiModule } from './google-fit-config';
 /* Localization settings */
 import { LanguageSelectComponent } from './gui/language-select/language-select.component';
 
+/* Error pages */
+import { 
+  FourFourPageComponent, 
+  FiveOhPageComponent 
+} from './error-pages/error-pages.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -135,7 +141,9 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     NewAlertDialog,
     LanguageSelectComponent,
     SettingsViewComponent,
-    SelectionViewComponent
+    SelectionViewComponent,
+    FourFourPageComponent, 
+    FiveOhPageComponent 
   ],
   imports: [
     DataViewerModule,
@@ -224,3 +232,5 @@ export class AppModule { }
 export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+
+
