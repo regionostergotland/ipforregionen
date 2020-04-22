@@ -282,6 +282,7 @@ export class DataTableComponent implements OnInit {
       // Reset all the internal lists.
       this.categorySpec = this.conveyor.getCategorySpec(this.category);
       this.addPaginator();
+      console.log("SIMON i ngOnInit")
       this.displayedColumns = this.getDisplayedColumns();
 
       this.options = new Map<string, DataTypeCodedTextOpt[]>();
@@ -346,6 +347,15 @@ export class DataTableComponent implements OnInit {
 
     if (this.category) {
       const dataList = this.conveyor.getDataList(this.category);
+      // om datalist.length != getlista från localstorage.length
+      //    slå ihop listorna
+      // annars fortsätt som vanligt
+      console.log("This is the datalist: " , dataList);
+
+      console.log("This is datalist points pls?? ", dataList.getPoints());
+      console.log(dataList.getPoints().keys());
+      // THIS IS STILL BROKEN //
+
       for (const [column, dataType] of dataList.spec.dataTypes.entries()) {
         if (!dataType.visible) {
           continue;
@@ -378,5 +388,14 @@ export class DataTableComponent implements OnInit {
     }
 
     return result;
+  }
+
+  reviver(key: string, value: any): any {
+    if(typeof value === 'object' && value !== null) {
+      if (value.dataType === 'Map') {
+        return new Map(value.value);
+      }
+    }
+    return value;
   }
 }
