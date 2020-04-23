@@ -4,6 +4,7 @@ import { CategorySpec } from 'src/app/ehr/datatype';
 import { DataList } from '../../ehr/datalist';
 import { Router } from '@angular/router';
 import { Filter, filterString } from 'src/app/ehr/datalist';
+import { Destination } from '../../destination.service';
 import {
   Categories,
   CommonFields,
@@ -33,6 +34,8 @@ export class SelectionViewComponent implements OnInit {
   selectedSelection: Selection[] = []; //Add Selection to this list when it is clicked on
 
   categoryIds: string[] = [];
+
+  destination: Destination;
 
   file: File;
 
@@ -78,13 +81,17 @@ export class SelectionViewComponent implements OnInit {
 
       if (!!result["selection"]) {
         // For now loading only one selection.
-        let selection = result["selection"];
+
+        for (let selection of result["selection"]){
+
+        //let selection = result["selection"];
+          console.log("2 " + JSON.stringify(selection));
 
         // Making instance of interface Selection
         const currentSelection: Selection = {
           id: JSON.stringify(selection["id"]),
           name: JSON.stringify(selection["name"]),
-          needsAuth: selection["needsAuth"],
+          needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
           filters: selection["filters"]
@@ -95,6 +102,7 @@ export class SelectionViewComponent implements OnInit {
         // Adding currentSelection to member variable selections
         this.selections.push(currentSelection);
       }
+    }
 
       else {
         console.log("This file is not a valid selection.");
@@ -108,28 +116,60 @@ export class SelectionViewComponent implements OnInit {
 * And applies the filters to the values
 */
   executeSelections() : void {
-    let dataList : DataList;
-
     for (let sel of this.selections){
-      for (let cat of sel.categories){
-        console.log("For cat: "+ cat);
-        dataList = this.conveyor.getDataList(cat);
-        let filter: Filter = sel.filters[cat];
-        console.log("Filter:");
-        console.log(filter);
-        dataList.addFilter(filter);
-        console.log(sel.destinations);
-        this.conveyor.setDestination("yeet");
-        this.conveyor.setDestinationUrl(sel.destinations[0]);
-        this.conveyor.setDestinationAuth(sel.needsAuth);
+      this.executeSelection(sel);
+    }
+  }
 
-        for (let entry of dataList.getPoints().entries())
-        {
-          console.log(entry[1]);
-        }
+
+  executeSelection(selection: Selection): void {
+    for (let cat of selection.categories){
+      console.log("For cat: "+ cat);
+      if(this.conveyor.hasCategoryId(cat)){
+        let dataList = this.conveyor.getDataList(cat);
+        let filter: Filter = selection.filters[cat];
+        //console.log("Filter:");
+        //console.log(filter);
+        dataList.addFilter(filter);
+        //console.log("Selection destination: ")
+        //console.log(selection.destinations);
+        this.addDestinationData(cat, dataList, selection.destinations,
+           selection.needsAuth);
+        //this.conveyor.setDestinationUrl(sel.destinations[0]);
+      } else {
+        console.log("Category has not been imported");
       }
     }
   }
+
+/*
+* Create destination objects for each destination and
+* add each destination to the destination array in conveyor
+*/
+  addDestinationData(category : string, data : DataList,
+    destinations: string[], needsAuth :boolean): void {
+
+      destinations.forEach((value, i) => {
+        let dest_object : Destination;
+        
+        if(!this.conveyor.getDestinations().has(value)){
+          dest_object = new Destination("dest" + String(i), value, needsAuth);
+          console.log("Added destination to map");        } 
+        else {
+          dest_object = this.conveyor.getDestinations().get(value);
+          console.log("Destination already in map");
+        }
+        dest_object.setDataList(category, data);
+        this.conveyor.setDestination(dest_object);
+
+        console.log("Destination object: ");
+        console.log(dest_object);
+        
+      })
+      console.log("Destination map: ");
+      console.log(this.conveyor.getDestinations());
+  }
+
 
   /*
   * Allows selecting one or more selections

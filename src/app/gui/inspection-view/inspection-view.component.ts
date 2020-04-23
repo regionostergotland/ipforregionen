@@ -10,6 +10,7 @@ import { ConfigService } from 'src/app/config.service';
 import { LoginModal } from './login-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 
+import { Destination } from '../../destination.service';
 
 @Component({
   selector: 'app-inspection-view',
@@ -21,8 +22,7 @@ export class InspectionViewComponent implements OnInit {
 
   dataSent = false;
   receipt: CompositionReceipt;
-  destination: string;
-  //destinations: Map<string, Destinations>;
+  destinations: Map<string, Destination>;
 
   constructor(
     public router: Router,
@@ -37,6 +37,7 @@ export class InspectionViewComponent implements OnInit {
 
   ngOnInit() {
     this.dataSent = false;
+    this.destinations = this.conveyor.getDestinations();
   }
 
   hasDestination(): boolean {
@@ -142,4 +143,25 @@ export class InspectionViewComponent implements OnInit {
       }
     });
   }
-}
+  // sendData(pnr: string) { //<-- This is an issue
+    //for (let dest of this.destinations){
+    //   let dest = new Destination("demo",
+    //    "https://personal-health-record-c7ebb.firebaseio.com/", false);
+    // this.conveyor.sendData(dest).
+    //   subscribe(
+    //     receipt => {
+    //       this.dataSent = true;
+    //       this.receipt = receipt;
+    //       this.conveyor.clearData();
+    //     },
+    //     e => {
+    //       console.log(e);
+    //       if (this.cfg.getIsDebug()) { console.log(e); }
+    //       this.snackBar.open(
+    //         'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', 'OK',
+    //         { duration: 100000000 }
+    //       );
+    //     }
+    //   );
+    // }
+  }
