@@ -20,7 +20,7 @@ export class InspectionViewComponent implements OnInit {
 
   dataSent = false;
   receipt: CompositionReceipt;
-  destinations: Destination[];
+  destinations: Map<string, Destination>;
 
   constructor(
     public router: Router,

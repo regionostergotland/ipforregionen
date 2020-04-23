@@ -18,7 +18,7 @@ import { BluetoothService } from './platform/bluetooth.service';
 export class Conveyor {
   private readonly platforms: Map<string, Platform>;
   private categories: Map<string, DataList>;
-  private destinations: Destination[] = [];
+  private destinations: Map<string, Destination>;
 
   //private destination: string;
   //private destinationUrl: string;
@@ -31,6 +31,7 @@ export class Conveyor {
     private bluetoothService: BluetoothService)
     {
       this.categories = new Map<string, DataList>();
+      this.destinations  = new Map<string, Destination>();
       this.platforms = new Map<string, Platform>([
         [ 'google-fit', this.gfitService ],
         [ 'dummy', this.dummyPlatformService ],
@@ -130,7 +131,7 @@ export class Conveyor {
   }
 
   public setDestination(dest:Destination){
-    this.destinations.push(dest);
+    this.destinations.set(dest.getDestinationUrl(), dest);
   }
 
   public getDestinations(){

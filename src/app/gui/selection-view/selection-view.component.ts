@@ -125,11 +125,11 @@ export class SelectionViewComponent implements OnInit {
       if(this.conveyor.hasCategoryId(cat)){
         let dataList = this.conveyor.getDataList(cat);
         let filter: Filter = selection.filters[cat];
-        console.log("Filter:");
-        console.log(filter);
+        //console.log("Filter:");
+        //console.log(filter);
         dataList.addFilter(filter);
-        console.log("Selection destination: ")
-        console.log(selection.destinations);
+        //console.log("Selection destination: ")
+        //console.log(selection.destinations);
         this.addDestinationData(cat, dataList, selection.destinations)
         //this.conveyor.setDestinationUrl(sel.destinations[0]);
 
@@ -148,26 +148,30 @@ export class SelectionViewComponent implements OnInit {
     destinations: string[]): void {
 
       destinations.forEach((value, i) => {
-        console.log("ind: " + i);
-        let dest_object = new Destination("dest" + String(i), value);
+        let dest_object : Destination;
+        
+        if(!this.conveyor.getDestinations().has(value)){
+          dest_object = new Destination("dest" + String(i), value);
+          console.log("Added destination to map");        } 
+        else {
+          dest_object = this.conveyor.getDestinations().get(value);
+          console.log("Destination already in map");
+        }
         dest_object.setDataList(category, data);
+        this.conveyor.setDestination(dest_object);
+
         console.log("Destination object: ");
         console.log(dest_object);
-        this.conveyor.setDestination(dest_object);
+        //this.conveyor.getDestinations()[value]
+        //.setDataList(category, data); 
+        
       })
-/*
-      let i : number; //tmp
-      i = 0; //tmp
-    for (let dest of destinations){
-      let tmp = new Destination("dest" + i.toString, dest);
-      console.log("ind: " + i);
-      tmp.setDataList(category, data);
-      console.log("OJDestination object: ");
-      console.log(tmp);
-      this.conveyor.setDestination(tmp);
-      i++; //tmp
+      console.log("Destination map: ");
+      console.log(this.conveyor.getDestinations());
 
-    }*/
+      for (let key of this.conveyor.getDestinations().keys()){
+        console.log(key);
+      }
   }
 
   /*
