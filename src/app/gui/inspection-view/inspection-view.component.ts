@@ -36,7 +36,6 @@ export class InspectionViewComponent implements OnInit {
     this.dataSent = false;
     let destinations = this.conveyor.getDestinations();
     this.destinations = Array.from(destinations.values());
-    console.log(this.destinations[0]);
   }
 
   hasDestination(): boolean {
