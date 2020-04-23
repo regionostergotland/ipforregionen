@@ -18,16 +18,17 @@ import { BluetoothService } from './platform/bluetooth.service';
 export class Conveyor {
   private readonly platforms: Map<string, Platform>;
   private categories: Map<string, DataList>;
-  private destinations: Destination[];
+  private destinations: Destination[] = [];
+
   //private destination: string;
   //private destinationUrl: string;
-  
+
 
   constructor(
     private ehrService: EhrService,
     private gfitService: GfitService,
     private dummyPlatformService: DummyPlatformService,
-    private bluetoothService: BluetoothService) 
+    private bluetoothService: BluetoothService)
     {
       this.categories = new Map<string, DataList>();
       this.platforms = new Map<string, Platform>([
