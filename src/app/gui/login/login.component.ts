@@ -37,6 +37,13 @@ export class LoginComponent {
     );
   }
 
+  /* bug workaround https://github.com/angular/angular/issues/25837
+     messes up routing, multiple views simultaneously and nothing is
+     clickable. */
+  private enter(): void {
+    this.ngZone.run(() => this.router.navigateByUrl('home')).then();
+  }
+
   /* TODO custom errors with specific user messages */
   assistedToken() {
     this.auth.authenticateAT().subscribe(
@@ -55,9 +62,11 @@ export class LoginComponent {
         }
       }))
       .subscribe(
+        () => this.enter(),
         e => this.showError(
           'Inloggning misslyckades. Fel: "' + e.message + '"'
-        )
+        ),
       );
+      console.log(this.auth.isAuthenticated());
   }
 }

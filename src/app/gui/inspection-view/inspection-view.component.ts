@@ -78,33 +78,65 @@ export class InspectionViewComponent implements OnInit {
     }
     return values;
   }
+  
+  sendData(): void {
+    this.conveyor.sendData().
+        subscribe(
+          receipt => {
+            console.log(receipt);
+            this.dataSent = true;
+            this.receipt = receipt;
+            this.conveyor.clearData();
+          },
+          e => {
+            console.log(e);
+            if (this.cfg.getIsDebug()) { console.log(e); }
+            this.snackBar.open(
+              'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', null,
+              { duration: 5000 }
+            );
+          }
+      );
+  }
+  
+  /**
+   * Checks if destination requires login
+   * @returns true | false
+   */
+  needsAuth(): boolean {
+    return this.conveyor.getDestinationAuth();
+  }
 
   /**
-   * Send all the data stored in the conveyor.
+   * Send all the data stored in the conveyor if log in is required.
    */
-  sendData(): void {
+  sendDataWithAuth(): void {
     const dialogRef = this.dialog.open(LoginModal, {
       width: '250px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.conveyor.sendData().
-      subscribe(
-        receipt => {
-          console.log(receipt);
-          this.dataSent = true;
-          this.receipt = receipt;
-          this.conveyor.clearData();
-        },
-        e => {
-          console.log(e);
-          if (this.cfg.getIsDebug()) { console.log(e); }
-          this.snackBar.open(
-            'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', null,
-            { duration: 5000 }
-          );
-        }
-    );
+      if (result === true) {
+        this.conveyor.sendData().
+        subscribe(
+          receipt => {
+            console.log(receipt);
+            this.dataSent = true;
+            this.receipt = receipt;
+            this.conveyor.clearData();
+          },
+          e => {
+            console.log(e);
+            if (this.cfg.getIsDebug()) { console.log(e); }
+            this.snackBar.open(
+              'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', null,
+              { duration: 5000 }
+            );
+          }
+      );
+      } else {
+        this.snackBar.open("Datan är inte skickad", null, {duration: 3000});
+      }
     });
   }
 }

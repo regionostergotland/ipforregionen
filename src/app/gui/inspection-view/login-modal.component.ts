@@ -16,6 +16,7 @@ export class LoginModal{
     AuthenticationMethod = AuthenticationMethod;
     method: AuthenticationMethod;
     loggedIn: boolean = false;
+    private succesfulLogin: boolean = false;
   
 
     constructor (
@@ -57,10 +58,14 @@ export class LoginModal{
             }
         }))
         .subscribe(
-            () => this.closeDialog(),
-            e => this.showError(
+            () => {
+                this.succesfulLogin = true;
+                this.closeDialog()
+            },
+            e => {
+                this.showError(
                 'Inloggning misslyckades. Fel: "' + e.message + '"'
-            )
+                )}
         );
     }
 
@@ -68,7 +73,7 @@ export class LoginModal{
      * Closes dialog when user presses no
      */
     closeDialog(): void {
-        this.dialogRef.close();
+        this.dialogRef.close(this.succesfulLogin);
     }
 }
 

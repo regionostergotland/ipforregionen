@@ -17,6 +17,7 @@
   (click) = "selectSelection($event.target)"> <!--Make selections clickable-->
   <p>{{selection.name}}</p>
   <p>{{selection.id}}</p>
+  <p>{{selection.needsAuth}}</p>
   <p>{{selection.destinations}}</p>
   <p>{{selection.categories}}</p>
   </div>
@@ -27,3 +28,5 @@
   class="btn"
   color="primary"
   (click) = "executeSelections()" > Skapa resultat </button> 
+
+<button (click)="router.navigateByUrl('/inspection')">Gå vidare</button>

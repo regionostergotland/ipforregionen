@@ -17,6 +17,7 @@ import {
 interface Selection {
   id: string;
   name: string;
+  needsAuth: boolean;
   destinations: string[];
   categories: string[];
   filters: Map<string, Filter>;
@@ -83,6 +84,7 @@ export class SelectionViewComponent implements OnInit {
         const currentSelection: Selection = {
           id: JSON.stringify(selection["id"]),
           name: JSON.stringify(selection["name"]),
+          needsAuth: selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
           filters: selection["filters"]
@@ -117,7 +119,9 @@ export class SelectionViewComponent implements OnInit {
         console.log(filter);
         dataList.addFilter(filter);
         console.log(sel.destinations);
+        this.conveyor.setDestination("yeet");
         this.conveyor.setDestinationUrl(sel.destinations[0]);
+        this.conveyor.setDestinationAuth(sel.needsAuth);
 
         for (let entry of dataList.getPoints().entries())
         {

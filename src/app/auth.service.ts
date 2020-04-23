@@ -248,6 +248,7 @@ export class AuthService {
     this.basicCredentials = '';
   }
 
+
   /**
    * Perform a GET request with current authentication to a given API call with
    * the given parameters.

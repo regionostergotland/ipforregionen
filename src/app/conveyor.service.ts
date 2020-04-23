@@ -19,6 +19,7 @@ export class Conveyor {
   private categories: Map<string, DataList>;
   private destination: string;
   private destinationUrl: string;
+  private destinationAuth: boolean = true;
 
   constructor(
     private ehrService: EhrService,
@@ -136,7 +137,16 @@ export class Conveyor {
     return this.destinationUrl;
   }
 
+  
   public setDestinationUrl(destination: string) {
     this.destinationUrl = destination;
+  }
+  
+  public getDestinationAuth(): boolean {
+    return this.destinationAuth;
+  }
+
+  public setDestinationAuth(needsAuth: boolean): void {
+    this.destinationAuth= needsAuth;
   }
 }

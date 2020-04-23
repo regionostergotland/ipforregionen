@@ -54,6 +54,14 @@
         Tillbaka
       </button>
       <button
+        *ngIf="needsAuth()"
+        mat-raised-button
+        color="primary"
+        (click)="sendDataWithAuth()">
+        Logga in och skicka
+      </button>
+      <button
+        *ngIf="!needsAuth()"
         mat-raised-button
         color="primary"
         (click)="sendData()">
