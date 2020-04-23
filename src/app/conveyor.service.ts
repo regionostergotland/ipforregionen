@@ -123,7 +123,7 @@ export class Conveyor {
     return this.ehrService.getCategorySpec(categoryId);
   }
 
-  public sendData(dest:Destination): Observable<CompositionReceipt> {
+  public sendData(dest: Destination): Observable<CompositionReceipt> {
     const composition = this.ehrService.createComposition(
       Array.from(dest.getCategories().values())
     );
@@ -145,13 +145,5 @@ export class Conveyor {
     else{
       console.log("Destination not found");
     }
-  }
-  
-  public getDestinationAuth(): boolean {
-    return this.destinationAuth;
-  }
-
-  public setDestinationAuth(needsAuth: boolean): void {
-    this.destinationAuth = needsAuth;
   }
 }

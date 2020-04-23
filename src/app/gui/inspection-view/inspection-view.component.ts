@@ -22,7 +22,7 @@ export class InspectionViewComponent implements OnInit {
 
   dataSent = false;
   receipt: CompositionReceipt;
-  destinations: Map<string, Destination>;
+  destinations: Array<Destination>;
 
   constructor(
     public router: Router,
@@ -30,19 +30,18 @@ export class InspectionViewComponent implements OnInit {
     private snackBar: MatSnackBar,
     private conveyor: Conveyor,
     public dialog: MatDialog
-  ) {
-    this.destination = this.conveyor.getDestination();
-    //this.destinations = this.conveyor.getDestinations();
-  }
+  ) {}
 
   ngOnInit() {
     this.dataSent = false;
-    this.destinations = this.conveyor.getDestinations();
+    let destinations = this.conveyor.getDestinations();
+    this.destinations = Array.from(destinations.values());
+    console.log(this.destinations[0]);
   }
 
   hasDestination(): boolean {
-    return this.destination != null;
-    //return this.destinations != null;
+    //return this.destination != null;
+    return this.destinations != null;
   }
 
   hasData(): boolean {
@@ -83,8 +82,9 @@ export class InspectionViewComponent implements OnInit {
     return values;
   }
   
-  sendData(): void {
-    this.conveyor.sendData().
+  sendData(index: number): void {
+    let destination = this.destinations[index];
+    this.conveyor.sendData(destination).
         subscribe(
           receipt => {
             console.log(receipt);
@@ -107,21 +107,21 @@ export class InspectionViewComponent implements OnInit {
    * Checks if destination requires login
    * @returns true | false
    */
-  needsAuth(): boolean {
-    return this.conveyor.getDestinationAuth();
+  needsAuth(index: number): boolean {
+    return this.destinations[index].getAuth();
   }
 
   /**
    * Send all the data stored in the conveyor if log in is required.
    */
-  sendDataWithAuth(): void {
+  sendDataWithAuth(index: number): void {
     const dialogRef = this.dialog.open(LoginModal, {
       width: '250px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.conveyor.sendData().
+        this.conveyor.sendData(this.destinations[index]).
         subscribe(
           receipt => {
             console.log(receipt);
@@ -143,25 +143,4 @@ export class InspectionViewComponent implements OnInit {
       }
     });
   }
-  // sendData(pnr: string) { //<-- This is an issue
-    //for (let dest of this.destinations){
-    //   let dest = new Destination("demo",
-    //    "https://personal-health-record-c7ebb.firebaseio.com/", false);
-    // this.conveyor.sendData(dest).
-    //   subscribe(
-    //     receipt => {
-    //       this.dataSent = true;
-    //       this.receipt = receipt;
-    //       this.conveyor.clearData();
-    //     },
-    //     e => {
-    //       console.log(e);
-    //       if (this.cfg.getIsDebug()) { console.log(e); }
-    //       this.snackBar.open(
-    //         'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', 'OK',
-    //         { duration: 100000000 }
-    //       );
-    //     }
-    //   );
-    // }
-  }
+}

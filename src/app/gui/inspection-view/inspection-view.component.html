@@ -26,7 +26,12 @@
   </button>
 </div>
 <div *ngIf="hasData() && hasDestination()">
-  <div *ngIf="!dataSent" class="center">
+  <mat-expansion-panel *ngFor="let destination of destinations; let i = index" class="panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Skicka data till {{ destination.name }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
     <p>Kontrollera dina värden innan du skickar in till {{ destination }}</p>
     <div class="panel-container">
       <mat-expansion-panel *ngFor="let category of conveyor.getCategoryIds()"
@@ -54,19 +59,19 @@
         Tillbaka
       </button>
       <button
-        *ngIf="needsAuth()"
+        *ngIf="needsAuth(i)"
         mat-raised-button
         color="primary"
-        (click)="sendDataWithAuth()">
+        (click)="sendDataWithAuth(i)">
         Logga in och skicka
       </button>
       <button
-        *ngIf="!needsAuth()"
+        *ngIf="!needsAuth(i)"
         mat-raised-button
         color="primary"
-        (click)="sendData()">
+        (click)="sendData(i)">
         Godkänn och skicka
       </button>
     </div>
-  </div>
+  </mat-expansion-panel>
 </div>
