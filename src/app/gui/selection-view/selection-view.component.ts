@@ -147,7 +147,7 @@ export class SelectionViewComponent implements OnInit {
 * add each destination to the destination array in conveyor
 */
   addDestinationData(category : string, data : DataList,
-    destinations: string[], needsAuth :boolean): void {
+    destinations: string[], needsAuth : boolean): void {
 
       destinations.forEach((value, i) => {
         let dest_object : Destination;
