@@ -12,12 +12,14 @@ export class Destination {
   private name : string;
   private url : string;
   private categories : Map<string, DataList>;
+  private needsAuth : boolean;
 
-  constructor(name:string, url:string) 
+  constructor(name:string, url:string, needsAuth: boolean) 
   {
     this.name = name;
     this.url = url;
-    this.categories = new Map<string, DataList>(); 
+    this.categories = new Map<string, DataList>();
+    this.needsAuth = needsAuth;
   };
 
   public getDestinationName(): string {
@@ -46,5 +48,9 @@ export class Destination {
 
   public setDataList(categoryId: string, list: DataList) {
     this.categories.set(categoryId, list);
+  }
+
+  public getAuth() : boolean {
+  return this.needsAuth;
   }
 }

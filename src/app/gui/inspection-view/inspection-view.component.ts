@@ -77,10 +77,10 @@ export class InspectionViewComponent implements OnInit {
   /**
    * Send all the data stored in the conveyor.
    */
-  sendData(pnr: string) {
+  sendData(pnr: string) { //<-- This is an issue
     //for (let dest of this.destinations){
       let dest = new Destination("demo",
-       "https://personal-health-record-c7ebb.firebaseio.com/");
+       "https://personal-health-record-c7ebb.firebaseio.com/", false);
     this.conveyor.sendData(dest).
       subscribe(
         receipt => {

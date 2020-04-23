@@ -1,6 +1,7 @@
 {
 	"selection": [{
 		"id": 1,
+		"needsAuth" : false,
 		"name": "demo",
 		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/"],
 		"categories": ["body_weight", "blood_pressure"],

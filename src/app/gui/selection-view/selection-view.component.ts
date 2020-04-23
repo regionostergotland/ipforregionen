@@ -18,6 +18,7 @@ import {
 interface Selection {
   id: string;
   name: string;
+  needsAuth: boolean;
   destinations: string[];
   categories: string[];
   filters: Map<string, Filter>;
@@ -90,6 +91,7 @@ export class SelectionViewComponent implements OnInit {
         const currentSelection: Selection = {
           id: JSON.stringify(selection["id"]),
           name: JSON.stringify(selection["name"]),
+          needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
           filters: selection["filters"]
@@ -119,6 +121,7 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
+
   executeSelection(selection: Selection): void {
     for (let cat of selection.categories){
       console.log("For cat: "+ cat);
@@ -130,10 +133,9 @@ export class SelectionViewComponent implements OnInit {
         dataList.addFilter(filter);
         //console.log("Selection destination: ")
         //console.log(selection.destinations);
-        this.addDestinationData(cat, dataList, selection.destinations)
+        this.addDestinationData(cat, dataList, selection.destinations,
+           selection.needsAuth);
         //this.conveyor.setDestinationUrl(sel.destinations[0]);
-
-
       } else {
         console.log("Category has not been imported");
       }
@@ -145,13 +147,13 @@ export class SelectionViewComponent implements OnInit {
 * add each destination to the destination array in conveyor
 */
   addDestinationData(category : string, data : DataList,
-    destinations: string[]): void {
+    destinations: string[], needsAuth :boolean): void {
 
       destinations.forEach((value, i) => {
         let dest_object : Destination;
         
         if(!this.conveyor.getDestinations().has(value)){
-          dest_object = new Destination("dest" + String(i), value);
+          dest_object = new Destination("dest" + String(i), value, needsAuth);
           console.log("Added destination to map");        } 
         else {
           dest_object = this.conveyor.getDestinations().get(value);
@@ -162,17 +164,12 @@ export class SelectionViewComponent implements OnInit {
 
         console.log("Destination object: ");
         console.log(dest_object);
-        //this.conveyor.getDestinations()[value]
-        //.setDataList(category, data); 
         
       })
       console.log("Destination map: ");
       console.log(this.conveyor.getDestinations());
-
-      for (let key of this.conveyor.getDestinations().keys()){
-        console.log(key);
-      }
   }
+
 
   /*
   * Allows selecting one or more selections

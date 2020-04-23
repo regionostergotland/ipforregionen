@@ -103,7 +103,7 @@ export class Conveyor {
     }
 
   public getDataList(categoryId: string): DataList {
-    console.log("getDataList: " + categoryId);
+    //console.log("getDataList: " + categoryId);
     if (this.categories.has(categoryId)) {
       return this.categories.get(categoryId);
     } else {
@@ -136,5 +136,14 @@ export class Conveyor {
 
   public getDestinations(){
     return this.destinations;
+  }
+
+  public getDestinationSpec(dest:Destination){
+    if(this.destinations.has(dest.getDestinationUrl())){
+      return this.destinations.get(dest.getDestinationUrl());
+  }
+    else{
+      console.log("Destination not found");
+    }
   }
 }
