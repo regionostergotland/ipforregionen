@@ -318,7 +318,7 @@ export class DataPointDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  addToLocalStorage(datapoint: DataPoint): void {
+    addToLocalStorage(datapoint: DataPoint): void {
     let category = this.selectedCategory;
     let new_data;
     
@@ -327,22 +327,11 @@ export class DataPointDialogComponent implements OnInit {
       new_data = JSON.parse(localStorage.getItem(category));
     } 
 
-    new_data.push(JSON.stringify(datapoint, this.replacer));
+    let jsonText = JSON.stringify(Array.from(datapoint.entries()));
+    new_data.push(jsonText);
+    
     localStorage.setItem(category, JSON.stringify(new_data));
   }
-
-  replacer(key: string, value: any): any {
-    const originalObject = this[key];
-    if(originalObject instanceof Map) {
-      return {
-        dataType: 'Map',
-        value: Array.from(originalObject.entries()), // or with spread: value: [...originalObject]
-      };
-    } else {
-      return value;
-    }
-  } 
-  //this.conveyor.getCategorySpec(this.selectedCategory)
   
   /**
    * Sets the time of the DataType. This is the only exception to the DataType,

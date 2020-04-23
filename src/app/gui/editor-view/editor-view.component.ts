@@ -8,6 +8,9 @@ import { ConfigService } from 'src/app/config.service';
 import {
   BottomSheetCategoriesComponent
 } from './bottom-sheet-categories.component';
+import { Categories } from 'src/app/ehr/ehr-config';
+import { DataList } from '../../ehr/datalist';
+import { DataPoint } from 'src/app/ehr/datalist';
 
 @Component({
   selector: 'app-editor-view',
@@ -43,7 +46,57 @@ export class EditorViewComponent implements OnInit {
     });
   }
 
+  logMapElements(value, key, map) {
+    console.log(`m[${key}] = ${value}`);
+  }
+
   ngOnInit() {
+    //Display categories stored in localstorage
+    let all_categories = this.conveyor.getAllCategories();
+    all_categories.forEach(categoryID => {
+      if (localStorage.getItem(categoryID)){
+        let dataList = new DataList(this.conveyor.getCategorySpec(categoryID));
+        console.log(JSON.parse(localStorage.getItem(categoryID))[0]);
+        //dataList.addPoints(JSON.parse(localStorage.getItem(categoryID)));
+        this.conveyor.setDataList(categoryID, dataList);
+
+        //console.log(localStorage.getItem(categoryID));
+
+        let current_category = JSON.parse(localStorage.getItem(categoryID));
+        console.log("TESTITEST: " + current_category[1]);
+        let point_map = new Map(current_category);
+        // FÖRSÖK OMVANDLA CURRENT_CATEGORY TILL EN MAP NÄSTA GÅNG
+        //dataList.addPoints(current_category); 
+        // for (let point = 0; point < current_category.length; point++)
+        // {
+        //   console.log("DETTA ÄR POINT AV JSONPARSE: " + current_category[point]);
+        //   point_map = new Map (current_category[point])
+      }
+    });
+
+
+
+    /*    let dataPoint: DataPoint = this.dataPoint;
+    if (!dataPoint) {
+      dataPoint = new DataPoint();
+    }
+
+    // set the datapoint values from the forms
+    for (const data of Array.from(this.pointData.keys())) {
+      dataPoint.set(data, this.pointData.get(data));
+    }
+
+    // Dont add a point that already exists
+    if (!this.dataPoint) {
+      this.conveyor.getDataList(this.selectedCategory).addPoint(dataPoint);
+    }*/
+
+    /*    if (!this.conveyor.hasCategoryId(categoryId)) {
+      this.conveyor.setDataList(
+        categoryId,
+        new DataList(this.conveyor.getCategorySpec(categoryId))
+      );
+    }*/
   }
 
   getMode(): string {

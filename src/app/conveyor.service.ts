@@ -77,6 +77,7 @@ export class Conveyor {
    */
   public fetchData(platformId: string, categoryId: string,
                    start: Date, end: Date): Observable<any> {
+      console.log("calling fetchData");
       if (!this.platforms.has(platformId)) {
         throw TypeError('platform ' + platformId + 'not available');
       }
