@@ -8,7 +8,7 @@ import { Conveyor } from '../../conveyor.service';
 import { CompositionReceipt } from '../../ehr/ehr.service';
 import { ConfigService } from 'src/app/config.service';
 import { LoginModal } from './login-modal.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -22,6 +22,7 @@ export class InspectionViewComponent implements OnInit {
   dataSent = false;
   receipt: CompositionReceipt;
   destination: string;
+  //destinations: Map<string, Destinations>;
 
   constructor(
     public router: Router,
@@ -31,6 +32,7 @@ export class InspectionViewComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.destination = this.conveyor.getDestination();
+    //this.destinations = this.conveyor.getDestinations();
   }
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class InspectionViewComponent implements OnInit {
 
   hasDestination(): boolean {
     return this.destination != null;
+    //return this.destinations != null;
   }
 
   hasData(): boolean {
