@@ -33,7 +33,7 @@ export class SelectionViewComponent implements OnInit {
   selectedSelection: Selection[] = []; //Add Selection to this list when it is clicked on
 
   categoryIds: string[] = [];
-  
+
   destination: Destination;
 
   file: File;
@@ -81,7 +81,7 @@ export class SelectionViewComponent implements OnInit {
       if (!!result["selection"]) {
         // For now loading only one selection.
 
-        for (let selection of result["selection"]){ 
+        for (let selection of result["selection"]){
 
         //let selection = result["selection"];
           console.log("2 " + JSON.stringify(selection));
@@ -113,7 +113,7 @@ export class SelectionViewComponent implements OnInit {
 * Retrieves the relevant values and filters
 * And applies the filters to the values
 */
-  executeSelections() : void {   
+  executeSelections() : void {
     for (let sel of this.selections){
       this.executeSelection(sel);
     }
@@ -128,10 +128,11 @@ export class SelectionViewComponent implements OnInit {
         console.log("Filter:");
         console.log(filter);
         dataList.addFilter(filter);
+        console.log("Selection destination: ")
         console.log(selection.destinations);
         this.addDestinationData(cat, dataList, selection.destinations)
         //this.conveyor.setDestinationUrl(sel.destinations[0]);
-        
+
 
       } else {
         console.log("Category has not been imported");
@@ -139,16 +140,34 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
-  addDestinationData(category : string, data : DataList, 
+/*
+* Create destination objects for each destination and
+* add each destination to the destination array in conveyor
+*/
+  addDestinationData(category : string, data : DataList,
     destinations: string[]): void {
+
+      destinations.forEach((value, i) => {
+        console.log("ind: " + i);
+        let dest_object = new Destination("dest" + String(i), value);
+        dest_object.setDataList(category, data);
+        console.log("Destination object: ");
+        console.log(dest_object);
+        this.conveyor.setDestination(dest_object);
+      })
+/*
       let i : number; //tmp
       i = 0; //tmp
     for (let dest of destinations){
       let tmp = new Destination("dest" + i.toString, dest);
-      tmp.setDataList(category, data);    
+      console.log("ind: " + i);
+      tmp.setDataList(category, data);
+      console.log("OJDestination object: ");
+      console.log(tmp);
       this.conveyor.setDestination(tmp);
       i++; //tmp
-    }
+
+    }*/
   }
 
   /*
