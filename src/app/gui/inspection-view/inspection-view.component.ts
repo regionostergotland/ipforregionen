@@ -23,6 +23,7 @@ export class InspectionViewComponent implements OnInit {
   dataSent = false;
   receipt: CompositionReceipt;
   destinations: Array<Destination>;
+  destinationSent: Array<boolean>;
 
   constructor(
     public router: Router,
@@ -36,6 +37,9 @@ export class InspectionViewComponent implements OnInit {
     this.dataSent = false;
     let destinations = this.conveyor.getDestinations();
     this.destinations = Array.from(destinations.values());
+    this.destinationSent = new Array(this.destinations.length);
+    this.destinationSent.fill(false);
+    console.log(this.destinations);
   }
 
   hasDestination(): boolean {
@@ -83,13 +87,17 @@ export class InspectionViewComponent implements OnInit {
   
   sendData(index: number): void {
     let destination = this.destinations[index];
+    this.destinationSent[index] = true;
     this.conveyor.sendData(destination).
         subscribe(
           receipt => {
-            console.log(receipt);
-            this.dataSent = true;
+            this.dataSent = true && this.checkAllSent();
             this.receipt = receipt;
-            this.conveyor.clearData();
+            if (this.dataSent) {
+              this.conveyor.clearData();
+            } else {
+              this.snackBar.open("Data skickat till ${destination.getDestinationName}", "Ok", {duration: 3000});
+            }
           },
           e => {
             console.log(e);
@@ -100,6 +108,18 @@ export class InspectionViewComponent implements OnInit {
             );
           }
       );
+  }
+
+  /**
+   * Checks if all destinations has sent the data
+   */
+
+  checkAllSent(): boolean {
+    for (let i = 0; i < this.destinationSent.length; i++) {
+      if (!this.destinationSent[i])
+        return false;
+    }
+    return true;
   }
   
   /**
@@ -123,10 +143,13 @@ export class InspectionViewComponent implements OnInit {
         this.conveyor.sendData(this.destinations[index]).
         subscribe(
           receipt => {
-            console.log(receipt);
             this.dataSent = true;
             this.receipt = receipt;
-            this.conveyor.clearData();
+            if (this.dataSent) {
+              this.conveyor.clearData();
+            } else {
+              this.snackBar.open("Data skickat till" + this.destinations[index].getDestinationName, "Ok", {duration: 3000});
+            }
           },
           e => {
             console.log(e);
