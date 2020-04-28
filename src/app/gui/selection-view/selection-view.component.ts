@@ -34,7 +34,7 @@ interface Selection {
 })
 export class SelectionViewComponent implements OnInit {
   selections: Selection[] = [];
-  selectedSelection: Selection[] = []; //Add Selection to this list when it is clicked on
+  selectedSelections: Selection[] = []; //Add Selection to this list when it is clicked on
 
   categoryIds: string[] = [];
 
@@ -90,8 +90,8 @@ export class SelectionViewComponent implements OnInit {
 
         // Making instance of interface Selection
         const currentSelection: Selection = {
-          id: JSON.stringify(selection["id"]),
-          name: JSON.stringify(selection["name"]),
+          id: selection["id"],
+          name: selection["name"],
           needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
@@ -120,7 +120,7 @@ export class SelectionViewComponent implements OnInit {
 * And applies the filters to the values
 */
   executeSelections() : void {
-    for (let sel of this.selections){
+    for (let sel of this.selectedSelections){
       this.executeSelection(sel);
     }
     this.snackBar.open("Urval skapat!", null, {duration: 2000});
@@ -180,7 +180,17 @@ export class SelectionViewComponent implements OnInit {
   * Allows selecting one or more selections
   * that will then be handled with executeSelections()
   */
-  selectSelection() : void{
+  selectSelection(selection: Selection, event: any) : void{
+    const boxChecked: boolean = event.checked;
+    if (boxChecked) {
+      if (this.selectedSelections.indexOf(selection) === -1){
+        this.selectedSelections.push(selection);
+      }
+    } else {
+      this.selectedSelections.splice(this.selectedSelections.indexOf(selection), 1);
+    }
+
+        console.log(this.selectedSelections);
 
   }
 
