@@ -34,7 +34,7 @@
     </mat-expansion-panel-header>
     <p>Kontrollera dina värden innan du skickar in till {{ destination.name }}</p>
     <div class="panel-container">
-      <mat-expansion-panel *ngFor="let category of conveyor.getCategoryIds()"
+      <mat-expansion-panel *ngFor="let category of getDestCategories(destination)"
                            class="panel">
         <mat-expansion-panel-header *ngIf="!isCategoryEmpty(category)">
           <mat-panel-title>
@@ -45,7 +45,7 @@
             {{ getNumberOfValues(category) }}
           </mat-panel-description>
         </mat-expansion-panel-header>
-
+      
         <app-data-container [editable]="false" [selectCategory]="category">
         </app-data-container>
       </mat-expansion-panel>

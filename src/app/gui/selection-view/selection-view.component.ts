@@ -47,12 +47,12 @@ export class SelectionViewComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log("ngOnInit");
+    //console.log("ngOnInit");
     this.getCategories();
   }
 
   AfterViewInit() : void {
-    console.log("AfterViewInit");
+    //console.log("AfterViewInit");
   }
 
   /**
@@ -134,7 +134,7 @@ export class SelectionViewComponent implements OnInit {
         let dataList = this.conveyor.getDataList(cat);
         let filter: Filter = selection.filters[cat];
         //console.log("Filter:");
-        //console.log(filter);
+        //console.log(filter);)
         dataList.addFilter(filter);
         //console.log("Selection destination: ")
         //console.log(selection.destinations);
@@ -151,7 +151,7 @@ export class SelectionViewComponent implements OnInit {
 * Create destination objects for each destination and
 * add each destination to the destination array in conveyor
 */
-  addDestinationData(category : string, data : DataList,
+  addDestinationData(name : string, category : string, data : DataList,
     destinations: string[], needsAuth : boolean): void {
 
       destinations.forEach((value, i) => {
@@ -159,10 +159,11 @@ export class SelectionViewComponent implements OnInit {
         
         if(!this.conveyor.getDestinations().has(value)){
           dest_object = new Destination(name, value, needsAuth);
-            console.log("Added destination to map");        } 
+            //console.log("Added destination to map");        
+          } 
         else {
           dest_object = this.conveyor.getDestinations().get(value);
-          console.log("Destination already in map");
+          //console.log("Destination already in map");
         }
         dest_object.setDataList(category, data);
         this.conveyor.setDestination(dest_object);

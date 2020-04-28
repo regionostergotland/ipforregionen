@@ -130,6 +130,14 @@ export class InspectionViewComponent implements OnInit {
     return this.destinations[index].getAuth();
   }
 
+    /**
+   * Checks if destination requires login
+   * @param dest A destination to retrieve keys from
+   * @returns the chosen destination's key.
+   */
+  getDestCategories(dest: Destination): string [] { 
+    return Array.from(dest.getCategories().keys()); 
+  }
   /**
    * Send all the data stored in the conveyor if log in is required.
    */
