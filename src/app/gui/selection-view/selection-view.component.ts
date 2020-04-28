@@ -5,6 +5,7 @@ import { DataList } from '../../ehr/datalist';
 import { Router } from '@angular/router';
 import { Filter, filterString } from 'src/app/ehr/datalist';
 import { Destination } from '../../destination.service';
+import { ConfigService } from 'src/app/config.service';
 import {
   Categories,
   CommonFields,
@@ -23,6 +24,7 @@ interface Selection {
   destinations: string[];
   categories: string[];
   filters: Map<string, Filter>;
+  imageUrl: string;
 }
 
 @Component({
@@ -42,7 +44,8 @@ export class SelectionViewComponent implements OnInit {
 
   constructor(private conveyor: Conveyor,
     public router: Router,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private cfg: ConfigService) {
     console.log("Loaded selection view...");
    }
 
@@ -92,7 +95,8 @@ export class SelectionViewComponent implements OnInit {
           needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
-          filters: selection["filters"]
+          filters: selection["filters"],
+          imageUrl: this.cfg.getAssetUrl() + 'selection.png'
         };
 
         console.log(currentSelection.name);
@@ -214,7 +218,8 @@ export class SelectionViewComponent implements OnInit {
           needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
-          filters: selection["filters"]
+          filters: selection["filters"],
+          imageUrl: this.cfg.getAssetUrl() + 'selection.png'
         };
 
         console.log(currentSelection.name);

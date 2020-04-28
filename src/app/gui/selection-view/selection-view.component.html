@@ -3,7 +3,8 @@
   Välj en giltig json fil.
 </p>
 
-<input type="file" style="display:none" #file (change)="importSelection($event)"/>
+
+  <input type="file" style="display:none" #file (change)="importSelection($event)"/>
 <button
   name="fileSelector"
   type="button"
@@ -11,17 +12,30 @@
   color="primary"
   (click) = "file.click()"> Hämta Urval </button>
 
-<div class ="container"
-  color="white"
+<div class= "centering" class ="container" >
+  <div
+  fxLayout="row"
+  fxLayout.xs="column"
+  fxLayout.lt-sm="column"
+  fxFlex
+  class="wrapper">
+<mat-card
   *ngFor="let selection of selections"
   (click) = "selectSelection($event.target)"> <!--Make selections clickable-->
-  <p>{{selection.name}}</p>
+  <mat-card-title>{{selection.name}}</mat-card-title>
+<mat-card-content>
+  <img src= {{selection.imageUrl}} style="width:80px"/>
   <p>{{selection.id}}</p>
+
   <p>{{selection.needsAuth}}</p>
   <p>{{selection.destinations}}</p>
   <p>{{selection.categories}}</p>
-  <mat-divider></mat-divider>
+</mat-card-content>
+  </mat-card>
   </div>
+    <mat-divider></mat-divider>
+  </div>
+
 
 <button
   name="executeSelections"
