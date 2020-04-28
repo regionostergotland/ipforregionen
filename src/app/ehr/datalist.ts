@@ -251,7 +251,7 @@ export class DataList {
     ]);
   }
 
-  public addFilter(filter: Filter) {
+  public addFilter(filter: Filter) { // <-- Optimera!
     let exists : boolean = false;
     this.processedPoints.delete(DEFAULT_FILTER);
     for (let key of this.processedPoints.keys()){

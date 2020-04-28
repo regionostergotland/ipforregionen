@@ -132,12 +132,15 @@ export class SelectionViewComponent implements OnInit {
       // console.log("For cat: "+ cat);
       if(this.conveyor.hasCategoryId(cat)){
         let dataList = this.conveyor.getDataList(cat);
-        let filter: Filter = selection.filters[cat];
+
+        for (let filter of selection.filters[cat]){
+        //let filter: Filter = selection.filters[cat];
         //console.log("Filter:");
         //console.log(filter);)
         dataList.addFilter(filter);
         //console.log("Selection destination: ")
         //console.log(selection.destinations);
+        }
         this.addDestinationData(selection.name, cat, dataList, selection.destinations,
            selection.needsAuth);
         //this.conveyor.setDestinationUrl(sel.destinations[0]);
