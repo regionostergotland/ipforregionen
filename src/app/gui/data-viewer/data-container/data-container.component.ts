@@ -17,6 +17,7 @@ import {
   DataRemovalDialogComponent
 } from '../data-removal-dialog/data-removal-dialog.component';
 import {SelectionModel} from '@angular/cdk/collections';
+import { MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-data-container',
@@ -119,9 +120,10 @@ export class DataContainerComponent implements OnInit {
   /**
    * Removes all of the selected datapoints and updates the list
    */
-  removeSelected() {
+  removeSelected(): void {
     this.conveyor.getDataList(this.selectedCategory)
-      .removePoints(this.selectedRows.selected);
+            .removePoints(this.selectedRows.selected);       
+    this.removeSelectFromLocal();
     this.ngOnInit();
   }
 
@@ -129,6 +131,21 @@ export class DataContainerComponent implements OnInit {
     const dataList = this.conveyor.getDataList(this.selectedCategory);
     dataList.removeFilter(filter);
     this.ngOnInit();
+  }
+
+  /**
+   * Removes all of selected datapoints from localStorage
+   */
+  removeSelectFromLocal(): void {
+    console.log("THIS IS THE SELECTED ROW ", this.selectedRows.selected);
+    let modified_data = new Array();
+
+    this.conveyor.getDataList(this.selectedCategory).
+                          getUnfilteredPoints().forEach(dataPoint =>{
+      modified_data.push(Object.fromEntries(dataPoint.entries()));
+    });
+    
+    localStorage.setItem(this.selectedCategory, JSON.stringify(modified_data));
   }
 
   isSmallScreen(): boolean {

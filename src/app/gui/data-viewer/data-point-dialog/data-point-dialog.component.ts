@@ -318,7 +318,10 @@ export class DataPointDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-    addToLocalStorage(datapoint: DataPoint): void {
+  /**
+   * @Param datapoint is a datapoint we want to add to localstorage
+   */
+  addToLocalStorage(datapoint: DataPoint): void {
     let category = this.selectedCategory;
     let new_data;
     
@@ -327,8 +330,8 @@ export class DataPointDialogComponent implements OnInit {
       new_data = JSON.parse(localStorage.getItem(category));
     } 
 
-    let jsonText = JSON.stringify(Array.from(datapoint.entries()));
-    new_data.push(jsonText);
+    //let jsonText = JSON.stringify(Array.from(datapoint.values()));
+    new_data.push(Object.fromEntries(datapoint.entries()));
     
     localStorage.setItem(category, JSON.stringify(new_data));
   }
