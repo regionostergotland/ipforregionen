@@ -11,7 +11,7 @@
   color="primary"
   (click) = "file.click()"> Hämta Urval </button>
 
-<div 
+<div class ="container"
   color="white"
   *ngFor="let selection of selections"
   (click) = "selectSelection($event.target)"> <!--Make selections clickable-->
@@ -28,6 +28,6 @@
   type="button"
   class="btn"
   color="primary"
-  (click) = "executeSelections()" > Skapa resultat </button> 
+  (click) = "executeSelections()" > Skapa resultat </button>
 
 <button (click)="router.navigateByUrl('/inspection')">Gå vidare</button>

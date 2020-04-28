@@ -49,6 +49,7 @@ export class SelectionViewComponent implements OnInit {
   ngOnInit() {
     console.log("ngOnInit");
     this.getCategories();
+    this.loadFromLocal();
   }
 
   AfterViewInit() : void {
@@ -82,12 +83,7 @@ export class SelectionViewComponent implements OnInit {
       result = JSON.parse(result);
 
       if (!!result["selection"]) {
-        // For now loading only one selection.
-
         for (let selection of result["selection"]){
-
-        //let selection = result["selection"];
-          // console.log("2 " + JSON.stringify(selection));
 
         // Making instance of interface Selection
         const currentSelection: Selection = {
@@ -156,10 +152,10 @@ export class SelectionViewComponent implements OnInit {
 
       destinations.forEach((value, i) => {
         let dest_object : Destination;
-        
+
         if(!this.conveyor.getDestinations().has(value)){
           dest_object = new Destination(name, value, needsAuth);
-            console.log("Added destination to map");        } 
+            console.log("Added destination to map");        }
         else {
           dest_object = this.conveyor.getDestinations().get(value);
           console.log("Destination already in map");
@@ -169,7 +165,7 @@ export class SelectionViewComponent implements OnInit {
 
         console.log("Destination object: ");
         console.log(dest_object);
-        
+
       })
       console.log("Destination map: ");
       console.log(this.conveyor.getDestinations());
@@ -203,7 +199,36 @@ export class SelectionViewComponent implements OnInit {
       localStorage.setItem("selections", JSON.stringify(selections));
     }
   }
+
+  loadFromLocal(): void {
+    if (!!JSON.parse(localStorage.getItem("selections"))) {
+      let result = JSON.parse(localStorage.getItem("selections"));
+
+      for (let sel in result){
+        let selection = result[sel];
+
+        // Making instance of interface Selection
+        const currentSelection: Selection = {
+          id: selection["id"],
+          name: selection["name"],
+          needsAuth : selection["needsAuth"],
+          destinations: selection["destinations"],
+          categories: selection["categories"],
+          filters: selection["filters"]
+        };
+
+        console.log(currentSelection.name);
+        // Adding currentSelection to selections
+        this.selections.push(currentSelection);
+      };
+
+  }
 }
+
+
+}
+
+
 
 
 //    localStorage.setItem('destination_urls', JSON.stringify(urls));
