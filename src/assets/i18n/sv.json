@@ -21,5 +21,10 @@
         "Choose": "Välj källa",
         "Help": "Hjälp",
         "Helpflavor": "Behöver du en hjälpande hand? Ta en titt på vår guide."
+    },
+    "Error-pages": {
+        "404page": "404-fel, sidan du letar efter finns inte!",
+        "404button": "Återgå till hemsidan",
+        "500page": "500-fel, servern håller på och krånglar!"
     }
 }

@@ -1,1 +1,3 @@
 https://www.offlineprogrammer.com/fix-error-staticinjectorerror-ionic-app-scripts/
+
+curl -X GET --user "lio.se2:passwordforlio.se2" https://rest.ehrscape.com/rest/v1/composition/49ce2c9b-dfc6-43cb-b73e-c517926930f5::lio.ehrscape.com::1 |json

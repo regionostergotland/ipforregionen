@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { imports } from '../../imports.ts';
+import { imports } from '../../app.imports';
 import { SelectionViewComponent } from './selection-view.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 describe('SelectionViewComponent', () => {

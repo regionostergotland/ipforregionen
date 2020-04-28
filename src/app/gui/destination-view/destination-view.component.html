@@ -11,7 +11,7 @@
       	<mat-list-item role="listitem" *ngFor="let destination of destination_names; let i = index; let lastitem = last">
       		<mat-radio-button color="primary" [value]="destination" (change)="selection = $event.value">
       			{{destination}}
-      		</mat-radio-button>
+          </mat-radio-button>
           <button mat-icon-button
             class="trash"
             (click)="openAlert(i)"

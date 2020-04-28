@@ -47,7 +47,6 @@ export class LoginComponent {
   /* TODO custom errors with specific user messages */
   assistedToken() {
     this.auth.authenticateAT().subscribe(
-      () => this.enter(),
       e => this.showError('Inloggning med BankId misslyckades. Fel: "'
                           + e.message + '"')
     );
@@ -66,7 +65,8 @@ export class LoginComponent {
         () => this.enter(),
         e => this.showError(
           'Inloggning misslyckades. Fel: "' + e.message + '"'
-        )
+        ),
       );
+      console.log(this.auth.isAuthenticated());
   }
 }

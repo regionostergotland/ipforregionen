@@ -14,6 +14,7 @@ import {
   Height,
   HeartRate
 } from '../../ehr/ehr-config';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Selection {
   id: string;
@@ -40,7 +41,8 @@ export class SelectionViewComponent implements OnInit {
   file: File;
 
   constructor(private conveyor: Conveyor,
-    public router: Router) {
+    public router: Router,
+    private snackBar: MatSnackBar) {
     console.log("Loaded selection view...");
    }
 
@@ -70,7 +72,7 @@ export class SelectionViewComponent implements OnInit {
 */
   importSelection(file) : void{
     this.file = file.target.files[0];
-    console.log("File uploaded is: " + this.file.name);
+    // console.log("File uploaded is: " + this.file.name);
     let result;
 
     let reader = new FileReader();
@@ -85,7 +87,7 @@ export class SelectionViewComponent implements OnInit {
         for (let selection of result["selection"]){
 
         //let selection = result["selection"];
-          console.log("2 " + JSON.stringify(selection));
+          // console.log("2 " + JSON.stringify(selection));
 
         // Making instance of interface Selection
         const currentSelection: Selection = {
@@ -97,10 +99,12 @@ export class SelectionViewComponent implements OnInit {
           filters: selection["filters"]
         };
 
-        console.log("Categories: "+ currentSelection.categories);
+        console.log(currentSelection.name);
+
+        this.saveToLocal(currentSelection);
+
         // Adding currentSelection to member variable selections
         this.selections.push(currentSelection);
-        console.log("Selection: "+ JSON.stringify(this.selections));
       }
     }
 
@@ -119,12 +123,13 @@ export class SelectionViewComponent implements OnInit {
     for (let sel of this.selections){
       this.executeSelection(sel);
     }
+    this.snackBar.open("Urval skapat!", null, {duration: 2000});
   }
 
 
   executeSelection(selection: Selection): void {
     for (let cat of selection.categories){
-      console.log("For cat: "+ cat);
+      // console.log("For cat: "+ cat);
       if(this.conveyor.hasCategoryId(cat)){
         let dataList = this.conveyor.getDataList(cat);
         let filter: Filter = selection.filters[cat];
@@ -133,7 +138,7 @@ export class SelectionViewComponent implements OnInit {
         dataList.addFilter(filter);
         //console.log("Selection destination: ")
         //console.log(selection.destinations);
-        this.addDestinationData(cat, dataList, selection.destinations,
+        this.addDestinationData(selection.name, cat, dataList, selection.destinations,
            selection.needsAuth);
         //this.conveyor.setDestinationUrl(sel.destinations[0]);
       } else {
@@ -153,8 +158,8 @@ export class SelectionViewComponent implements OnInit {
         let dest_object : Destination;
         
         if(!this.conveyor.getDestinations().has(value)){
-          dest_object = new Destination("dest" + String(i), value, needsAuth);
-          console.log("Added destination to map");        } 
+          dest_object = new Destination(name, value, needsAuth);
+            console.log("Added destination to map");        } 
         else {
           dest_object = this.conveyor.getDestinations().get(value);
           console.log("Destination already in map");
@@ -175,7 +180,30 @@ export class SelectionViewComponent implements OnInit {
   * Allows selecting one or more selections
   * that will then be handled with executeSelections()
   */
-  selectSelection(){
+  selectSelection() : void{
 
   }
+
+  /**
+   * Saves selection to localstorage under "selections" if not already
+   * present.
+   * @param object selection
+   */
+
+  saveToLocal(selection: Selection) : void {
+    let selections;
+    if (!!JSON.parse(localStorage.getItem("selections"))) {
+      selections = JSON.parse(localStorage.getItem("selections"));
+    } else {
+      selections = {};
+    }
+
+    if (!selections[selection.id]) {
+      selections[selection.id] = selection;
+      localStorage.setItem("selections", JSON.stringify(selections));
+    }
+  }
 }
+
+
+//    localStorage.setItem('destination_urls', JSON.stringify(urls));
