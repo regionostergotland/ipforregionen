@@ -47,7 +47,7 @@ export class BottomSheetCategoriesComponent {
 
   /**
    * Gets the icon of a specific category to display on the page.
-   * @param categoryId id of the category to get from.
+   * @param categoryId ihttps://prod.liveshare.vsengsaas.visualstudio.com/join?667FF9938C0EE2D0814F72F5AA0F61D9C99Fd of the category to get from.
    * @returns the project path to the icon image.
    */
   getCategoryIcon(categoryId: string): string {
@@ -62,13 +62,37 @@ export class BottomSheetCategoriesComponent {
    * @param categoryId the string ID of the user-selected category.
    */
   addCategory(event: MouseEvent, categoryId: string): void {
+    console.log("Hej vi väljer kategori nu!");
+    let values;
+
     if (!this.conveyor.hasCategoryId(categoryId)) {
       this.conveyor.setDataList(
         categoryId,
         new DataList(this.conveyor.getCategorySpec(categoryId))
       );
     }
+    if (!!localStorage.getItem(categoryId))
+    {
+      values = JSON.parse(localStorage.getItem(categoryId));  
+    } else 
+    {
+      values = new Array
+    }
+    localStorage.setItem(categoryId, JSON.stringify(values));
     this.bottomSheetRef.dismiss();
     event.preventDefault();
   }
 }
+// if (!!localStorage.getItem('destination_names')) {
+
+/*
+  addToLocalStorage(category: string, values: array): void {
+    let values;
+    if (!!localStorage.getItem(category)) {
+      values = JSON.parse(localStorage.getItem(category));
+    } else {
+      values = new Array();
+    }
+
+    localStorage.setItem(category, JSON.stringify(values));
+  }*/

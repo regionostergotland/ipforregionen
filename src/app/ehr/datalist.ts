@@ -237,6 +237,9 @@ export class DataList {
     return this.processedPoints;
   }
 
+  public getUnfilteredPoints(): DataPoint[] {
+    return this.points;
+  }
   /**
    * Replace all original points with new list of points.
    */

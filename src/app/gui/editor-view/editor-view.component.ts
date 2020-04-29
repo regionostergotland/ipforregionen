@@ -8,6 +8,9 @@ import { ConfigService } from 'src/app/config.service';
 import {
   BottomSheetCategoriesComponent
 } from './bottom-sheet-categories.component';
+import { Categories } from 'src/app/ehr/ehr-config';
+import { DataList } from '../../ehr/datalist';
+import { DataPoint } from 'src/app/ehr/datalist';
 
 @Component({
   selector: 'app-editor-view',
@@ -43,7 +46,60 @@ export class EditorViewComponent implements OnInit {
     });
   }
 
+  logMapElements(value, key, map) {
+    console.log(`m[${key}] = ${value}`);
+  }
+
   ngOnInit() {
+    //Display categories stored in localstorage
+    let all_categories = this.conveyor.getAllCategories();
+    all_categories.forEach(categoryID => {
+      if (this.conveyor.hasCategoryId(categoryID) 
+          || !!localStorage.getItem(categoryID)){
+        // For when data exists in localStorage but not conveyor
+        let dataList = new DataList(this.conveyor.getCategorySpec(categoryID));
+        
+        // If data already exists in conveyor
+        if (this.conveyor.getDataList(categoryID) !== null) {
+          dataList = this.conveyor.getDataList(categoryID);
+        }
+
+        let current_category = new Array;
+        
+        // Add points from localStorage to 
+        if (!!JSON.parse(localStorage.getItem(categoryID))) {
+          current_category = JSON.parse(localStorage.getItem(categoryID));
+          for (const dataPoint of current_category) {
+            let map = new Map(Object.entries(dataPoint));
+            let newPoint: DataPoint = new DataPoint();
+            
+            for (const data of Array.from(map.keys())) {
+              if (data === "time") {
+                newPoint.set(data, new Date(map.get(data)));
+              } else {
+                newPoint.set(data, map.get(data));
+              }
+            }
+            
+            // Dont add a point that already exists
+            if (!dataList.containsPoint(newPoint)) {
+              dataList.addPoint(newPoint);
+            }
+          }
+        }
+        this.conveyor.setDataList(categoryID, dataList);
+        this.addToLocal(categoryID, dataList);
+      }
+    });
+  }
+
+  addToLocal(categoryID: string, dataList: DataList): void {
+    let modified_data = new Array();
+    dataList.getUnfilteredPoints().forEach(dataPoint =>{
+      modified_data.push(Object.fromEntries(dataPoint.entries()));
+    });
+
+    localStorage.setItem(categoryID, JSON.stringify(modified_data));
   }
 
   getMode(): string {

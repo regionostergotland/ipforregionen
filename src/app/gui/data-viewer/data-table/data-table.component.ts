@@ -346,6 +346,7 @@ export class DataTableComponent implements OnInit {
 
     if (this.category) {
       const dataList = this.conveyor.getDataList(this.category);
+      
       for (const [column, dataType] of dataList.spec.dataTypes.entries()) {
         if (!dataType.visible) {
           continue;

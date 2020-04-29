@@ -314,9 +314,28 @@ export class DataPointDialogComponent implements OnInit {
       this.conveyor.getDataList(this.selectedCategory).addPoint(dataPoint);
     }
 
+    this.addToLocalStorage(dataPoint);
     this.dialogRef.close();
   }
 
+  /**
+   * @Param datapoint is a datapoint we want to add to localstorage
+   */
+  addToLocalStorage(datapoint: DataPoint): void {
+    let category = this.selectedCategory;
+    let new_data = new Array;
+    
+    if (!!localStorage.getItem(category))
+    { 
+      new_data = JSON.parse(localStorage.getItem(category));
+    } 
+
+    //let jsonText = JSON.stringify(Array.from(datapoint.values()));
+    new_data.push(Object.fromEntries(datapoint.entries()));
+    
+    localStorage.setItem(category, JSON.stringify(new_data));
+  }
+  
   /**
    * Sets the time of the DataType. This is the only exception to the DataType,
    * as the key 'time' will be split into two, a 'date' and a 'time'. The
