@@ -102,7 +102,7 @@ export class Conveyor {
     if (this.categories.has(categoryId)) {
       return this.categories.get(categoryId);
     } else {
-      throw TypeError('category ' + categoryId + ' not in map');
+      return null;
     }
   }
 
