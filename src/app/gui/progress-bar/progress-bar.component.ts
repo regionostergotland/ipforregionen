@@ -52,10 +52,12 @@ export class ProgressBarComponent implements OnInit {
         return 1;
       case 'edit':
         return 2;
-      case 'destination':
+      case 'selection':
         return 3;
-      case 'inspection':
+      case 'destination':
         return 4;
+      case 'inspection':
+        return 5;
       default: {
         return 0;
       }

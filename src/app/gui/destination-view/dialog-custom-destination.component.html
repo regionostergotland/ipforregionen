@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Lagg till ny destination</h1>
+<h1 mat-dialog-title>Lägg till ny destination</h1>
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Namn</mat-label>
@@ -18,7 +18,7 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="closeDialog()">No Thanks</button>
   <button mat-button
     cdkFocusInitial
     [mat-dialog-close]="data"

@@ -36,7 +36,7 @@ export class CategorySelectionComponent implements OnInit {
 
   ngOnInit() {
     this.platformId = this.route.snapshot.paramMap.get('platform');
-
+    console.log(this.platformId);
     this.startDate = new Date();
     this.startDate.setMonth(this.startDate.getMonth() - 1);
     this.endDate = new Date();

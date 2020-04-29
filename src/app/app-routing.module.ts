@@ -26,6 +26,9 @@ import {
 import {
   SettingsViewComponent
 } from './gui/settings-view/settings-view.component';
+import {
+  SelectionViewComponent
+} from './gui/selection-view/selection-view.component';  
 import { DataViewerModule } from './gui/data-viewer/data-viewer.module';
 
 import { AuthService } from 'src/app/auth.service';
@@ -36,7 +39,7 @@ import { AuthService } from 'src/app/auth.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private auth: AuthService,
-    private router: Router,
+    private router: Router
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -50,7 +53,9 @@ export class AuthGuard implements CanActivate {
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  //TODO: Ladda in language från local storage och redirecta till den istället för hårdkodad sv
+  { path: 'login', redirectTo: 'sv/login'},
+  { path: 'sv/login', component: LoginComponent },
   { path: 'help', component: HelpPageComponent },
   { path: 'info', component: InfoPageComponent },
   { path: '', canActivate: [AuthGuard], children: [
@@ -62,6 +67,7 @@ const routes: Routes = [
     { path: 'destination', component: DestinationViewComponent},
     { path: 'edit', component: EditorViewComponent },
     { path: 'settings', component: SettingsViewComponent },
+    { path: 'selection', component: SelectionViewComponent },
   ]},
 ];
 

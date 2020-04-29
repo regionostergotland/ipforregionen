@@ -42,7 +42,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { LOCALE_ID } from '@angular/core';
 
 import { HammerModule } from '@angular/platform-browser';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -62,6 +61,7 @@ import { InfoPageComponent } from './gui/info-page/info-page.component';
 import { HomePageComponent } from './gui/home-page/home-page.component';
 import { HelpPageComponent } from './gui/help-page/help-page.component';
 import { SettingsViewComponent } from './gui/settings-view/settings-view.component';
+import { SelectionViewComponent } from './gui/selection-view/selection-view.component'; //?
 /* Fetching */
 import {
   PlatformSelectionComponent
@@ -106,8 +106,6 @@ import { ToolbarComponent } from './gui/toolbar/toolbar.component';
 /* Google Fit configuration */
 import { CustomGoogleApiModule } from './google-fit-config';
 
-/* Localization settings */
-import { LanguageSelectComponent } from './gui/language-select/language-select.component';
 
 @NgModule({
   declarations: [
@@ -132,8 +130,8 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     DestinationViewComponent,
     NewDestinationDialog,
     NewAlertDialog,
-    LanguageSelectComponent,
     SettingsViewComponent,
+    SelectionViewComponent
   ],
   imports: [
     DataViewerModule,
@@ -207,8 +205,9 @@ import { LanguageSelectComponent } from './gui/language-select/language-select.c
     AddNewDataModalComponent,
     NewDestinationDialog,
     NewAlertDialog,
-    LanguageSelectComponent
+    SelectionViewComponent
   ],
+
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' }
   ],
