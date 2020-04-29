@@ -1,6 +1,6 @@
 {
 	"selection": [{
-		"id": 1,
+		"id": 3,
 		"needsAuth" : false,
 		"name": "other",
 		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/"],

@@ -23,7 +23,7 @@
 	},
 		{
 			"id": 2,
-			"name": "steps, height",
+			"name": "EhrEscape",
 			"destinations": ["https://rest.ehrscape.com/rest/v1/"],
 			"categories": ["steps", "height_length"],
 			"filters": {
