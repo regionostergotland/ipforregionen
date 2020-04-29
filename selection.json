@@ -21,10 +21,11 @@
 			}]
 		}
 	},
-		{
-			"id": 2,
-			"name": "EhrEscape",
-			"destinations": ["https://rest.ehrscape.com/rest/v1/"],
+		
+	{
+		"id": 2,
+		"name": "EhrEscape",
+		"destinations": ["https://rest.ehrscape.com/rest/v1/"],
 			"categories": ["steps", "height_length"],
 			"filters": {
 				"steps": [{
@@ -36,6 +37,7 @@
 					"fn": 1
 				}]
 			}
-		}
+	}
+		
 	]
 }

@@ -13,19 +13,33 @@
   </button>
 </div>
 
-<div *ngIf="!dataSent && (!hasDestination() || !hasData())">
+<div *ngIf="!dataSent && (!hasDestinations() || !hasData())">
   <h1 style="text-align: center">
     Hoppsan!
   </h1>
-  <p *ngIf="!hasDestination() && !hasData()">Du har inte hämtat data eller valt destination!</p>
-  <p *ngIf="!hasDestination() && hasData()">Du har inte valt destination!</p>
-  <p *ngIf="hasDestination() && !hasData()">Du har inte hämtat någon data att skicka!</p>
-  <button mat-raised-button color="primary"
-    (click)="router.navigateByUrl('/destination')">
+  <div *ngIf="!hasDestinations() && !hasData()">
+    <p>Du har inte hämtat data eller valt destination!</p>
+    <button mat-raised-button color="primary"
+    (click)="router.navigateByUrl('/platform-selection')">
       Backa
   </button>
+  </div>
+  <div *ngIf="!hasDestinations() && hasData()">
+    <p>Du har inte valt destination!</p>
+    <button mat-raised-button color="primary"
+      (click)="router.navigateByUrl('/selection')">
+      Backa
+    </button>
+  </div>
+  <div *ngIf="hasDestinations() && !hasData()">
+    <p>Du har inte hämtat någon data att skicka!</p>
+    <button mat-raised-button color="primary"
+      (click)="router.navigateByUrl('/platform-selection')">
+      Backa
+    </button>
+  </div>
 </div>
-<div *ngIf="hasData() && hasDestination()">
+<div *ngIf="hasData() && hasDestinations()">
   <mat-expansion-panel *ngFor="let destination of destinations; let i = index" class="panel">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -53,12 +67,6 @@
 
     <div style="display: flex; flex-direction: row">
       <button
-        mat-raised-button
-        color="primary"
-        (click)="router.navigateByUrl('/destination')">
-        Tillbaka
-      </button>
-      <button
         *ngIf="needsAuth(i)"
         mat-raised-button
         color="primary"
@@ -74,4 +82,10 @@
       </button>
     </div>
   </mat-expansion-panel>
+  <button
+  mat-raised-button
+  color="primary"
+  (click)="router.navigateByUrl('/selection')">
+  Tillbaka
+</button>
 </div>

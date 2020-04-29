@@ -42,9 +42,13 @@ export class InspectionViewComponent implements OnInit {
     console.log(this.destinations);
   }
 
-  hasDestination(): boolean {
-    //return this.destination != null;
-    return this.destinations != null;
+  hasDestinations(): boolean {
+    console.log(this.destinations.length);
+    if(this.destinations.length != 0){
+      return true;
+
+    }
+    return false;
   }
 
   hasData(): boolean {

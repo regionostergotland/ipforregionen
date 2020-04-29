@@ -123,7 +123,9 @@ export class SelectionViewComponent implements OnInit {
     for (let sel of this.selectedSelections){
       this.executeSelection(sel);
     }
+    
     this.snackBar.open("Urval skapat!", null, {duration: 2000});
+    this.router.navigateByUrl('/inspection');
   }
 
 
@@ -198,6 +200,13 @@ export class SelectionViewComponent implements OnInit {
 
   }
 
+  /*
+  * Removes selection from page
+  */
+  removeSelection(selection: Selection): void {
+    this.selections.splice(this.selections.indexOf(selection), 1);
+  }
+
   /**
    * Saves selection to localstorage under "selections" if not already
    * present.
@@ -212,6 +221,15 @@ export class SelectionViewComponent implements OnInit {
       selections = {};
     }
 
+    if (!selections[selection.id]) {
+      selections[selection.id] = selection;
+      localStorage.setItem("selections", JSON.stringify(selections));
+    }
+  }
+
+  removeFromLocal(selection: Selection): void{
+    localStorage.removeItem("selections");
+    let selections = {};
     if (!selections[selection.id]) {
       selections[selection.id] = selection;
       localStorage.setItem("selections", JSON.stringify(selections));
