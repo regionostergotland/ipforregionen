@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, EMPTY } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Destination } from './destination.service';
 import { DataList } from './ehr/datalist';
 import { EhrService } from './ehr/ehr.service';
 import { CompositionReceipt } from './ehr/ehr.service';
@@ -17,21 +18,26 @@ import { BluetoothService } from './platform/bluetooth.service';
 export class Conveyor {
   private readonly platforms: Map<string, Platform>;
   private categories: Map<string, DataList>;
-  private destination: string;
-  private destinationUrl: string;
+  private destinations: Map<string, Destination>;
+
+  //private destination: string;
+  //private destinationUrl: string;
+
 
   constructor(
     private ehrService: EhrService,
     private gfitService: GfitService,
     private dummyPlatformService: DummyPlatformService,
-    private bluetoothService: BluetoothService) {
-    this.categories = new Map<string, DataList>();
-    this.platforms = new Map<string, Platform>([
-      [ 'google-fit', this.gfitService ],
-      [ 'dummy', this.dummyPlatformService ],
-      [ 'bluetooth', this.bluetoothService ]
-    ]);
-  }
+    private bluetoothService: BluetoothService)
+    {
+      this.categories = new Map<string, DataList>();
+      this.destinations  = new Map<string, Destination>();
+      this.platforms = new Map<string, Platform>([
+        [ 'google-fit', this.gfitService ],
+        [ 'dummy', this.dummyPlatformService ],
+        [ 'bluetooth', this.bluetoothService ]
+      ]);
+    }
 
   public async signIn(platformId: string) {
     const platform: Platform = this.platforms.get(platformId);
@@ -97,7 +103,7 @@ export class Conveyor {
     }
 
   public getDataList(categoryId: string): DataList {
-    console.log("getDataList: " + categoryId);
+    //console.log("getDataList: " + categoryId);
     if (this.categories.has(categoryId)) {
       return this.categories.get(categoryId);
     } else {
@@ -117,26 +123,27 @@ export class Conveyor {
     return this.ehrService.getCategorySpec(categoryId);
   }
 
-  public sendData(): Observable<CompositionReceipt> {
+  public sendData(dest: Destination): Observable<CompositionReceipt> {
     const composition = this.ehrService.createComposition(
-      Array.from(this.categories.values())
+      Array.from(dest.getCategories().values())
     );
-    return this.ehrService.sendComposition(composition, this.destinationUrl);
+    return this.ehrService.sendComposition(composition, dest.getDestinationUrl());
   }
 
-  public getDestination(): string {
-    return this.destination;
+  public setDestination(dest:Destination){
+    this.destinations.set(dest.getDestinationUrl(), dest);
   }
 
-  public setDestination(destination: string) {
-    this.destination = destination;
+  public getDestinations(){
+    return this.destinations;
   }
 
-  public getDestinationUrl(): string {
-    return this.destinationUrl;
+  public getDestinationSpec(dest:Destination){
+    if(this.destinations.has(dest.getDestinationUrl())){
+      return this.destinations.get(dest.getDestinationUrl());
   }
-
-  public setDestinationUrl(destination: string) {
-    this.destinationUrl = destination;
+    else{
+      console.log("Destination not found");
+    }
   }
 }

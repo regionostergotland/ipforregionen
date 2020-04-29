@@ -2,9 +2,9 @@
 
 <div *ngIf="method===AuthenticationMethod.BASIC">
   <div class="auth-form">
-    <label>Personnummer:</label> <input #pnr />
-    <label>Användare:</label> <input #username />
-    <label>Lösenord:</label> <input type="password" #password />
+    <label>Personnummer:</label> <input #pnr value="191212121212"/>
+    <label>Användare:</label> <input #username value="lio.se2"/>
+    <label>Lösenord:</label> <input type="password" #password value="ehr4lio.se2"/>
   </div>
 
   <button
@@ -19,8 +19,10 @@
   <button
       mat-raised-button
       color="primary"
-      (click)="assistedToken()"
-    >
+      (click)="assistedToken()">
     Logga in med BankId
   </button>
+</div>
+<div>
+    <button mat-button (click)="closeDialog()">No Thanks</button>
 </div>

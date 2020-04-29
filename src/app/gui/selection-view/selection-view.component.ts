@@ -4,6 +4,8 @@ import { CategorySpec } from 'src/app/ehr/datatype';
 import { DataList } from '../../ehr/datalist';
 import { Router } from '@angular/router';
 import { Filter, filterString } from 'src/app/ehr/datalist';
+import { Destination } from '../../destination.service';
+import { ConfigService } from 'src/app/config.service';
 import {
   Categories,
   CommonFields,
@@ -13,13 +15,17 @@ import {
   Height,
   HeartRate
 } from '../../ehr/ehr-config';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SELECT_PANEL_VIEWPORT_PADDING } from '@angular/material/select';
 
 interface Selection {
   id: string;
   name: string;
+  needsAuth: boolean;
   destinations: string[];
   categories: string[];
   filters: Map<string, Filter>;
+  imageUrl: string;
 }
 
 @Component({
@@ -29,20 +35,27 @@ interface Selection {
 })
 export class SelectionViewComponent implements OnInit {
   selections: Selection[] = [];
-  selectedSelection: Selection[] = []; //Add Selection to this list when it is clicked on
+  selectedSelections: Selection[] = []; //Add Selection to this list when it is clicked on
 
   categoryIds: string[] = [];
 
+  destination: Destination;
+
   file: File;
+  assetUrl: string;
 
   constructor(private conveyor: Conveyor,
-    public router: Router) {
-    console.log("Loaded selection view...");
+    public router: Router,
+    private snackBar: MatSnackBar,
+    private cfg: ConfigService) {
+      this.assetUrl = cfg.getAssetUrl();
+      console.log("Loaded selection view...");
    }
 
   ngOnInit() {
     console.log("ngOnInit");
     this.getCategories();
+    this.loadFromLocal();
   }
 
   AfterViewInit() : void {
@@ -66,7 +79,7 @@ export class SelectionViewComponent implements OnInit {
 */
   importSelection(file) : void{
     this.file = file.target.files[0];
-    console.log("File uploaded is: " + this.file.name);
+    // console.log("File uploaded is: " + this.file.name);
     let result;
 
     let reader = new FileReader();
@@ -76,24 +89,27 @@ export class SelectionViewComponent implements OnInit {
       result = JSON.parse(result);
 
       if (!!result["selection"]) {
-        // For now loading only one selection.
-        let selection = result["selection"];
-        console.log("2 " + JSON.stringify(selection));
+        for (let selection of result["selection"]){
 
         // Making instance of interface Selection
         const currentSelection: Selection = {
-          id: JSON.stringify(selection["id"]),
-          name: JSON.stringify(selection["name"]),
+          id: selection["id"],
+          name: selection["name"],
+          needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
-          filters: selection["filters"]
+          filters: selection["filters"],
+          imageUrl: this.cfg.getAssetUrl() + 'selection.png'
         };
 
-        console.log("Categories: "+ currentSelection.categories);
+        console.log(currentSelection.name);
+
+        this.saveToLocal(currentSelection);
+
         // Adding currentSelection to member variable selections
         this.selections.push(currentSelection);
-        console.log("Selection: "+ JSON.stringify(this.selections));
       }
+    }
 
       else {
         console.log("This file is not a valid selection.");
@@ -107,32 +123,151 @@ export class SelectionViewComponent implements OnInit {
 * And applies the filters to the values
 */
   executeSelections() : void {
-    let dataList : DataList;
+    for (let sel of this.selectedSelections){
+      this.executeSelection(sel);
+    }
+    this.snackBar.open("Urval skapat!", null, {duration: 2000});
+  }
 
-    for (let sel of this.selections){
-      for (let cat of sel.categories){
-        console.log("For cat: "+ cat);
-        dataList = this.conveyor.getDataList(cat);
-        let filter: Filter = sel.filters[cat];
-        console.log("Filter:");
-        console.log(filter);
+
+  executeSelection(selection: Selection): void {
+    for (let cat of selection.categories){
+      // console.log("For cat: "+ cat);
+      if(this.conveyor.hasCategoryId(cat)){
+        let dataList = this.conveyor.getDataList(cat);
+        let filter: Filter = selection.filters[cat];
+        //console.log("Filter:");
+        //console.log(filter);
         dataList.addFilter(filter);
-        console.log(sel.destinations);
-        this.conveyor.setDestinationUrl(sel.destinations[0]);
-
-        for (let entry of dataList.getPoints().entries())
-           {
-             console.log(entry[1]);
-           }
+        //console.log("Selection destination: ")
+        //console.log(selection.destinations);
+        this.addDestinationData(selection.name, cat, dataList, selection.destinations,
+           selection.needsAuth);
+        //this.conveyor.setDestinationUrl(sel.destinations[0]);
+      } else {
+        console.log("Category has not been imported");
       }
     }
   }
+
+/*
+* Create destination objects for each destination and
+* add each destination to the destination array in conveyor
+*/
+  addDestinationData(name: string, category : string, data : DataList,
+    destinations: string[], needsAuth :boolean): void {
+
+      destinations.forEach((value, i) => {
+        let dest_object : Destination;
+
+        if(!this.conveyor.getDestinations().has(value)){
+          dest_object = new Destination(name, value, needsAuth);
+            //console.log("Added destination to map");
+          }
+        else {
+          dest_object = this.conveyor.getDestinations().get(value);
+          console.log("Destination already in map");
+        }
+        dest_object.setDataList(category, data);
+        this.conveyor.setDestination(dest_object);
+
+        console.log("Destination object: ");
+        console.log(dest_object);
+
+      })
+      console.log("Destination map: ");
+      console.log(this.conveyor.getDestinations());
+  }
+
 
   /*
   * Allows selecting one or more selections
   * that will then be handled with executeSelections()
   */
-  selectSelection(){
+  selectSelection(selection: Selection, event: any) : void{
+    const boxChecked: boolean = event.checked;
+    if (boxChecked) {
+      if (this.selectedSelections.indexOf(selection) === -1){
+        this.selectedSelections.push(selection);
+      }
+    } else {
+      this.selectedSelections.splice(this.selectedSelections.indexOf(selection), 1);
+    }
+
+        console.log(this.selectedSelections);
+
+  }
+
+  /**
+   * Saves selection to localstorage under "selections" if not already
+   * present.
+   * @param object selection
+   */
+
+   /*
+   * Removes selection from page
+   */
+   removeSelection(selection: Selection): void {
+     this.selections.splice(this.selections.indexOf(selection), 1);
+     console.log(this.selections);
+     this.updateLocal();
+   }
+
+   updateLocal(): void{
+     localStorage.removeItem("selections");
+     for (let selection of this.selections){
+        this.saveToLocal(selection);
+     }
+   }
+
+  saveToLocal(selection: Selection) : void {
+    let selections;
+    if (!!JSON.parse(localStorage.getItem("selections"))) {
+      selections = JSON.parse(localStorage.getItem("selections"));
+    } else {
+      selections = {};
+    }
+
+    if (!selections[selection.id]) {
+      selections[selection.id] = selection;
+      localStorage.setItem("selections", JSON.stringify(selections));
+    }
+  }
+
+  /* 
+  * Checks local storage for previously loaded selections
+  * Called when page is loaded
+  */
+  loadFromLocal(): void {
+    if (!!JSON.parse(localStorage.getItem("selections"))) {
+      let result = JSON.parse(localStorage.getItem("selections"));
+
+      for (let sel in result){
+        let selection = result[sel];
+
+        // Making instance of interface Selection
+        const currentSelection: Selection = {
+          id: selection["id"],
+          name: selection["name"],
+          needsAuth : selection["needsAuth"],
+          destinations: selection["destinations"],
+          categories: selection["categories"],
+          filters: selection["filters"],
+          imageUrl: this.cfg.getAssetUrl() + 'selection.png'
+        };
+
+        console.log(currentSelection.name);
+        // Adding currentSelection to selections
+        this.selections.push(currentSelection);
+      };
 
   }
 }
+
+
+}
+
+
+
+
+//    localStorage.setItem('destination_urls', JSON.stringify(urls));

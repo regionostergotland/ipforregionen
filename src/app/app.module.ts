@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -61,7 +61,7 @@ import { InfoPageComponent } from './gui/info-page/info-page.component';
 import { HomePageComponent } from './gui/home-page/home-page.component';
 import { HelpPageComponent } from './gui/help-page/help-page.component';
 import { SettingsViewComponent } from './gui/settings-view/settings-view.component';
-import { SelectionViewComponent } from './gui/selection-view/selection-view.component'; //?
+import { SelectionViewComponent } from './gui/selection-view/selection-view.component';
 /* Fetching */
 import {
   PlatformSelectionComponent
@@ -107,6 +107,15 @@ import { ToolbarComponent } from './gui/toolbar/toolbar.component';
 import { CustomGoogleApiModule } from './google-fit-config';
 
 
+/* Error pages */
+import { 
+  FourFourPageComponent, 
+  FiveOhPageComponent 
+} from './error-pages/error-pages.component';
+
+/* LoginModal */
+import { LoginModal } from './gui/inspection-view/login-modal.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -130,8 +139,11 @@ import { CustomGoogleApiModule } from './google-fit-config';
     DestinationViewComponent,
     NewDestinationDialog,
     NewAlertDialog,
+    LoginModal,
     SettingsViewComponent,
-    SelectionViewComponent
+    SelectionViewComponent,
+    FourFourPageComponent, 
+    FiveOhPageComponent 
   ],
   imports: [
     DataViewerModule,
@@ -205,7 +217,8 @@ import { CustomGoogleApiModule } from './google-fit-config';
     AddNewDataModalComponent,
     NewDestinationDialog,
     NewAlertDialog,
-    SelectionViewComponent
+    SelectionViewComponent,
+    LoginModal
   ],
 
   providers: [
@@ -219,3 +232,5 @@ export class AppModule { }
 export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+
+

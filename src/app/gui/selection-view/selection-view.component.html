@@ -3,7 +3,8 @@
   Välj en giltig json fil.
 </p>
 
-<input type="file" style="display:none" #file (change)="importSelection($event)"/>
+
+  <input type="file" style="display:none" #file (change)="importSelection($event)"/>
 <button
   name="fileSelector"
   type="button"
@@ -11,19 +12,52 @@
   color="primary"
   (click) = "file.click()"> Hämta Urval </button>
 
-<div 
-  color="white"
-  *ngFor="let selection of selections"
-  (click) = "selectSelection($event.target)"> <!--Make selections clickable-->
-  <p>{{selection.name}}</p>
-  <p>{{selection.id}}</p>
-  <p>{{selection.destinations}}</p>
-  <p>{{selection.categories}}</p>
+<div class= "centering" class ="container" >
+  <div
+  fxLayout="row"
+  fxLayout.xs="column"
+  fxLayout.lt-sm="column"
+  fxFlex
+  class="wrapper">
+<mat-card
+  *ngFor="let selection of selections"> <!--Make selections clickable-->
+  <mat-card-title>
+    <mat-checkbox
+      class="top-checkbox"
+      [ngModel]="allChosen"
+      [matTooltip]="selection.id"
+      (change)="selectSelection(selection, $event)">
+        {{selection.name}}
+    </mat-checkbox>
+    <button mat-icon-button
+    class="trash"
+    (click)=removeSelection(selection)>
+    <img src="{{assetUrl}}/flaticon/trashcan.svg" style="max-height: 100%; width: auto;" stroke="red" fill="red"/>
+    </button>
+
+  </mat-card-title>
+ 
+
+<mat-card-content>
+
+  <img src= {{selection.imageUrl}} style="width:80px"/>
+  <p>ID: {{selection.id}}</p>
+
+  <p>Auth: {{selection.needsAuth}}</p>
+  <p>DestUrl: {{selection.destinations}}</p>
+  <p>Categories: {{selection.categories}}</p>
+</mat-card-content>
+  </mat-card>
   </div>
+    <mat-divider></mat-divider>
+  </div>
+
 
 <button
   name="executeSelections"
   type="button"
   class="btn"
   color="primary"
-  (click) = "executeSelections()" > Skapa resultat </button> 
+  (click) = "executeSelections()" > Skapa resultat </button>
+
+<button (click)="router.navigateByUrl('/inspection')">Gå vidare</button>

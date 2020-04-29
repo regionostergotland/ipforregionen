@@ -1,14 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { imports } from '../../app.imports';
 import { SelectionViewComponent } from './selection-view.component';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 describe('SelectionViewComponent', () => {
   let component: SelectionViewComponent;
   let fixture: ComponentFixture<SelectionViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectionViewComponent ]
+      imports: imports,
+      declarations: [ SelectionViewComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

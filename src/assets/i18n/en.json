@@ -1,5 +1,5 @@
 {
-    "Global":{
+    "Global": {
         "Login": "Log in"
     },
     "Platform-sel": {
@@ -14,12 +14,17 @@
         "Choosedest": "Choose destination",
         "Inspect": "Inspect and send"
     },
-    "Home-page":{
+    "Home-page": {
         "Welcome": "Welcome!",
         "Senddata": "Send data",
         "Sendflavor": "Send health data to Region Östergötland's Digitalization Platform.",
         "Choose": "Choose source",
         "Help": "Help",
         "Helpflavor": "Need a helping hand? Take a look at our guide!"
+    },
+    "Error-pages": {
+        "404page": "404-error, we could not find the page you where looking for!",
+        "404button": "Go back to homepage",
+        "500page": "500-error, the server is acting up!"
     }
 }

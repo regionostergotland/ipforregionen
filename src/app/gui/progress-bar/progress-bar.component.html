@@ -31,12 +31,12 @@
       <button (click)="navigate('destination', 4)" [class]="getClass(4)">
         4
       </button>
-      <div *ngIf="!onSmallScreen()"><p>Välj destination</p></div>
+      <div *ngIf="!onSmallScreen()"><p>{{ 'Progress-bar.Choosedest' | translate }}</p></div>
     </div>
 
     <!-- REVIEW -->
     <div class="item-container">
-      <button (click)="navigate('inspection', 5)" [class]="getClass(5)">
+      <button (click)="navigate('inspection', 4)" [class]="getClass(5)">
         5
       </button>
       <div *ngIf="!onSmallScreen()"><p>{{ 'Progress-bar.Inspect' | translate }}</p></div>

@@ -1,10 +1,32 @@
-.selection-card {
+.mat-card {
   min-width: 150px;
-  width: 160px;
-  height: 250px;
+  max-width: 400px;
+  height: 300px;
   margin: 15px;
   display: flex;
   flex-direction: column;
-  text-align: center;
+  text-align: left;
   justify-content: space-between;
+}
+
+
+.wrapper {
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  margin:20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-checkbox {
+  font-weight: bold;
+  font-size: 14pt;
+  display: flex;
+  align-content: left;
+  margin: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.23);
 }
