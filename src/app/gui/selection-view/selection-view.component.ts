@@ -16,6 +16,7 @@ import {
   HeartRate
 } from '../../ehr/ehr-config';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SELECT_PANEL_VIEWPORT_PADDING } from '@angular/material/select';
 
 interface Selection {
   id: string;
@@ -41,12 +42,14 @@ export class SelectionViewComponent implements OnInit {
   destination: Destination;
 
   file: File;
+  assetUrl: string;
 
   constructor(private conveyor: Conveyor,
     public router: Router,
     private snackBar: MatSnackBar,
     private cfg: ConfigService) {
-    console.log("Loaded selection view...");
+      this.assetUrl = cfg.getAssetUrl();
+      console.log("Loaded selection view...");
    }
 
   ngOnInit() {
@@ -159,7 +162,8 @@ export class SelectionViewComponent implements OnInit {
 
         if(!this.conveyor.getDestinations().has(value)){
           dest_object = new Destination(name, value, needsAuth);
-            console.log("Added destination to map");        }
+            //console.log("Added destination to map");
+          }
         else {
           dest_object = this.conveyor.getDestinations().get(value);
           console.log("Destination already in map");
@@ -200,6 +204,22 @@ export class SelectionViewComponent implements OnInit {
    * @param object selection
    */
 
+   /*
+   * Removes selection from page
+   */
+   removeSelection(selection: Selection): void {
+     this.selections.splice(this.selections.indexOf(selection), 1);
+     console.log(this.selections);
+     this.updateLocal();
+   }
+
+   updateLocal(): void{
+     localStorage.removeItem("selections");
+     for (let selection of this.selections){
+        this.saveToLocal(selection);
+     }
+   }
+
   saveToLocal(selection: Selection) : void {
     let selections;
     if (!!JSON.parse(localStorage.getItem("selections"))) {
@@ -214,6 +234,10 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
+  /* 
+  * Checks local storage for previously loaded selections
+  * Called when page is loaded
+  */
   loadFromLocal(): void {
     if (!!JSON.parse(localStorage.getItem("selections"))) {
       let result = JSON.parse(localStorage.getItem("selections"));
