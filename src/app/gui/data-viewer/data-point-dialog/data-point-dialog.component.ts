@@ -323,7 +323,7 @@ export class DataPointDialogComponent implements OnInit {
    */
   addToLocalStorage(datapoint: DataPoint): void {
     let category = this.selectedCategory;
-    let new_data;
+    let new_data = new Array;
     
     if (!!localStorage.getItem(category))
     { 

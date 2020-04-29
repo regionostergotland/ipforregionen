@@ -346,12 +346,7 @@ export class DataTableComponent implements OnInit {
 
     if (this.category) {
       const dataList = this.conveyor.getDataList(this.category);
-      // om datalist.length != getlista från localstorage.length
-      //    slå ihop listorna
-      // annars fortsätt som vanligt
-      console.log("This is datalist", dataList);
-      // THIS IS STILL BROKEN //
-
+      
       for (const [column, dataType] of dataList.spec.dataTypes.entries()) {
         if (!dataType.visible) {
           continue;
@@ -385,22 +380,4 @@ export class DataTableComponent implements OnInit {
 
     return result;
   }
-
-  reviver(key: string, value: any): any {
-    if(typeof value === 'object' && value !== null) {
-      if (value.dataType === 'Map') {
-        console.log("valuetype == MAP");
-        //return new Map(value.value);
-        return new DataPoint(value);
-      }
-    }
-    return value;
-  }
 }
-
-/*
-new DataPoint([
-    ['time', new Date(2016, 1, 1)],
-    ['systolic', 101],
-    ['diastolic', 20],
-  ])*/
