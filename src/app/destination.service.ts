@@ -47,7 +47,7 @@ export class Destination {
   }
 
   public setDataList(categoryId: string, list: DataList) {
-    this.categories.set(categoryId, list);
+      this.categories.set(categoryId, list);
   }
 
   public getAuth() : boolean {

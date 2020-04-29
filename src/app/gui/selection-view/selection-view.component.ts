@@ -53,13 +53,13 @@ export class SelectionViewComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log("ngOnInit");
+    //console.log("ngOnInit");
     this.getCategories();
     this.loadFromLocal();
   }
 
   AfterViewInit() : void {
-    console.log("AfterViewInit");
+    //console.log("AfterViewInit");
   }
 
   /**
@@ -126,7 +126,9 @@ export class SelectionViewComponent implements OnInit {
     for (let sel of this.selectedSelections){
       this.executeSelection(sel);
     }
+    
     this.snackBar.open("Urval skapat!", null, {duration: 2000});
+    this.router.navigateByUrl('/inspection');
   }
 
 
@@ -135,12 +137,15 @@ export class SelectionViewComponent implements OnInit {
       // console.log("For cat: "+ cat);
       if(this.conveyor.hasCategoryId(cat)){
         let dataList = this.conveyor.getDataList(cat);
-        let filter: Filter = selection.filters[cat];
+
+        for (let filter of selection.filters[cat]){
+        //let filter: Filter = selection.filters[cat];
         //console.log("Filter:");
-        //console.log(filter);
+        //console.log(filter);)
         dataList.addFilter(filter);
         //console.log("Selection destination: ")
         //console.log(selection.destinations);
+        }
         this.addDestinationData(selection.name, cat, dataList, selection.destinations,
            selection.needsAuth);
         //this.conveyor.setDestinationUrl(sel.destinations[0]);
@@ -154,8 +159,8 @@ export class SelectionViewComponent implements OnInit {
 * Create destination objects for each destination and
 * add each destination to the destination array in conveyor
 */
-  addDestinationData(name: string, category : string, data : DataList,
-    destinations: string[], needsAuth :boolean): void {
+  addDestinationData(name : string, category : string, data : DataList,
+    destinations: string[], needsAuth : boolean): void {
 
       destinations.forEach((value, i) => {
         let dest_object : Destination;
@@ -163,10 +168,9 @@ export class SelectionViewComponent implements OnInit {
         if(!this.conveyor.getDestinations().has(value)){
           dest_object = new Destination(name, value, needsAuth);
             //console.log("Added destination to map");
-          }
-        else {
+          } else {
           dest_object = this.conveyor.getDestinations().get(value);
-          console.log("Destination already in map");
+          //console.log("Destination already in map");
         }
         dest_object.setDataList(category, data);
         this.conveyor.setDestination(dest_object);
@@ -198,12 +202,6 @@ export class SelectionViewComponent implements OnInit {
 
   }
 
-  /**
-   * Saves selection to localstorage under "selections" if not already
-   * present.
-   * @param object selection
-   */
-
    /*
    * Removes selection from page
    */
@@ -219,7 +217,11 @@ export class SelectionViewComponent implements OnInit {
         this.saveToLocal(selection);
      }
    }
-
+  /**
+   * Saves selection to localstorage under "selections" if not already
+   * present.
+   * @param object selection
+   */
   saveToLocal(selection: Selection) : void {
     let selections;
     if (!!JSON.parse(localStorage.getItem("selections"))) {
@@ -254,20 +256,15 @@ export class SelectionViewComponent implements OnInit {
           categories: selection["categories"],
           filters: selection["filters"],
           imageUrl: this.cfg.getAssetUrl() + 'selection.png'
-        };
+        }
 
         console.log(currentSelection.name);
         // Adding currentSelection to selections
         this.selections.push(currentSelection);
-      };
-
+      }
+    }
   }
 }
-
-
-}
-
-
 
 
 //    localStorage.setItem('destination_urls', JSON.stringify(urls));

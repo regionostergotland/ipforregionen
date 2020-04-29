@@ -6,9 +6,8 @@
 
   <input type="file" style="display:none" #file (change)="importSelection($event)"/>
 <button
+  mat-raised-button
   name="fileSelector"
-  type="button"
-  class="btn"
   color="primary"
   (click) = "file.click()"> Hämta Urval </button>
 
@@ -52,12 +51,25 @@
     <mat-divider></mat-divider>
   </div>
 
+<button
+  mat-raised-button
+  color="primary"
+  (click)="router.navigateByUrl('/edit')">
+  Tillbaka
+</button>
 
 <button
+  mat-raised-button
   name="executeSelections"
-  type="button"
-  class="btn"
   color="primary"
-  (click) = "executeSelections()" > Skapa resultat </button>
+  (click) = "executeSelections()" >
+  Skapa resultat
+</button>
 
-<button (click)="router.navigateByUrl('/inspection')">Gå vidare</button>
+<button 
+  mat-raised-button
+  color="primary"
+  (click)="router.navigateByUrl('/inspection')">
+  Gå vidare
+</button>
+

@@ -2,35 +2,42 @@
 	"selection": [{
 		"id": 1,
 		"needsAuth" : false,
-		"name": "FireHospital",
-		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/"],
+		"name": "Hälsosamtal",
+		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/",
+			 "https://rest.ehrscape.com/rest/v1/"],
 		"categories": ["body_weight", "blood_pressure"],
 		"filters": {
-		"body_weight": {
-			"width": 4,
-			"fn": 2
-			},
-		"blood_pressure": {
+		"body_weight": [{
 			"width": 3,
+			"fn": 4
+			},
+			{
+				"width": 3,
+				"fn": 3
+			}],
+		"blood_pressure": [{
+			"width": 2,
 			"fn": 5
-			}
+			}]
 		}
 	},
-		{
-			"id": 2,
-			"name": "EhrEscape",
-			"destinations": ["https://rest.ehrscape.com/rest/v1/"],
+		
+	{
+		"id": 2,
+		"name": "EhrEscape",
+		"destinations": ["https://rest.ehrscape.com/rest/v1/"],
 			"categories": ["steps", "height_length"],
 			"filters": {
-				"steps": {
+				"steps": [{
 					"width": 4,
 					"fn": 3
-				},
-				"height_length" : {
+				}],
+				"height_length" : [{
 					"width": 4,
 					"fn": 1
-				}
+				}]
 			}
-		}
+	}
+		
 	]
 }

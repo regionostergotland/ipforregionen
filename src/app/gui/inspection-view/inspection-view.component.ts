@@ -42,9 +42,13 @@ export class InspectionViewComponent implements OnInit {
     console.log(this.destinations);
   }
 
-  hasDestination(): boolean {
-    //return this.destination != null;
-    return this.destinations != null;
+  hasDestinations(): boolean {
+    console.log(this.destinations.length);
+    if(this.destinations.length != 0){
+      return true;
+
+    }
+    return false;
   }
 
   hasData(): boolean {
@@ -130,6 +134,14 @@ export class InspectionViewComponent implements OnInit {
     return this.destinations[index].getAuth();
   }
 
+    /**
+   * Checks if destination requires login
+   * @param dest A destination to retrieve keys from
+   * @returns the chosen destination's key.
+   */
+  getDestCategories(dest: Destination): string [] { 
+    return Array.from(dest.getCategories().keys()); 
+  }
   /**
    * Send all the data stored in the conveyor if log in is required.
    */

@@ -254,9 +254,17 @@ export class DataList {
     ]);
   }
 
-  public addFilter(filter: Filter) {
+  public addFilter(filter: Filter) { // <-- Optimera!
+    let exists : boolean = false;
     this.processedPoints.delete(DEFAULT_FILTER);
-    this.processedPoints.set(filter, this.mergePoints(filter));
+    for (let key of this.processedPoints.keys()){
+      if(JSON.stringify(key) === JSON.stringify(filter)){ //JSON.stringify(obj1) === JSON.stringify(obj2)   
+        exists = true; //break?
+      }
+    }
+    if(!exists){
+      this.processedPoints.set(filter, this.mergePoints(filter));
+    }
   }
 
   public removeFilter(filter: Filter) {
