@@ -323,17 +323,35 @@ export class DataPointDialogComponent implements OnInit {
    */
   addToLocalStorage(datapoint: DataPoint): void {
     let category = this.selectedCategory;
-    let new_data = new Array;
+    let arrayFromLocalStorage = new Array;
     
     if (!!localStorage.getItem(category))
     { 
-      new_data = JSON.parse(localStorage.getItem(category));
+      arrayFromLocalStorage = JSON.parse(localStorage.getItem(category));
     } 
 
-    //let jsonText = JSON.stringify(Array.from(datapoint.values()));
-    new_data.push(Object.fromEntries(datapoint.entries()));
+    // Have to stringify datapoint to be able to compare to object inside localStorage.
+    let stringifiedDatapoint = JSON.stringify(Object.fromEntries(datapoint.entries())); 
+    let timeSplit = stringifiedDatapoint.split('"')[3];  //TODO: The desired timeSplit is at index 3, should probably find a better way to get it.
+    let tempArray = [...arrayFromLocalStorage];
+    let found = false;
+
+    if (tempArray.length > 0) {
+      for (let entry = 0; entry < tempArray.length; entry++) {
+        if (tempArray[entry]['time'] === timeSplit) {
+          arrayFromLocalStorage[entry] = (Object.fromEntries(datapoint.entries()));
+          found = true;
+          break;
+        }        
+      }
+      if (!found) {
+        arrayFromLocalStorage.push(Object.fromEntries(datapoint.entries()));
+      }
+    } else {
+      arrayFromLocalStorage.push(Object.fromEntries(datapoint.entries()));
+    }
     
-    localStorage.setItem(category, JSON.stringify(new_data));
+    localStorage.setItem(category, JSON.stringify(arrayFromLocalStorage));
   }
   
   /**
