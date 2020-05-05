@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     templateUrl: './login-modal.component.html',
     styleUrls: []
 })
-export class LoginModal{
+export class LoginModal {
     AuthenticationMethod = AuthenticationMethod;
     method: AuthenticationMethod;
     loggedIn: boolean = false;

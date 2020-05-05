@@ -20,10 +20,6 @@ export class Conveyor {
   private categories: Map<string, DataList>;
   private destinations: Map<string, Destination>;
 
-  //private destination: string;
-  //private destinationUrl: string;
-
-
   constructor(
     private ehrService: EhrService,
     private gfitService: GfitService,
@@ -112,15 +108,19 @@ export class Conveyor {
     }
   }
 
-  public setDataList(categoryId: string, list: DataList) {
+  public setDataList(categoryId: string, list: DataList): void {
     this.categories.set(categoryId, list);
   }
 
-  public clearData() {
+  public removeDestination(url: string): void {
+    this.destinations.delete(url);
+  }
+
+  public clearData(): void {
     this.categories = new Map<string, DataList>();
   }
 
-  public getCategorySpec(categoryId: string) {
+  public getCategorySpec(categoryId: string): any {
     return this.ehrService.getCategorySpec(categoryId);
   }
 

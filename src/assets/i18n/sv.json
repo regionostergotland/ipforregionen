@@ -26,5 +26,10 @@
         "404page": "404-fel, sidan du letar efter finns inte!",
         "404button": "Återgå till hemsidan",
         "500page": "500-fel, servern håller på och krånglar!"
+    },
+    "Inspect-and-send": {
+        "SendAll": "Skicka all data.",
+        "LoginAndSend": "Logga in och skicka data.",
+        "Send": "Godkänd och skicka data."
     }
 }

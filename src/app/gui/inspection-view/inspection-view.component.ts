@@ -12,6 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Destination } from '../../destination.service';
 
+import { tap } from 'rxjs/operators';
+
 @Component({
   selector: 'app-inspection-view',
   templateUrl: './inspection-view.component.html',
@@ -43,10 +45,8 @@ export class InspectionViewComponent implements OnInit {
   }
 
   hasDestinations(): boolean {
-    console.log(this.destinations.length);
     if(this.destinations.length != 0){
       return true;
-
     }
     return false;
   }
@@ -88,7 +88,13 @@ export class InspectionViewComponent implements OnInit {
     }
     return values;
   }
-  
+
+  /**
+   * Sends data to a destination and clears itself from conveyor.
+   * @param index A number representing a selection.
+   * 
+   * ngOnInit is a bit hacky? Maybe change to more reasonable update?
+   */
   sendData(index: number): void {
     let destination = this.destinations[index];
     this.destinationSent[index] = true;
@@ -97,11 +103,10 @@ export class InspectionViewComponent implements OnInit {
           receipt => {
             this.dataSent = true && this.checkAllSent();
             this.receipt = receipt;
-            if (this.dataSent) {
-              this.conveyor.clearData();
-            } else {
-              this.snackBar.open("Data skickat till ${destination.getDestinationName}", "Ok", {duration: 3000});
-            }
+            this.snackBar.open("Data skickat till ${destination.getDestinationName}", "Ok", {duration: 3000});
+            this.conveyor.removeDestination(destination.getDestinationUrl());
+            let destinations = this.conveyor.getDestinations();
+            this.destinations = Array.from(destinations.values());
           },
           e => {
             console.log(e);
@@ -116,8 +121,8 @@ export class InspectionViewComponent implements OnInit {
 
   /**
    * Checks if all destinations has sent the data
+   * @Returns true | false
    */
-
   checkAllSent(): boolean {
     for (let i = 0; i < this.destinationSent.length; i++) {
       if (!this.destinationSent[i])
@@ -128,6 +133,7 @@ export class InspectionViewComponent implements OnInit {
   
   /**
    * Checks if destination requires login
+   * @param index A number representing a selection
    * @returns true | false
    */
   needsAuth(index: number): boolean {
@@ -142,39 +148,40 @@ export class InspectionViewComponent implements OnInit {
   getDestCategories(dest: Destination): string [] { 
     return Array.from(dest.getCategories().keys()); 
   }
+
   /**
    * Send all the data stored in the conveyor if log in is required.
+   * Uses "sendData" because except for loginModal they are identical.
    */
-  sendDataWithAuth(index: number): void {
+  sendDataWithAuth(index: number): any {
     const dialogRef = this.dialog.open(LoginModal, {
       width: '250px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    return dialogRef.afterClosed().pipe(tap(result => {
       if (result === true) {
-        this.conveyor.sendData(this.destinations[index]).
-        subscribe(
-          receipt => {
-            this.dataSent = true;
-            this.receipt = receipt;
-            if (this.dataSent) {
-              this.conveyor.clearData();
-            } else {
-              this.snackBar.open("Data skickat till" + this.destinations[index].getDestinationName, "Ok", {duration: 3000});
-            }
-          },
-          e => {
-            console.log(e);
-            if (this.cfg.getIsDebug()) { console.log(e); }
-            this.snackBar.open(
-              'Inrapporteringen misslyckades. Fel: "' + e.statusText + '"', null,
-              { duration: 5000 }
-            );
-          }
-      );
-      } else {
-        this.snackBar.open("Datan är inte skickad", null, {duration: 3000});
+        this.sendData(index);
       }
-    });
+    })).toPromise();
+  }
+
+  /**
+   * Sends all available selection-data to respective destination.
+   * Sends data that doesn't need login first, so that it can run async on the ones that needs
+   * login to function properly.
+   * 
+   * For now only one authorisation per selection is possible, maybe expand in future?
+   */
+  async sendAll() {
+    for (let i = 0; i < this.destinations.length; i++) {
+      if (!this.needsAuth(i)) {
+        this.sendData(i);
+      }
+    }
+    for (let i = 0; i < this.destinations.length; i++) {
+      if (this.needsAuth(i)) {
+        await this.sendDataWithAuth(i);
+      }
+    }
   }
 }

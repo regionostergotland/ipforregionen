@@ -26,5 +26,10 @@
         "404page": "404-error, we could not find the page you where looking for!",
         "404button": "Go back to homepage",
         "500page": "500-error, the server is acting up!"
+    },
+    "Inspect-and-send": {
+        "SendAll": "Send all data",
+        "LoginAndSend": "Login and send data.",
+        "Send": "Approve and send data"
     }
 }

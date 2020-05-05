@@ -40,12 +40,10 @@
   </div>
 </div>
 <div *ngIf="hasData() && hasDestinations()">
-  <mat-expansion-panel *ngFor="let destination of destinations; let i = index" class="panel">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Skicka data till {{ destination.name }}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
+  <mat-card *ngFor="let destination of destinations; let i = index" class="dest-card">
+    <mat-card-title>
+      Skicka data till {{ destination.name }}
+    </mat-card-title>
     <p>Kontrollera dina värden innan du skickar in till {{ destination.name }}</p>
     <div class="panel-container">
       <mat-expansion-panel *ngFor="let category of getDestCategories(destination)"
@@ -71,21 +69,27 @@
         mat-raised-button
         color="primary"
         (click)="sendDataWithAuth(i)">
-        Logga in och skicka
+        {{ 'Inspect-and-send.LoginAndSend' | translate }}
       </button>
       <button
         *ngIf="!needsAuth(i)"
         mat-raised-button
         color="primary"
         (click)="sendData(i)">
-        Godkänn och skicka
+        {{ 'Inspect-and-send.Send' | translate }}
       </button>
     </div>
-  </mat-expansion-panel>
+  </mat-card>
   <button
-  mat-raised-button
-  color="primary"
-  (click)="router.navigateByUrl('/selection')">
-  Tillbaka
-</button>
+    mat-raised-button
+    color="primary"
+    (click)="sendAll()">
+    {{ 'Inspect-and-send.SendAll' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="router.navigateByUrl('/selection')">
+    Tillbaka
+  </button>
 </div>
