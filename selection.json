@@ -1,10 +1,21 @@
 {
 	"selection": [{
-		"id": 1,
-		"needsAuth" : false,
+		"id": 999,
 		"name": "Hälsosamtal",
-		"destinations": ["https://personal-health-record-c7ebb.firebaseio.com/",
-			 "https://rest.ehrscape.com/rest/v1/"],
+		"destinations": 
+		[
+			{
+			"name": "Firebase",
+			"url": "https://personal-health-record-c7ebb.firebaseio.com/",
+			"needsAuth" : false 
+		},
+		{ 
+			"name": "EHR",
+			"url": "https://rest.ehrscape.com/rest/v1/",
+			"needsAuth" : false
+		}
+	],
+
 		"categories": ["body_weight", "blood_pressure"],
 		"filters": {
 		"body_weight": [{
@@ -23,9 +34,15 @@
 	},
 		
 	{
-		"id": 2,
-		"name": "EhrEscape",
-		"destinations": ["https://rest.ehrscape.com/rest/v1/"],
+		"id": 228,
+		"name": "Steg och längd",
+		"destinations": [
+			{
+				"name": "EHR",
+				"url": "https://rest.ehrscape.com/rest/v1/",
+				"needsAuth": false
+				}
+			],
 			"categories": ["steps", "height_length"],
 			"filters": {
 				"steps": [{
