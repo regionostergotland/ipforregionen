@@ -13,6 +13,7 @@ import { Categories,
   providedIn: 'root'
 })
 export class BluetoothService extends Platform {
+  static GATT_PRIMARY_SERVICE = 'pulse_oximeter';
 
   constructor(
     private blt: BluetoothService
@@ -37,6 +38,8 @@ export class BluetoothService extends Platform {
     this.pair();
   }
 
+
+
   public async pair() {
     // this can be made into a selector later for different devices
     let serviceUuid = ["pulse_oximeter"];
@@ -47,8 +50,9 @@ export class BluetoothService extends Platform {
         filters: [{services: serviceUuid }],
         optionalServices: ['generic_access']
       });
-      console.log('> Name:             ' + device.name);
-      console.log('> Id:               ' + device.id);
+      console.log(device);
+      console.log('> DeviceName:             ' + device.name);
+      console.log('> DeviceId:               ' + device.id);
 
       console.log('Connecting to GATT Server ...');
       const server = await device.gatt.connect();
@@ -57,18 +61,19 @@ export class BluetoothService extends Platform {
       console.log('Getting Service...');
       const service = await server.getPrimaryService(serviceUuid);
 
-      console.log('Getting Characteristics...');
-      const characteristics = await service.getCharacteristics();
-
-      console.log('> Characteristics: ' +
-            characteristics.map(c => c.uuid).join('\n' + ' '.repeat(19)));
-
-      for (const characteristic of characteristics) {
-        const descriptor = await characteristic.getDescriptors();
-        console.log('> Descriptors: ' +
-      descriptor.map(c => c.uuid).join('\n' + ' '.repeat(19)));
-      }
-
+      //this is a characteristic specific for pulse oximeters
+      const characteristic = await service.getCharacteristic("plx_spot_check_measurement");
+      console.log(characteristic);
+      console.log('> Characteristic UUID:  ' + characteristic.uuid);
+      console.log('> Broadcast:            ' + characteristic.properties.broadcast);
+      console.log('> Read:                 ' + characteristic.properties.read);
+      //console.log('> Write w/o response:   ' + characteristic.properties.writeWithoutResponse);
+      //console.log('> Write:                ' + characteristic.properties.write);
+      console.log('> Notify:               ' + characteristic.properties.notify);
+      console.log('> Indicate:             ' + characteristic.properties.indicate);
+      //console.log('> Signed Write:         ' + characteristic.properties.authenticatedSignedWrites);
+      //console.log('> Queued Write:         ' + characteristic.properties.reliableWrite);
+      //console.log('> Writable Auxiliaries: ' + characteristic.properties.writableAuxiliaries);
 
     } catch(error) {
       console.log('That did not work! ' + error);
