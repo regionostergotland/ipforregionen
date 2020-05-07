@@ -13,6 +13,7 @@ import { Categories,
   providedIn: 'root'
 })
 export class BluetoothService extends Platform {
+  private device: BluetoothDevice;
   static GATT_PRIMARY_SERVICE = 'pulse_oximeter';
 
   constructor(
