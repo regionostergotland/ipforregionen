@@ -31,5 +31,8 @@
         "SendAll": "Skicka all data.",
         "LoginAndSend": "Logga in och skicka data.",
         "Send": "Godkänd och skicka data."
+    },
+    "Selection-categories": {
+        "BodyWeight": "Kroppsvikt"
     }
 }

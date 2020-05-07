@@ -31,5 +31,9 @@
         "SendAll": "Send all data",
         "LoginAndSend": "Login and send data.",
         "Send": "Approve and send data"
+    },
+    "Selection-categories": {
+        "body_weight": "Body weight"
     }
+
 }

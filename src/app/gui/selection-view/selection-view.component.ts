@@ -73,6 +73,10 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
+  getCategoryLabel(categoryId: string): string {
+    return this.conveyor.getCategorySpec(categoryId).label;
+}
+
 /*
 * Importing one selection at the time and saving it in
 * member variable selections

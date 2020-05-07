@@ -1,7 +1,7 @@
 .mat-card {
-  min-width: 150px;
-  max-width: 400px;
-  height: 300px;
+  //min-width: 150px;
+  width: 300px;
+  height: auto;
   margin: 15px;
   display: flex;
   flex-direction: column;
@@ -9,15 +9,34 @@
   justify-content: space-between;
 }
 
+.mat-card-title {
+  display: inline-flex;
+}
+
+.trash{
+  position: absolute;
+  right: 0;
+}
+
+#trash{
+  max-height: 50%;
+  width: auto;
+}
+
+button{
+  margin: 15px;
+}
 
 .wrapper {
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
+  flex-wrap: wrap;
+
 }
+
 
 .container {
   margin:20px;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -29,4 +48,10 @@
   align-content: left;
   margin: 10px 0;
   border-bottom: 1px solid rgba(0,0,0,0.23);
+}
+
+@media only screen and (min-width: 600px){
+  .wrapper{
+    max-width: 85%;
+  }
 }
