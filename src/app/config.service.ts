@@ -64,7 +64,10 @@ export class ConfigService {
   private authMethod: AuthenticationMethod = AuthenticationMethod.BASIC;
 
   private ehrBaseUrl = 'https://rest.ehrscape.com/rest/v1/';
-  private ehrTemplateId = 'self-reporting';
+  // Old template id
+  // TODO: Make a new userstory to make changing ehrTemplateId dynamic
+  //private ehrTemplateId = 'self-reporting';
+  private ehrTemplateId = 'self-reporting-new';
   private ehrNamespace = 'default';
 
   private clientId = '';

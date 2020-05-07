@@ -60,7 +60,8 @@ export class EhrService {
   private postComposition(ehrId: any, composition: {}, baseUrl: string):
       Observable<CompositionResponse> {
         const params = new HttpParams()
-        .set('ehrId', ehrId)
+        //.set('ehrId', ehrId)
+        .set('ehrID', "7d44b88c-4199-4bad-97dc-d78268e01398")
         .set('templateId', this.cfg.getEhrTemplateId())
         .set('format', 'STRUCTURED');
         let call = 'composition';
@@ -72,8 +73,12 @@ export class EhrService {
     if (baseUrl.includes('firebase')) {
       call += '.json';
     }
+    // return this.auth.postAuthenticated<CompositionResponse>(
+    //   call, composition, baseUrl, params
+    // );
+    // TODO: DISABLE CORS to be able to send between localhost
     return this.auth.postAuthenticated<CompositionResponse>(
-      call, composition, baseUrl, params
+      call, composition, baseUrl+"7d44b88c-4199-4bad-97dc-d78268e01398/", new HttpParams().set("Access-Control-Allow-Origin", '*')
     );
   }
 

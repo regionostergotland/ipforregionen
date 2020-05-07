@@ -97,6 +97,8 @@ export class InspectionViewComponent implements OnInit {
    */
   sendData(index: number): void {
     let destination = this.destinations[index];
+    console.log("THIS IS THE DESTINATION IT'S BEING SENT TO", destination);
+    if (destination.getDestinationName() === "http://localhost:8080/ehrbase/rest/openehr/v1/ehr/")
     this.destinationSent[index] = true;
     this.conveyor.sendData(destination).
         subscribe(

@@ -1,0 +1,60 @@
+{
+	"selection": [{
+		"id": 342,
+		"name": "Hälsosamtal",
+		"destinations": 
+		[
+			{
+			"name": "PHR",
+			"url":  "http://localhost:8080/ehrbase/rest/openehr/v1/ehr/",
+			"needsAuth" : false 
+		},
+		{ 
+			"name": "EHR",
+			"url": "https://rest.ehrscape.com/rest/v1/",
+			"needsAuth" : false
+		}
+	],
+
+		"categories": ["body_weight", "blood_pressure"],
+		"filters": {
+		"body_weight": [{
+			"width": 3,
+			"fn": 4
+			},
+			{
+				"width": 3,
+				"fn": 3
+			}],
+		"blood_pressure": [{
+			"width": 2,
+			"fn": 5
+			}]
+		}
+	},
+		
+	{
+		"id": 228,
+		"name": "Steg och längd",
+		"destinations": [
+			{
+				"name": "EHR",
+				"url": "https://rest.ehrscape.com/rest/v1/",
+				"needsAuth": false
+				}
+			],
+			"categories": ["steps", "height_length"],
+			"filters": {
+				"steps": [{
+					"width": 4,
+					"fn": 3
+				}],
+				"height_length" : [{
+					"width": 4,
+					"fn": 1
+				}]
+			}
+	}
+		
+	]
+}
