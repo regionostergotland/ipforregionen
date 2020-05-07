@@ -12,6 +12,9 @@ import { GfitService } from './platform/gfit.service';
 import { DummyPlatformService } from './platform/dummy.service';
 import { BluetoothService } from './platform/bluetooth.service';
 
+import { DataPoint } from 'src/app/ehr/datalist';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,6 +36,7 @@ export class Conveyor {
         [ 'dummy', this.dummyPlatformService ],
         [ 'bluetooth', this.bluetoothService ]
       ]);
+      this.fillDataFromLocalStorage();
     }
 
   public async signIn(platformId: string) {
@@ -64,6 +68,41 @@ export class Conveyor {
 
   public getAllCategories(): string[] {
     return this.ehrService.getCategories();
+  }
+
+  private fillDataFromLocalStorage(): void {
+    let all_categories = this.getAllCategories();
+    all_categories.forEach(categoryID => {
+      if (!!localStorage.getItem(categoryID)){
+        // For when data exists in localStorage but not conveyor
+        let dataList = new DataList(this.getCategorySpec(categoryID));
+
+        let current_category = new Array;
+        
+        // Add points from localStorage to 
+        if (!!JSON.parse(localStorage.getItem(categoryID))) {
+          current_category = JSON.parse(localStorage.getItem(categoryID));
+          for (const dataPoint of current_category) {
+            let map = new Map(Object.entries(dataPoint));
+            let newPoint: DataPoint = new DataPoint();
+            
+            for (const data of Array.from(map.keys())) {
+              if (data === "time") {
+                newPoint.set(data, new Date(map.get(data)));
+              } else {
+                newPoint.set(data, map.get(data));
+              }
+            }
+            
+            // Dont add a point that already exists
+            if (!dataList.containsPoint(newPoint)) {
+              dataList.addPoint(newPoint);
+            }
+          }
+        }
+        this.setDataList(categoryID, dataList);
+      }
+    });
   }
 
   /**
