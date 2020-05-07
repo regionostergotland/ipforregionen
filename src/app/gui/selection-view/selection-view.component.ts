@@ -21,8 +21,8 @@ import { SELECT_PANEL_VIEWPORT_PADDING } from '@angular/material/select';
 interface Selection {
   id: string;
   name: string;
-  needsAuth: boolean;
-  destinations: string[];
+  //needsAuth: boolean;
+  destinations: any[];
   categories: string[];
   filters: Map<string, Filter>;
   imageUrl: string;
@@ -95,14 +95,14 @@ export class SelectionViewComponent implements OnInit {
         const currentSelection: Selection = {
           id: selection["id"],
           name: selection["name"],
-          needsAuth : selection["needsAuth"],
+          //needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
           filters: selection["filters"],
           imageUrl: this.cfg.getAssetUrl() + 'selection.png'
         };
 
-        console.log(currentSelection.name);
+        console.log(currentSelection);
 
         this.saveToLocal(currentSelection);
 
@@ -120,7 +120,7 @@ export class SelectionViewComponent implements OnInit {
 /*
 * Uses imported selections stored in this.selections
 * Retrieves the relevant values and filters
-* And applies the filters to the values
+* and applies the filters to the values
 */
   executeSelections() : void {
     for (let sel of this.selectedSelections){
@@ -134,21 +134,14 @@ export class SelectionViewComponent implements OnInit {
 
   executeSelection(selection: Selection): void {
     for (let cat of selection.categories){
-      // console.log("For cat: "+ cat);
       if(this.conveyor.hasCategoryId(cat)){
         let dataList = this.conveyor.getDataList(cat);
 
         for (let filter of selection.filters[cat]){
-        //let filter: Filter = selection.filters[cat];
-        //console.log("Filter:");
-        //console.log(filter);)
         dataList.addFilter(filter);
-        //console.log("Selection destination: ")
-        //console.log(selection.destinations);
         }
         this.addDestinationData(selection.name, cat, dataList, selection.destinations,
-           selection.needsAuth);
-        //this.conveyor.setDestinationUrl(sel.destinations[0]);
+           /*selection.needsAuth*/);
       } else {
         console.log("Category has not been imported");
       }
@@ -160,16 +153,19 @@ export class SelectionViewComponent implements OnInit {
 * add each destination to the destination array in conveyor
 */
   addDestinationData(name : string, category : string, data : DataList,
-    destinations: string[], needsAuth : boolean): void {
+    destinations: Object[]/*, needsAuth : boolean*/): void {
 
-      destinations.forEach((value, i) => {
+      destinations.forEach((destination, i) => {
         let dest_object : Destination;
 
-        if(!this.conveyor.getDestinations().has(value)){
-          dest_object = new Destination(name, value, needsAuth);
+        if(!this.conveyor.getDestinations().has(destination["url"]))
+        {
+          dest_object = new Destination(destination["name"],
+           destination["url"], destination["needsAuth"]);
             //console.log("Added destination to map");
           } else {
-          dest_object = this.conveyor.getDestinations().get(value);
+          dest_object = this.conveyor.getDestinations()
+          .get(destination["url"]);
           //console.log("Destination already in map");
         }
         dest_object.setDataList(category, data);
@@ -251,7 +247,7 @@ export class SelectionViewComponent implements OnInit {
         const currentSelection: Selection = {
           id: selection["id"],
           name: selection["name"],
-          needsAuth : selection["needsAuth"],
+          //needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
           filters: selection["filters"],

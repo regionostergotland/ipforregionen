@@ -38,13 +38,12 @@
  
 
 <mat-card-content>
-
   <img src= {{selection.imageUrl}} style="width:80px"/>
-  <p>ID: {{selection.id}}</p>
-
-  <p>Auth: {{selection.needsAuth}}</p>
-  <p>DestUrl: {{selection.destinations}}</p>
-  <p>Categories: {{selection.categories}}</p>
+  <p>Destinationer:</p>
+  <p *ngFor="let destination of selection.destinations">
+  {{destination.name}}
+  </p>
+  <p>Kategorier: {{selection.categories}}</p>
 </mat-card-content>
   </mat-card>
   </div>
