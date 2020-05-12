@@ -25,7 +25,6 @@ export class InspectionViewComponent implements OnInit {
   dataSent = false;
   receipt: CompositionReceipt;
   destinations: Array<Destination>;
-  destinationSent: Array<boolean>;
 
   constructor(
     public router: Router,
@@ -39,13 +38,11 @@ export class InspectionViewComponent implements OnInit {
     this.dataSent = false;
     let destinations = this.conveyor.getDestinations();
     this.destinations = Array.from(destinations.values());
-    this.destinationSent = new Array(this.destinations.length);
-    this.destinationSent.fill(false);
     console.log(this.destinations);
   }
 
   hasDestinations(): boolean {
-    if(this.destinations.length != 0){
+    if(this.destinations.length > 0){
       return true;
     }
     return false;
@@ -97,16 +94,19 @@ export class InspectionViewComponent implements OnInit {
    */
   sendData(index: number): void {
     let destination = this.destinations[index];
-    console.log("THIS IS THE DESTINATION IT'S BEING SENT TO", destination);
-    if (destination.getDestinationName() === "http://localhost:8080/ehrbase/rest/openehr/v1/ehr/")
-    this.destinationSent[index] = true;
     this.conveyor.sendData(destination).
         subscribe(
           receipt => {
-            this.dataSent = true && this.checkAllSent();
             this.receipt = receipt;
-            this.snackBar.open("Data skickat till ${destination.getDestinationName}", "Ok", {duration: 3000});
+            let snackbarText = "Data skickat till " + destination.getDestinationName();
+            this.snackBar.open(snackbarText, "Ok", {duration: 3000});
             this.conveyor.removeDestination(destination.getDestinationUrl());
+
+            if (!!receipt.compUid && this.cfg.getIsDebug()) {
+              this.snackBar.dismiss();
+              this.snackBar.open("CompositionID=" + receipt.compUid, "Ok");
+            }
+
             let destinations = this.conveyor.getDestinations();
             this.destinations = Array.from(destinations.values());
           },
@@ -119,18 +119,6 @@ export class InspectionViewComponent implements OnInit {
             );
           }
       );
-  }
-
-  /**
-   * Checks if all destinations has sent the data
-   * @Returns true | false
-   */
-  checkAllSent(): boolean {
-    for (let i = 0; i < this.destinationSent.length; i++) {
-      if (!this.destinationSent[i])
-        return false;
-    }
-    return true;
   }
   
   /**
@@ -157,7 +145,8 @@ export class InspectionViewComponent implements OnInit {
    */
   sendDataWithAuth(index: number): any {
     const dialogRef = this.dialog.open(LoginModal, {
-      width: '250px'
+      width: '250px',
+      data: {destination_name: this.destinations[index].getDestinationName()}
     });
 
     return dialogRef.afterClosed().pipe(tap(result => {

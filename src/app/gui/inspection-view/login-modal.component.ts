@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
+import { 
+    Component, 
+    Inject 
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
+import { 
+    MatDialogRef, 
+    MAT_DIALOG_DATA 
+} from '@angular/material/dialog';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
@@ -25,6 +31,7 @@ export class LoginModal {
         private auth: AuthService,
         public router: Router,
         private snackBar: MatSnackBar,
+        @Inject(MAT_DIALOG_DATA) public data: any
         ) {
             this.method = this.cfg.getAuthMethod();
         }

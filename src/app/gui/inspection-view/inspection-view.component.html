@@ -1,4 +1,4 @@
-<div *ngIf="dataSent" class="center">
+<!--<div *ngIf="dataSent" class="center">
   <h1 style="text-align: center">
     Data skickat!
   </h1>
@@ -11,34 +11,29 @@
     (click)="router.navigateByUrl('/home')">
      Tillbaka hem
   </button>
-</div>
+</div>-->
 
-<div *ngIf="!dataSent && (!hasDestinations() || !hasData())">
+<!--<div *ngIf="!hasDestinations()">
+  <p> Ingen data </p>
+  <button mat-raised-button color="primary"
+    (click)="router.navigateByUrl('/home')">
+     Tillbaka hem
+  </button>
+</div>-->
+
+<div *ngIf="!hasDestinations()">
   <h1 style="text-align: center">
     Hoppsan!
   </h1>
-  <div *ngIf="!hasDestinations() && !hasData()">
-    <p>Du har inte hämtat data eller valt destination!</p>
-    <button mat-raised-button color="primary"
-    (click)="router.navigateByUrl('/platform-selection')">
-      Backa
-  </button>
-  </div>
-  <div *ngIf="!hasDestinations() && hasData()">
-    <p>Du har inte valt destination!</p>
+  <div>
+    <p>Du har inget att skicka!</p>
     <button mat-raised-button color="primary"
       (click)="router.navigateByUrl('/selection')">
       Backa
     </button>
   </div>
-  <div *ngIf="hasDestinations() && !hasData()">
-    <p>Du har inte hämtat någon data att skicka!</p>
-    <button mat-raised-button color="primary"
-      (click)="router.navigateByUrl('/platform-selection')">
-      Backa
-    </button>
-  </div>
 </div>
+
 <div *ngIf="hasData() && hasDestinations()">
   <mat-card *ngFor="let destination of destinations; let i = index" class="dest-card">
     <mat-card-title>
