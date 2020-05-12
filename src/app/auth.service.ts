@@ -99,9 +99,17 @@ export class AuthService {
     return authObs.pipe(map((authValue: string) =>
       new HttpHeaders({
         Authorization: authValue,
+        
         /* disable cache to prevent unauthorized calls from succeeding */
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
+
+        /* We sending that json yo */
+        'Content-Type': 'application/json',
+
+        /* We want json in return */
+        'Accept': 'application/json',
+        'PREFER': 'return=representation',
       })
     ));
   }
@@ -275,14 +283,17 @@ export class AuthService {
    * @param body JSON object to send as body
    */
   public postAuthenticated<T>(call: string, body = {}, baseUrl: string,
-                              params: HttpParams = null): Observable<T> {
+                              params: HttpParams = null): Observable<T> {    
     return this.headers().pipe(concatMap(hs => {
       const url = baseUrl + call;
+      
+      console.log(hs);
       const options = {
         params,
         headers: hs
       };
-      return this.http.post<T>(url, body, options);
+
+      return this.http.post<T>(url, body, options); 
     }));
   }
 

@@ -72,21 +72,21 @@ export class EhrService {
      */
     if (baseUrl.includes('firebase')) {
       call += '.json';
-    } else if (!baseUrl.includes('ehrscape')) {
-      composition["name"] = "";
     }
 
-    console.log("------------------------------");
-    console.log(JSON.stringify(composition));
-    console.log("------------------------------");
     // return this.auth.postAuthenticated<CompositionResponse>(
     //   call, composition, baseUrl, params
     // );
     // TODO: DISABLE CORS to be able to send between localhost
     return this.auth.postAuthenticated<CompositionResponse>(
-      call, composition, baseUrl+"7d44b88c-4199-4bad-97dc-d78268e01398/", new HttpParams()
+      call, composition, baseUrl+"4d55b77c-4199-5bad-97dc-d78268e01398/", new HttpParams()
     );
   }
+
+  /** Ehrids phr 2020-05-12
+   * -7d44b88c-4199-4bad-97dc-d78268e01398
+   */
+
 
   /* Create a composition of given data lists */
   public createEhrscapeComposition(lists: DataList[]): {} {
@@ -140,11 +140,14 @@ export class EhrService {
         }
       }
     }
-    console.log(composition);
     return composition;
   }
 
-  public createEhrbaseComposition(list: DataList[]): Object {
+  /** TODO:
+   * -Make this function more general
+   * -Make everything more general
+   */
+  public createEhrbaseComposition(list: DataList[]): {} {
     let composition: {} = {
       "_type": "COMPOSITION",
       "archetype_node_id": "openEHR-EHR-COMPOSITION.self_monitoring.v0",
@@ -190,7 +193,7 @@ export class EhrService {
         "external_ref": {
           "id": {
             "_type": "HIER_OBJECT_ID",
-            "value": "63a61a2a-14f0-4db3-af85-664ccf9ed4a5"
+            "value": "ea5738d3-83bf-42bf-b13c-4431819677cf"
           },
           "namespace": "default",
           "type": "PERSON"
@@ -231,10 +234,17 @@ export class EhrService {
       compUid: '',
     };
     return this.postComposition(this.auth.getUser().ehrId, composition, baseUrl)
-      .pipe(map((res: CompositionResponse) => {
-          receipt.ehrId = this.auth.getUser().ehrId;
-          receipt.compUid = res.compositionUid;
-          return receipt;
-        }));
+      .pipe(
+        map((res: any) => {
+            receipt.ehrId = this.auth.getUser().ehrId;
+            
+            if(!!res.compositionUid) {
+              receipt.compUid = res.compositionUid;
+            } else if (!!res.uid.value) {
+              receipt.compUid = res.uid.value;
+            }
+            
+            return receipt;
+          }));
   }
 }
