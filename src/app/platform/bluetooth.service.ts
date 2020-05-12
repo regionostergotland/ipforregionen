@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { DataTypeEnum } from '../ehr/datatype';
 import { DataPoint } from '../ehr/datalist';
 import { EhrService } from '../ehr/ehr.service';
@@ -13,14 +13,17 @@ import { Categories,
   providedIn: 'root'
 })
 export class BluetoothService extends Platform {
-  device: BluetoothDevice;
+
+  bluetooth: Bluetooth;
+  //device: BluetoothDevice;
+  server: BluetoothRemoteGATTServer;
   characteristic: BluetoothCharacteristicUUID;
   navigator: Navigator;
+
+
   static GATT_PRIMARY_SERVICE = 'pulse_oximeter';
 
-  constructor(
-    private blt: BluetoothService
-  ) {
+  constructor() {
     super();
     this.implementedCategories = new Map([
       [Categories.HEART_RATE, {
@@ -34,31 +37,50 @@ export class BluetoothService extends Platform {
 
   }
 
-/*  public async requestDevice() {
-    console.log("[X] Requesting Bluetooth Device...");
-    this.device = await navigator.bluetooth.requestDevice({
-      //acceptAllDevices: true,
-      filters: ['battery_service']
-    });
-    this.device.addEventListener('gattserverdisconnected', onDisconnected);
-  }
-
-  public async connectDevice() {
-    console.log("[X] Connecting to device...");
-    console.log(this.device);
-    console.log('> DeviceName:             ' + device.name);
-    console.log('> DeviceId:               ' + device.id);
-  }*/
-
   /**
   * Attempts to pair with a Bluetooth device
   */
-  public async signIn() {
-    this.pair();
+  async signIn() {
+    let device: BluetoothDevice;
+    device = await this.requestDevice();
+    this.server = await this.connectDevice(device);
+    //this.pair();
   }
 
+  async requestDevice(): Promise<BluetoothDevice> {
+    console.log("[*] Requesting Bluetooth Device...");
+    this.bluetooth = navigator.bluetooth;
+
+    return this.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: ["pulse_oximeter"]
+    });
+
+  }
+
+  async connectDevice(device: BluetoothDevice): Promise<BluetoothRemoteGATTServer> {
+    if (device) {
+      console.log("[*] Connecting to device..." + device.name);
+
+      try {
+        const server = await device.gatt.connect();
+        console.log("[*] Connected to device!");
+        return server;
+      } catch (error) {
+        Promise.reject(error);
+      }
+    } else {
+      console.error("[X] Could not connect to device.");
+    }
+  }
+
+async getCharacteristic(){}
+ async getValue() {
+
+ }
 
 
+/*
   public async pair() {
     // this can be made into a selector later for different devices
     let serviceUuid = ["pulse_oximeter"];
@@ -109,7 +131,7 @@ export class BluetoothService extends Platform {
     } catch(error) {
       console.log('That did not work! ' + error);
     }
-  }
+  }*/
 
   handleValueChanged(event) {
     let value = event.target.value.getUint8(0);
