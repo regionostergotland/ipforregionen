@@ -72,18 +72,24 @@ export class EhrService {
      */
     if (baseUrl.includes('firebase')) {
       call += '.json';
+    } else if (!baseUrl.includes('ehrscape')) {
+      composition["name"] = "";
     }
+
+    console.log("------------------------------");
+    console.log(JSON.stringify(composition));
+    console.log("------------------------------");
     // return this.auth.postAuthenticated<CompositionResponse>(
     //   call, composition, baseUrl, params
     // );
     // TODO: DISABLE CORS to be able to send between localhost
     return this.auth.postAuthenticated<CompositionResponse>(
-      call, composition, baseUrl+"7d44b88c-4199-4bad-97dc-d78268e01398/", new HttpParams().set("Access-Control-Allow-Origin", '*')
+      call, composition, baseUrl+"7d44b88c-4199-4bad-97dc-d78268e01398/", new HttpParams()
     );
   }
 
   /* Create a composition of given data lists */
-  public createComposition(lists: DataList[]): {} {
+  public createEhrscapeComposition(lists: DataList[]): {} {
     const composition: any = {
       ctx: {
         language: 'en',
@@ -135,6 +141,78 @@ export class EhrService {
       }
     }
     console.log(composition);
+    return composition;
+  }
+
+  public createEhrbaseComposition(list: DataList[]): Object {
+    let composition: {} = {
+      "_type": "COMPOSITION",
+      "archetype_node_id": "openEHR-EHR-COMPOSITION.self_monitoring.v0",
+      "name": {
+        "value": "self-reporting-new"
+      },
+      "uid": {
+        "_type": "HIER_OBJECT_ID",
+        "value": "af179164-af8a-4bb8-8fb5-eac7cfe8924d::127.0.0.1::1"
+      },
+      "archetype_details": {
+        "archetype_id": {
+          "value": "openEHR-EHR-COMPOSITION.self_monitoring.v0"
+        },
+        "template_id": {
+          "value": "self-reporting-new"
+        },
+        "rm_version": "1.0.2"
+      },
+      "language": {
+        "terminology_id": {
+          "value": "ISO_639-1"
+        },
+        "code_string": "en"
+      },
+      "territory": {
+        "terminology_id": {
+          "value": "ISO_3166-1"
+        },
+        "code_string": "SE"
+      },
+      "category": {
+        "value": "event",
+        "defining_code": {
+          "terminology_id": {
+            "value": "openehr"
+          },
+          "code_string": "433"
+        }
+      },
+      "composer": {
+        "_type": "PARTY_IDENTIFIED",
+        "external_ref": {
+          "id": {
+            "_type": "HIER_OBJECT_ID",
+            "value": "63a61a2a-14f0-4db3-af85-664ccf9ed4a5"
+          },
+          "namespace": "default",
+          "type": "PERSON"
+        },
+        "name": "A name"
+      },
+      "context": {
+        "start_time": {
+          "value": "2014-11-18T09:50:35.000+01:00"
+        },
+        "setting": {
+          "value": "other care",
+          "defining_code": {
+            "terminology_id": {
+              "value": "openehr"
+            },
+            "code_string": "238"
+          }
+        }
+      },
+      "content": []
+    }
     return composition;
   }
 

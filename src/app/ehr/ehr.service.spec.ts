@@ -140,7 +140,7 @@ describe('EhrService', () => {
   });
 
   it('should create a proper composition for bloodpressure', () => {
-    expect(service.createComposition([bloodList])).toEqual({
+    expect(service.createEhrscapeComposition([bloodList])).toEqual({
       ctx,
       self_monitoring: {
         bloood: [
