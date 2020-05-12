@@ -157,7 +157,7 @@ export class InspectionViewComponent implements OnInit {
     const dialogRef = this.dialog.open(LoginModal, {
       width: '250px'
     });
-
+      console.log(this.destinations[index].getDestinationUrl());
     return dialogRef.afterClosed().pipe(tap(result => {
       if (result === true) {
         this.sendData(index);
