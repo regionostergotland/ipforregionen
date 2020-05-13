@@ -147,6 +147,13 @@ export class Conveyor {
     }
   }
 
+  public dataListIsEmpty(categoryId: string): boolean {
+    if(this.categories.get(categoryId).getUnfilteredPoints().length == 0){
+      return true;
+    }
+    return false;
+  }
+
   public setDataList(categoryId: string, list: DataList): void {
     this.categories.set(categoryId, list);
   }

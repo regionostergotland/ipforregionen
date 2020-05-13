@@ -73,6 +73,10 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
+  getCategoryLabel(categoryId: string): string {
+    return this.conveyor.getCategorySpec(categoryId).label;
+}
+
 /*
 * Importing one selection at the time and saving it in
 * member variable selections
@@ -95,7 +99,6 @@ export class SelectionViewComponent implements OnInit {
         const currentSelection: Selection = {
           id: selection["id"],
           name: selection["name"],
-          //needsAuth : selection["needsAuth"],
           destinations: selection["destinations"],
           categories: selection["categories"],
           filters: selection["filters"],
@@ -107,7 +110,11 @@ export class SelectionViewComponent implements OnInit {
         this.saveToLocal(currentSelection);
 
         // Adding currentSelection to member variable selections
-        this.selections.push(currentSelection);
+        this.selections = [];
+        this.loadFromLocal();
+         
+
+        //this.selections.push(currentSelection);
       }
     }
 
@@ -133,31 +140,34 @@ export class SelectionViewComponent implements OnInit {
 
 
   executeSelection(selection: Selection): void {
-    for (let cat of selection.categories){
-      if(this.conveyor.hasCategoryId(cat)){
-        let dataList = this.conveyor.getDataList(cat);
+    for (let cat of selection.categories) {
+      if (this.conveyor.hasCategoryId(cat)) {
+        if (!this.conveyor.dataListIsEmpty(cat)) {
+          let dataList = this.conveyor.getDataList(cat);
 
-        for (let filter of selection.filters[cat]){
-        dataList.addFilter(filter);
+          for (let filter of selection.filters[cat]){
+            dataList.addFilter(filter);
+          }
+          this.addDestinationData(selection.name, cat, dataList, selection.destinations);
+        } else {
+          console.log("Category is empty and has not been imported");
         }
-        this.addDestinationData(selection.name, cat, dataList, selection.destinations,
-           /*selection.needsAuth*/);
       } else {
         console.log("Category has not been imported");
       }
     }
-  }
+  } 
 
 /*
 * Create destination objects for each destination and
 * add each destination to the destination array in conveyor
 */
   addDestinationData(name : string, category : string, data : DataList,
-    destinations: Object[]/*, needsAuth : boolean*/): void {
+    destinations: Object[]): void {
 
       destinations.forEach((destination, i) => {
         let dest_object : Destination;
-
+        
         if(!this.conveyor.getDestinations().has(destination["url"]))
         {
           dest_object = new Destination(destination["name"],

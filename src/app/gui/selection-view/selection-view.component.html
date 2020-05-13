@@ -12,7 +12,7 @@
   (click) = "file.click()"> Hämta Urval </button>
 
 <div class= "centering" class ="container" >
-  <div
+  <span
   fxLayout="row"
   fxLayout.xs="column"
   fxLayout.lt-sm="column"
@@ -31,7 +31,7 @@
     <button mat-icon-button
     class="trash"
     (click)=removeSelection(selection)>
-    <img src="{{assetUrl}}/flaticon/trashcan.svg" style="max-height: 100%; width: auto;" stroke="red" fill="red"/>
+    <img src="{{assetUrl}}/flaticon/trashcan.svg" id="trash" stroke="red" fill="red"/>
     </button>
 
   </mat-card-title>
@@ -40,29 +40,36 @@
 <mat-card-content>
   <img src= {{selection.imageUrl}} style="width:80px"/>
   <p>Destinationer:</p>
-  <p *ngFor="let destination of selection.destinations">
-  {{destination.name}}
-  </p>
-  <p>Kategorier: {{selection.categories}}</p>
+  <ul>
+    <li *ngFor="let destination of selection.destinations">
+      {{destination.name}}
+    </li>
+  </ul>
+  <p>Kategorier:</p>
+  <ul *ngFor="let category of selection.categories">
+      <li>{{ getCategoryLabel(category) }}</li>
+  </ul>
 </mat-card-content>
   </mat-card>
-  </div>
+</span>
     <mat-divider></mat-divider>
-  </div>
-
-<button
-  mat-raised-button
-  color="primary"
-  (click)="router.navigateByUrl('/edit')">
-  Tillbaka
-</button>
+</div>
 
 <button
   mat-raised-button
   name="executeSelections"
   color="primary"
+  [disabled]="selectedSelections.length===0"
   (click) = "executeSelections()" >
   Skapa resultat
+</button>
+
+<div>
+<button
+  mat-raised-button
+  color="primary"
+  (click)="router.navigateByUrl('/edit')">
+  Tillbaka
 </button>
 
 <button 
@@ -71,4 +78,6 @@
   (click)="router.navigateByUrl('/inspection')">
   Gå vidare
 </button>
+
+</div>
 

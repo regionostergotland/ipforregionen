@@ -78,13 +78,13 @@
   <button
     mat-raised-button
     color="primary"
-    (click)="sendAll()">
-    {{ 'Inspect-and-send.SendAll' | translate }}
+    (click)="router.navigateByUrl('/selection')">
+    Tillbaka
   </button>
   <button
     mat-raised-button
     color="primary"
-    (click)="router.navigateByUrl('/selection')">
-    Tillbaka
+    (click)="sendAll()">
+    {{ 'Inspect-and-send.SendAll' | translate }}
   </button>
 </div>

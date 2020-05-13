@@ -148,7 +148,7 @@ export class InspectionViewComponent implements OnInit {
       width: '250px',
       data: {destination_name: this.destinations[index].getDestinationName()}
     });
-
+      console.log(this.destinations[index].getDestinationUrl());
     return dialogRef.afterClosed().pipe(tap(result => {
       if (result === true) {
         this.sendData(index);
