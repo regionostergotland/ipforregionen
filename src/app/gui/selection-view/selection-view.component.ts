@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Conveyor } from '../../conveyor.service';
-import { CategorySpec } from 'src/app/ehr/datatype';
+// import { CategorySpec } from 'src/app/ehr/datatype';
 import { DataList } from '../../ehr/datalist';
 import { Router } from '@angular/router';
 import { Filter, filterString } from 'src/app/ehr/datalist';
 import { Destination } from '../../destination.service';
 import { ConfigService } from 'src/app/config.service';
-import {
-  Categories,
-  CommonFields,
-  MedicalDevice,
-  BloodPressure,
-  BodyWeight,
-  Height,
-  HeartRate
-} from '../../ehr/ehr-config';
+// import {
+//   Categories,
+//   CommonFields,
+//   MedicalDevice,
+//   BloodPressure,
+//   BodyWeight,
+//   Height,
+//   HeartRate
+// } from '../../ehr/ehr-config';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SELECT_PANEL_VIEWPORT_PADDING } from '@angular/material/select';
+// import { SELECT_PANEL_VIEWPORT_PADDING } from '@angular/material/select';
 
 interface Selection {
   id: string;
@@ -81,44 +81,52 @@ export class SelectionViewComponent implements OnInit {
 * Importing one selection at the time and saving it in
 * member variable selections
 */
-  importSelection(file) : void{
+  importSelection(file: { target: { files: File[]; value: string; }; }) : void{
+    console.log("yeet");
     this.file = file.target.files[0];
     // console.log("File uploaded is: " + this.file.name);
-    let result;
+    let res: any;
 
     let reader = new FileReader();
     reader.readAsText(this.file, "UTF-8");
-    reader.onload = (evt: Event) => {
-      result = reader.result;
-      result = JSON.parse(result);
 
-      if (!!result["selection"]) {
-        for (let selection of result["selection"]){
-
-        // Making instance of interface Selection
-        const currentSelection: Selection = {
-          id: selection["id"],
-          name: selection["name"],
-          destinations: selection["destinations"],
-          categories: selection["categories"],
-          filters: selection["filters"],
-          imageUrl: this.cfg.getAssetUrl() + 'selection.png'
-        };
-
-        console.log(currentSelection);
-
-        this.saveToLocal(currentSelection);
-
-        // Adding currentSelection to member variable selections
-        this.selections = [];
-        this.loadFromLocal();
-         
-
-        //this.selections.push(currentSelection);
-      }
+    reader.onerror = (_evt: any) => {
+      reader.abort();
     }
 
-      else {
+    console.log(file);
+
+    reader.onloadend = (evt) => {
+      res = evt.target.result;
+      res = JSON.parse(res);
+
+      /**
+       * rensa input#file så vi kan ladda upp samma fil flera gånger
+       * utan att behöva ladda upp en annan fil emellan
+       */
+      file.target.value = "";  
+
+      if (!!res["selection"]) {
+        for (let selection of res["selection"]){
+
+          // Making instance of interface Selection
+          const currentSelection: Selection = {
+            id: selection["id"],
+            name: selection["name"],
+            destinations: selection["destinations"],
+            categories: selection["categories"],
+            filters: selection["filters"],
+            imageUrl: this.cfg.getAssetUrl() + 'selection.png'
+          };
+
+          this.saveToLocal(currentSelection);
+
+          // Adding currentSelection to member variable selections
+          this.selections = [];
+          this.loadFromLocal();
+          console.log(this.selections);
+        }
+      } else {
         console.log("This file is not a valid selection.");
       }
     }
@@ -196,16 +204,14 @@ export class SelectionViewComponent implements OnInit {
   */
   selectSelection(selection: Selection, event: any) : void{
     const boxChecked: boolean = event.checked;
+    let selections = this.selectedSelections;
     if (boxChecked) {
-      if (this.selectedSelections.indexOf(selection) === -1){
-        this.selectedSelections.push(selection);
+      if (selections.indexOf(selection) === -1){
+        selections.push(selection);
       }
     } else {
-      this.selectedSelections.splice(this.selectedSelections.indexOf(selection), 1);
+      selections.splice(selections.indexOf(selection), 1);
     }
-
-        console.log(this.selectedSelections);
-
   }
 
    /*
@@ -229,7 +235,7 @@ export class SelectionViewComponent implements OnInit {
    * @param object selection
    */
   saveToLocal(selection: Selection) : void {
-    let selections;
+    let selections: {};
     if (!!JSON.parse(localStorage.getItem("selections"))) {
       selections = JSON.parse(localStorage.getItem("selections"));
     } else {
