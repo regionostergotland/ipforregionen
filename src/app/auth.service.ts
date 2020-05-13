@@ -286,13 +286,10 @@ export class AuthService {
                               params: HttpParams = null): Observable<T> {    
     return this.headers().pipe(concatMap(hs => {
       const url = baseUrl + call;
-      
-      console.log(hs);
       const options = {
         params,
         headers: hs
       };
-
       return this.http.post<T>(url, body, options); 
     }));
   }

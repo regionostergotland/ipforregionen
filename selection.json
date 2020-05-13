@@ -12,7 +12,7 @@
 		{ 
 			"name": "EHR",
 			"url": "https://rest.ehrscape.com/rest/v1/",
-			"needsAuth" : false
+			"needsAuth" : true
 		}
 	],
 
@@ -40,7 +40,7 @@
 			{
 				"name": "EHR",
 				"url": "https://rest.ehrscape.com/rest/v1/",
-				"needsAuth": false
+				"needsAuth": true
 				}
 			],
 			"categories": ["steps", "height_length"],

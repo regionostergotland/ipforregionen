@@ -59,27 +59,31 @@ export class EhrService {
    */
   private postComposition(ehrId: any, composition: {}, baseUrl: string):
       Observable<CompositionResponse> {
-        const params = new HttpParams()
-        //.set('ehrId', ehrId)
-        .set('ehrID', "7d44b88c-4199-4bad-97dc-d78268e01398")
-        .set('templateId', this.cfg.getEhrTemplateId())
-        .set('format', 'STRUCTURED');
-        let call = 'composition';
-        /*
-     * Firebase url needs to end with .json
-     * Other databases might not need it
-     * Check if universal fix is possible
-     */
+    const params = new HttpParams()
+    .set('ehrId', ehrId)
+    // .set('ehrID', "7d44b88c-4199-4bad-97dc-d78268e01398")
+    .set('templateId', this.cfg.getEhrTemplateId())
+    .set('format', 'STRUCTURED');
+    let call = 'composition';
+    
+    /**
+      * Firebase url needs to end with .json
+      * Other databases might not need it
+      * Check if universal fix is possible
+      */
     if (baseUrl.includes('firebase')) {
       call += '.json';
+    } else if (baseUrl.includes('ehrbase')) {
+      call = ehrId + '/composition';
+      
+      // PHR ehrbase doesn't take params in the same way ehrscape does so we have to return early.
+      return this.auth.postAuthenticated<CompositionResponse> (
+        call, composition, baseUrl
+      );
     }
-
-    // return this.auth.postAuthenticated<CompositionResponse>(
-    //   call, composition, baseUrl, params
-    // );
-    // TODO: DISABLE CORS to be able to send between localhost
+    
     return this.auth.postAuthenticated<CompositionResponse>(
-      call, composition, baseUrl+"4d55b77c-4199-5bad-97dc-d78268e01398/", new HttpParams()
+      call, composition, baseUrl, params
     );
   }
 
@@ -145,7 +149,9 @@ export class EhrService {
 
   /** TODO:
    * -Make this function more general
-   * -Make everything more general
+   * -Make everything more general✅
+   * -Find a way to authenticate against ehrBase
+   * -Move the bulk of the predetermined ehrbase composition stuff?
    */
   public createEhrbaseComposition(list: DataList[]): {} {
     let composition: {} = {
@@ -234,17 +240,16 @@ export class EhrService {
       compUid: '',
     };
     return this.postComposition(this.auth.getUser().ehrId, composition, baseUrl)
-      .pipe(
-        map((res: any) => {
-            receipt.ehrId = this.auth.getUser().ehrId;
-            
-            if(!!res.compositionUid) {
-              receipt.compUid = res.compositionUid;
-            } else if (!!res.uid.value) {
-              receipt.compUid = res.uid.value;
-            }
-            
-            return receipt;
-          }));
+      .pipe(map((res: any) => {
+        receipt.ehrId = this.auth.getUser().ehrId;
+        
+        if(!!res.compositionUid) {
+          receipt.compUid = res.compositionUid;
+        } else if (!!res.uid.value) {
+          receipt.compUid = res.uid.value;
+        }
+        
+        return receipt;
+    }));
   }
 }
