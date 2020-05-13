@@ -21,7 +21,6 @@ import { SELECT_PANEL_VIEWPORT_PADDING } from '@angular/material/select';
 interface Selection {
   id: string;
   name: string;
-  //needsAuth: boolean;
   destinations: any[];
   categories: string[];
   filters: Map<string, Filter>;
@@ -35,7 +34,7 @@ interface Selection {
 })
 export class SelectionViewComponent implements OnInit {
   selections: Selection[] = [];
-  selectedSelections: Selection[] = []; //Add Selection to this list when it is clicked on
+  selectedSelections: Selection[] = [];
 
   categoryIds: string[] = [];
 
@@ -49,27 +48,23 @@ export class SelectionViewComponent implements OnInit {
     private snackBar: MatSnackBar,
     private cfg: ConfigService) {
       this.assetUrl = cfg.getAssetUrl();
-      console.log("Loaded selection view...");
    }
 
   ngOnInit() {
-    //console.log("ngOnInit");
     this.getCategories();
     this.loadFromLocal();
   }
 
   AfterViewInit() : void {
-    //console.log("AfterViewInit");
   }
 
   /**
   * Fetches categories available in conveyor after
-  * Data is imported by user in step 1
-  **/
+  * data is imported by user in step 1.
+  */
   getCategories(): void {
     this.categoryIds = this.conveyor.getCategoryIds();
     for (const id of this.categoryIds) {
-      console.log("cat: " + id);
     }
   }
 
@@ -77,13 +72,14 @@ export class SelectionViewComponent implements OnInit {
     return this.conveyor.getCategorySpec(categoryId).label;
 }
 
-/*
-* Importing one selection at the time and saving it in
-* member variable selections
+/**
+* Imports a valid JSON file and iterates through each selection object.
+* For each selection object, an instance of the Selection interface is 
+* created and saved to localstorage. 
+* @param file A valid JSON file.
 */
   importSelection(file) : void{
     this.file = file.target.files[0];
-    // console.log("File uploaded is: " + this.file.name);
     let result;
 
     let reader = new FileReader();
@@ -105,19 +101,14 @@ export class SelectionViewComponent implements OnInit {
           imageUrl: this.cfg.getAssetUrl() + 'selection.png'
         };
 
-        console.log(currentSelection);
-
         this.saveToLocal(currentSelection);
 
         // Adding currentSelection to member variable selections
         this.selections = [];
         this.loadFromLocal();
          
-
-        //this.selections.push(currentSelection);
       }
     }
-
       else {
         console.log("This file is not a valid selection.");
       }
@@ -129,6 +120,13 @@ export class SelectionViewComponent implements OnInit {
 * Retrieves the relevant values and filters
 * and applies the filters to the values
 */
+
+/**
+ * Iterates through the list selectedSelections 
+ * and runs executeSelection on each selection.
+ * Creates a snackbar to indicate the action was succesful
+ * and navigates to the the inspection page.
+ */
   executeSelections() : void {
     for (let sel of this.selectedSelections){
       this.executeSelection(sel);
@@ -138,7 +136,18 @@ export class SelectionViewComponent implements OnInit {
     this.router.navigateByUrl('/inspection');
   }
 
-
+/**
+ * Iterates through a selection's list of category id's. 
+ * Checks if the category is present in the conveyor and if the
+ * category has any data points. 
+ * If the category exists and has at least one data point
+ * all the filters in the selection will be applied 
+ * to the category's data points to create a filtered data list.
+ * Lastly, the data list and selection information is transferred
+ * to an instance of the class Destination.
+ *  
+ * @param selection An instance of the interface Selection.
+ */
   executeSelection(selection: Selection): void {
     for (let cat of selection.categories) {
       if (this.conveyor.hasCategoryId(cat)) {
@@ -148,7 +157,7 @@ export class SelectionViewComponent implements OnInit {
           for (let filter of selection.filters[cat]){
             dataList.addFilter(filter);
           }
-          this.addDestinationData(selection.name, cat, dataList, selection.destinations);
+          this.addDestinationData(cat, dataList, selection.destinations);
         } else {
           console.log("Category is empty and has not been imported");
         }
@@ -162,7 +171,14 @@ export class SelectionViewComponent implements OnInit {
 * Create destination objects for each destination and
 * add each destination to the destination array in conveyor
 */
-  addDestinationData(name : string, category : string, data : DataList,
+
+/**
+ * 
+ * @param category The category id.
+ * @param data An instance of a DataList with a filter applied.
+ * @param destinations A list of JSON objects.
+ */
+  addDestinationData(category : string, data : DataList,
     destinations: Object[]): void {
 
       destinations.forEach((destination, i) => {
@@ -172,11 +188,9 @@ export class SelectionViewComponent implements OnInit {
         {
           dest_object = new Destination(destination["name"],
            destination["url"], destination["needsAuth"]);
-            //console.log("Added destination to map");
           } else {
           dest_object = this.conveyor.getDestinations()
           .get(destination["url"]);
-          //console.log("Destination already in map");
         }
         dest_object.setDataList(category, data);
         this.conveyor.setDestination(dest_object);
@@ -273,4 +287,3 @@ export class SelectionViewComponent implements OnInit {
 }
 
 
-//    localStorage.setItem('destination_urls', JSON.stringify(urls));

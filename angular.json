@@ -63,7 +63,6 @@
                 }
               ]
             }
-
           }
         },
         "serve": {
@@ -139,5 +138,8 @@
       }
     }
   },
-  "defaultProject": "wwv"
+  "defaultProject": "wwv",
+  "cli": {
+    "analytics": "491db151-29c0-4671-baec-4a12928ce99c"
+  }
 }

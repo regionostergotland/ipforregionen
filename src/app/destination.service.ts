@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DataList } from './ehr/datalist';
 
-/*@Injectable({ <-- Fungerar inte för att Destination konstruktor tar parametrar.
-  providedIn: 'root' 
-})*/
 /**
 * Destination determines what data should be sent to which destination.
-* Contains destination's name, url and data to be sent.
+* Contains destination's name, url, authentication need as well as a map of data to be sent to each destination.
 */
 export class Destination {
   private name : string;
