@@ -15,6 +15,7 @@ import { Categories,
 export class BluetoothService extends Platform {
 
   bluetooth: Bluetooth;
+  deviceName: string;
   //device: BluetoothDevice;
   server: BluetoothRemoteGATTServer;
   characteristic: BluetoothCharacteristicUUID;
@@ -55,12 +56,12 @@ export class BluetoothService extends Platform {
       acceptAllDevices: true,
       optionalServices: ["pulse_oximeter"]
     });
-
   }
 
   async connectDevice(device: BluetoothDevice): Promise<BluetoothRemoteGATTServer> {
     if (device) {
       console.log("[*] Connecting to device..." + device.name);
+      this.deviceName = device.name;
 
       try {
         const server = await device.gatt.connect();

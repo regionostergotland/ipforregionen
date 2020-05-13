@@ -1,9 +1,16 @@
 <h1 mat-dialog-title>Hämta bluetooth data</h1>
 <div mat-dialog-content>
-  <h2> Content </h2>
+  <h2> Ansluten till enhet: </h2>
 </div>
 <div mat-dialog-actions>
   <div>
       <button mat-button (click)="closeDialog()">No Thanks</button>
+      <button mat-button (click)="pairDevice()">Pair</button>
+      <button mat-button
+        cdkFocusInitial
+        [mat-dialog-close]="device"
+        [disabled]="device === ''">
+        Ok
+      </button>
   </div>
 </div>

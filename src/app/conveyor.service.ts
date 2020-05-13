@@ -53,6 +53,10 @@ export class Conveyor {
     return Array.from(this.platforms.keys());
   }
 
+  public getPlatform(platformId: string): Platform {
+    return this.platforms.get(platformId);
+  }
+
   public getAvailableCategories(platformId: string): Observable<string[]> {
     const platform: Platform = this.platforms.get(platformId);
     return platform.getAvailable();
