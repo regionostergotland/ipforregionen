@@ -115,6 +115,7 @@ import {
 
 /* LoginModal */
 import { LoginModal } from './gui/inspection-view/login-modal.component';
+import { BluetoothComponent } from './gui/platform-selection/bluetooth.component';
 
 
 @NgModule({
@@ -144,7 +145,8 @@ import { LoginModal } from './gui/inspection-view/login-modal.component';
     SettingsViewComponent,
     SelectionViewComponent,
     FourFourPageComponent,
-    FiveOhPageComponent
+    FiveOhPageComponent,
+    BluetoothComponent
   ],
   imports: [
     DataViewerModule,
@@ -219,7 +221,8 @@ import { LoginModal } from './gui/inspection-view/login-modal.component';
     NewDestinationDialog,
     NewAlertDialog,
     SelectionViewComponent,
-    LoginModal
+    LoginModal,
+    BluetoothComponent
   ],
 
   providers: [
