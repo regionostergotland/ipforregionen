@@ -108,13 +108,15 @@ import { CustomGoogleApiModule } from './google-fit-config';
 
 
 /* Error pages */
-import { 
-  FourFourPageComponent, 
-  FiveOhPageComponent 
+import {
+  FourFourPageComponent,
+  FiveOhPageComponent
 } from './error-pages/error-pages.component';
 
 /* LoginModal */
 import { LoginModal } from './gui/inspection-view/login-modal.component';
+import { BluetoothComponent } from './gui/platform-selection/bluetooth.component';
+
 
 @NgModule({
   declarations: [
@@ -142,8 +144,9 @@ import { LoginModal } from './gui/inspection-view/login-modal.component';
     LoginModal,
     SettingsViewComponent,
     SelectionViewComponent,
-    FourFourPageComponent, 
-    FiveOhPageComponent 
+    FourFourPageComponent,
+    FiveOhPageComponent,
+    BluetoothComponent
   ],
   imports: [
     DataViewerModule,
@@ -218,7 +221,8 @@ import { LoginModal } from './gui/inspection-view/login-modal.component';
     NewDestinationDialog,
     NewAlertDialog,
     SelectionViewComponent,
-    LoginModal
+    LoginModal,
+    BluetoothComponent
   ],
 
   providers: [
@@ -232,5 +236,3 @@ export class AppModule { }
 export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
-
-

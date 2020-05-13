@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 
 import { ConfigService } from 'src/app/config.service';
 import { Conveyor } from '../../conveyor.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
+import {BluetoothComponent} from './bluetooth.component';
+
 
 interface Source {
   id: string;
@@ -25,7 +29,8 @@ export class PlatformSelectionComponent implements OnInit {
   constructor(
     private cfg: ConfigService,
     private conveyor: Conveyor,
-    public router: Router
+    public router: Router,
+    public dialog: MatDialog
   ) {
     const availableSources: Map<string, Source> = new Map<string, Source>([
       [googleFit, {
@@ -67,8 +72,28 @@ export class PlatformSelectionComponent implements OnInit {
 
   ngOnInit() {}
 
+  /*
+  * Open bluetooth modal to handle reading of values
+  */
+
+  openBluetoothModal(): void {
+    const dialogRef = this.dialog.open(BluetoothComponent, {
+        width: '500px',
+        height: '500px'
+      });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigate(['/category-selection', 'bluetooth']);
+      }
+    })
+  }
+
   async selectPlatform(platformId: string) {
-    await this.conveyor.signIn(platformId);
-    this.router.navigate(['/category-selection', platformId]);
+    if (platformId == "bluetooth") {
+      this.openBluetoothModal();
+    } else {
+      await this.conveyor.signIn(platformId);
+      this.router.navigate(['/category-selection', platformId]);
+    }
   }
 }
