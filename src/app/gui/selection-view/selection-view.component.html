@@ -47,7 +47,11 @@
   </ul>
   <p>Kategorier:</p>
   <ul *ngFor="let category of selection.categories">
-      <li>{{ getCategoryLabel(category) }}</li>
+      <li>{{ getCategoryLabel(category) }}
+      <ul *ngFor="let filter of selection.filters[category]">
+        <li>{{ filter.fn }}</li>
+      </ul>
+    </li>
   </ul>
 </mat-card-content>
   </mat-card>
