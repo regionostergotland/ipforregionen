@@ -16,6 +16,7 @@
 %  -> sidebar (editor)
 %         add-new-data-modal
 %         bottom-sheet
+%  -> selection
 %  -> inspection (review)
 %
 %     Gemensamma komponenter:
@@ -121,6 +122,20 @@ har hämtat data för.
 Dess AddNewDataModalComponent innehåller knappar för att lägga till kategorier
 eller hämta ny data. Dess BottomSheetCategoriesComponent används för att välja
 vilken kategori att lägga till om användaren vill mata in egen data.
+
+\paragraph{selection-view}
+är komponenten som hanterar urval. Ett urval är ett JSON-objekt som innehåller 
+ett urvalsnamn, en lista med destinationer, en lista med datakategorier samt en 
+filterlista för varje datakategori. 
+
+För tillfället skrivs och visas filter med siffror; det optimala vore att ändra 
+detta till översättningsbara strängar. Komponenten hanterar importen av 
+JSON-filer, översättningen av JSON-filerna till något som kan representeras i 
+HTML samt sparar urvalen i local storage. Komponenten sköter även att importerade 
+urval kan hämtas ur local storage och representeras i HTML. 
+
+Till sist ansvarar även komponenten för att applicera de valda urvalen på den 
+aktuella datan som hämtats.
 
 \paragraph{inspection-view} är den komponent som ger granskningsvyn, det sista
 steget innan man skickar in hälsodata till RÖD. Här kan man se all den data man

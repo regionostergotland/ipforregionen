@@ -130,12 +130,6 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
-/*
-* Uses imported selections stored in this.selections
-* Retrieves the relevant values and filters
-* and applies the filters to the values
-*/
-
 /**
  * Iterates through the list selectedSelections 
  * and runs executeSelection on each selection.
@@ -182,13 +176,9 @@ export class SelectionViewComponent implements OnInit {
     }
   } 
 
-/*
-* Create destination objects for each destination and
-* add each destination to the destination array in conveyor
-*/
-
 /**
- * 
+ * Creates an instance of the destionation class for each JSON 
+ * object and adds the instance to the conveyor's destination array.
  * @param category The category id.
  * @param data An instance of a DataList with a filter applied.
  * @param destinations A list of JSON objects.
@@ -218,11 +208,13 @@ export class SelectionViewComponent implements OnInit {
       console.log(this.conveyor.getDestinations());
   }
 
-
-  /*
-  * Allows selecting one or more selections
-  * that will then be handled with executeSelections()
-  */
+  /**
+   * Checks if a checkbox is checked and adds the related
+   * selection to the array selectedSelections, else
+   * the selection is removed from the array.
+   * @param selection The selection related to the checkbox.
+   * @param event Event for checkbox.
+   */
   selectSelection(selection: Selection, event: any) : void{
     const boxChecked: boolean = event.checked;
     let selections = this.selectedSelections;
@@ -235,8 +227,10 @@ export class SelectionViewComponent implements OnInit {
     }
   }
 
-   /*
-   * Removes selection from page
+  /**
+   * Removes a selection from the array selection and updates the
+   * localstorage.
+   * @param selection Selection whose removal button was clicked.
    */
    removeSelection(selection: Selection): void {
      this.selections.splice(this.selections.indexOf(selection), 1);
@@ -253,7 +247,7 @@ export class SelectionViewComponent implements OnInit {
   /**
    * Saves selection to localstorage under "selections" if not already
    * present.
-   * @param object selection
+   * @param object Selection to be saved to localstorage.
    */
   saveToLocal(selection: Selection) : void {
     let selections: {};
@@ -268,10 +262,10 @@ export class SelectionViewComponent implements OnInit {
       localStorage.setItem("selections", JSON.stringify(selections));
     }
   }
-
-  /* 
-  * Checks local storage for previously loaded selections
-  * Called when page is loaded
+  
+ /**
+  * Checks localstorage for currently stored selections
+  * and adds them to the array selections.
   */
   loadFromLocal(): void {
     if (!!JSON.parse(localStorage.getItem("selections"))) {
