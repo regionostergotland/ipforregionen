@@ -92,8 +92,13 @@ export class InspectionViewComponent implements OnInit {
    * 
    * ngOnInit is a bit hacky? Maybe change to more reasonable update?
    */
-  sendData(index: number): void {
-    let destination = this.destinations[index];
+  sendData(index: number, dest: Destination = null): void {
+    let destination: Destination;
+    if (index !== null) {
+      destination = this.destinations[index];
+    } else {
+      destination = dest;
+    }
     this.conveyor.sendData(destination).
         subscribe(
           receipt => {
@@ -143,15 +148,15 @@ export class InspectionViewComponent implements OnInit {
    * Send all the data stored in the conveyor if log in is required.
    * Uses "sendData" because except for loginModal they are identical.
    */
-  sendDataWithAuth(index: number): any {
+  sendDataWithAuth(dest: Destination): any {
     const dialogRef = this.dialog.open(LoginModal, {
       width: '250px',
-      data: {destination_name: this.destinations[index].getDestinationName()}
+      data: {destination_name: dest.getDestinationName()}
     });
-      console.log(this.destinations[index].getDestinationUrl());
+      console.log(dest.getDestinationUrl());
     return dialogRef.afterClosed().pipe(tap(result => {
       if (result === true) {
-        this.sendData(index);
+        this.sendData(null, dest);
       }
     })).toPromise();
   }
@@ -171,7 +176,8 @@ export class InspectionViewComponent implements OnInit {
     }
     for (let i = 0; i < this.destinations.length; i++) {
       if (this.needsAuth(i)) {
-        await this.sendDataWithAuth(i);
+        let dest = this.destinations[i];
+        await this.sendDataWithAuth(dest);
       }
     }
   }

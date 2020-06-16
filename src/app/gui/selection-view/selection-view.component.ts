@@ -72,6 +72,7 @@ export class SelectionViewComponent implements OnInit {
     return this.conveyor.getCategorySpec(categoryId).label;
 }
 
+
 /**
 * Imports a valid JSON file and iterates through each selection object.
 * For each selection object, an instance of the Selection interface is 

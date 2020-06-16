@@ -81,7 +81,8 @@ export class EhrService {
         call, composition, baseUrl
       );
     }
-    
+
+    console.log(baseUrl + call);
     return this.auth.postAuthenticated<CompositionResponse>(
       call, composition, baseUrl, params
     );
@@ -245,8 +246,10 @@ export class EhrService {
         
         if(!!res.compositionUid) {
           receipt.compUid = res.compositionUid;
-        } else if (!!res.uid.value) {
+        } else if (!!res.uid && !!res.uid.value) {
           receipt.compUid = res.uid.value;
+        } else {
+          receipt.compUid = null;
         }
         
         return receipt;

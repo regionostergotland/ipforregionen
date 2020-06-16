@@ -177,12 +177,12 @@ export class Conveyor {
   public sendData(dest: Destination): Observable<CompositionReceipt> {
     let composition: {};
     const destUrl = dest.getDestinationUrl();
-    if(destUrl.includes('ehrscape')) {
-      composition = this.ehrService.createEhrscapeComposition(
+    if(destUrl.includes('ehrbase')) {
+      composition = this.ehrService.createEhrbaseComposition(
         Array.from(dest.getCategories().values())
       );
-    } else if (destUrl.includes('ehrbase')) {
-      composition = this.ehrService.createEhrbaseComposition(
+    } else {
+      composition = this.ehrService.createEhrscapeComposition(
         Array.from(dest.getCategories().values())
       );
     }
